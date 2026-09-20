@@ -1,0 +1,1227 @@
+<nav class="pager" aria-label="Pages">
+  <a href="#p1" class="on">01</a><a href="#p2">02</a><a href="#p3">03</a><a href="#p4">04</a><a href="#p5">05</a>
+  <span class="of">five pages</span>
+</nav>
+
+<!-- ================= PAGE 1 ================= -->
+<section class="pg" id="p1" style="--ic:var(--i0); --ic-soft:var(--i0-soft)">
+  <div class="in">
+    <header class="hero">
+      <p class="kicker">HERE · NOW · Guardians · Scircles</p>
+      <h1>The money model.</h1>
+      <p class="lede">Every action in HERE costs us something and is worth something.
+      Five pages: <b>what to measure</b>, <b>what each action costs in credits</b>,
+      <b>how billing runs underneath</b>, and <b>two plans modelled to month twelve</b>.</p>
+      <div class="tags">
+        <span>Monetization PRD · draft v2</span>
+        <span>20 Sep 2026</span>
+        <span>1 credit = $0.01</span>
+        <span>Target margin 70%+</span>
+      </div>
+    </header>
+
+    <header class="pg-hd">
+      <span class="pg-n">01</span>
+      <div>
+        <p class="kicker">Page one — the decision</p>
+        <h2>Two systems, two jobs</h2>
+      </div>
+    </header>
+
+    <p class="lede">You named it exactly right, so let's build on your words:
+    <b>credits are trust, control and perceived value. Billing is unit economics, revenue and profit.</b>
+    They are different machines and must not be the same machine.</p>
+
+    <div class="grid g2">
+      <div class="card" style="--ic:var(--i4)">
+        <span class="lbl">The credit system's job</span>
+        <h4>Make people feel in control</h4>
+        <p>Predictable prices. A visible balance. Nothing charged for failure. A clear "this will cost X"
+        before anything runs.</p>
+        <p>Credits are a <strong>trust interface</strong>. If someone is ever surprised by a charge, the
+        credit system has failed — even when the accounting was perfectly correct.</p>
+      </div>
+      <div class="card" style="--ic:var(--i0)">
+        <span class="lbl">The billing system's job</span>
+        <h4>Make the company survive</h4>
+        <p>Recurring revenue. Gross margin. Cash collection. Deferred-revenue accounting. Dunning. Tax.</p>
+        <p>Billing is a <strong>finance machine</strong>. People should barely see it — and when they do,
+        it should be one clean invoice.</p>
+      </div>
+    </div>
+
+    <h3>What this document is called</h3>
+    <p class="lede">A <b>Monetization PRD</b>. That is the industry name. Call the file
+    <code>MONETIZATION.md</code> and keep it beside your other handoffs.</p>
+    <div class="tbl">
+      <table>
+        <thead><tr><th>When someone asks for…</th><th>They mean</th><th class="n">Page</th></tr></thead>
+        <tbody>
+          <tr><td>"the pricing doc"</td><td>Pricing &amp; Packaging Spec</td><td class="n">05</td></tr>
+          <tr><td>"the unit economics"</td><td>Unit Economics Model</td><td class="n">04</td></tr>
+          <tr><td>"how credits work"</td><td>Rate Card, a.k.a. the metering &amp; rating spec</td><td class="n">03</td></tr>
+          <tr><td>"the billing architecture"</td><td>Billing &amp; Entitlements Architecture</td><td class="n">04</td></tr>
+          <tr><td>"what are we optimising for"</td><td>North Star &amp; Metric Tree</td><td class="n">02</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>The one decision everything hangs off</h3>
+    <div class="key">
+      <span class="tag">The call</span>
+      <p>You have <strong>one fixed cost that does not care how much anyone uses the product</strong> —
+      the $500-a-month guardian. A pure pay-as-you-go credit model cannot carry a fixed cost: it only
+      earns when someone is active, and the cost runs whether they are active or not.</p>
+      <p>So: a <strong>two-part tariff</strong>. A subscription floor pays for the fixed costs — guardians,
+      storage, support, the always-on parts. Metered credits pay for the variable costs — model tokens,
+      renders, transcription, egress — with margin on top.</p>
+      <p>Credits never carry the fixed cost. The subscription never carries the variable cost.
+      Each part covers what it is shaped like.</p>
+    </div>
+
+    <div class="note warn">
+      <span class="t">The trap to avoid</span>
+      The commonest failure in credit products is <b>letting the credit price float with your cost</b> —
+      "this run cost us more, so it costs you more." It destroys trust and makes the product
+      impossible to budget for. Fix the price; manage the cost. Page three shows how to do that even
+      though your four models differ in cost by ten times.
+    </div>
+  </div>
+</section>
+
+<!-- ================= PAGE 2 ================= -->
+<section class="pg" id="p2" style="--ic:var(--i0); --ic-soft:var(--i0-soft)">
+  <div class="in">
+    <header class="pg-hd">
+      <span class="pg-n">02</span>
+      <div>
+        <p class="kicker">Page two — what to measure</p>
+        <h2>The North Star, and its six branches</h2>
+      </div>
+    </header>
+
+    <p class="lede">A North Star has to be a number that <b>cannot go up unless the business is really
+    working</b>. Revenue can rise while you destroy trust. Signups can rise while you burn cash.
+    For a credit product, one number resists both.</p>
+
+    <div class="ns-hero">
+      <div><svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+<line x1="180" y1="84" x2="180" y2="47.85" stroke="var(--ink-3)" stroke-width="1.2" stroke-linecap="round" opacity="0.4"/>
+<line x1="183.33" y1="84.16" x2="190.19" y2="14.55" stroke="var(--ic)" stroke-width="2.4" stroke-linecap="round" opacity="1"/>
+<line x1="186.63" y1="84.65" x2="200.02" y2="17.34" stroke="var(--ic)" stroke-width="2.4" stroke-linecap="round" opacity="1"/>
+<circle cx="201.39" cy="10.47" r="2.1" fill="var(--ic)" opacity="0.75"/>
+<line x1="189.87" y1="85.46" x2="210.94" y2="16.02" stroke="var(--ic)" stroke-width="2.4" stroke-linecap="round" opacity="1"/>
+<line x1="193.01" y1="86.59" x2="223.01" y2="14.16" stroke="var(--ic)" stroke-width="2.4" stroke-linecap="round" opacity="1"/>
+<circle cx="225.69" cy="7.69" r="2.1" fill="var(--ic)" opacity="0.75"/>
+<line x1="196.03" y1="88.01" x2="217.87" y2="47.14" stroke="var(--ink-3)" stroke-width="1.2" stroke-linecap="round" opacity="0.4"/>
+<line x1="198.89" y1="89.73" x2="247.51" y2="16.96" stroke="var(--ic)" stroke-width="2.4" stroke-linecap="round" opacity="1"/>
+<circle cx="251.4" cy="11.14" r="2.1" fill="var(--ic)" opacity="0.75"/>
+<line x1="201.57" y1="91.72" x2="248.57" y2="34.45" stroke="var(--ic)" stroke-width="2.4" stroke-linecap="round" opacity="1"/>
+<line x1="204.04" y1="93.96" x2="256.96" y2="41.04" stroke="var(--ic)" stroke-width="2.4" stroke-linecap="round" opacity="1"/>
+<circle cx="261.91" cy="36.09" r="2.1" fill="var(--ic)" opacity="0.75"/>
+<line x1="206.28" y1="96.43" x2="262.07" y2="50.65" stroke="var(--ic)" stroke-width="2.4" stroke-linecap="round" opacity="1"/>
+<line x1="208.27" y1="99.11" x2="264.28" y2="61.69" stroke="var(--ic)" stroke-width="2.4" stroke-linecap="round" opacity="1"/>
+<circle cx="270.1" cy="57.8" r="2.1" fill="var(--ic)" opacity="0.75"/>
+<line x1="209.99" y1="101.97" x2="246.16" y2="82.64" stroke="var(--ink-3)" stroke-width="1.2" stroke-linecap="round" opacity="0.4"/>
+<line x1="211.41" y1="104.99" x2="263.31" y2="83.49" stroke="var(--ic)" stroke-width="2.4" stroke-linecap="round" opacity="1"/>
+<circle cx="269.78" cy="80.81" r="2.1" fill="var(--ic)" opacity="0.75"/>
+<line x1="212.54" y1="108.13" x2="268.38" y2="91.19" stroke="var(--ic)" stroke-width="2.4" stroke-linecap="round" opacity="1"/>
+<line x1="213.35" y1="111.37" x2="269.18" y2="100.26" stroke="var(--ic)" stroke-width="2.4" stroke-linecap="round" opacity="1"/>
+<circle cx="276.04" cy="98.9" r="2.1" fill="var(--ic)" opacity="0.75"/>
+<line x1="213.84" y1="114.67" x2="283.8" y2="107.78" stroke="var(--ic)" stroke-width="2.4" stroke-linecap="round" opacity="1"/>
+<line x1="214" y1="118" x2="291.81" y2="118" stroke="var(--ic)" stroke-width="2.4" stroke-linecap="round" opacity="1"/>
+<circle cx="298.81" cy="118" r="2.1" fill="var(--ic)" opacity="0.75"/>
+<line x1="213.84" y1="121.33" x2="294.08" y2="129.24" stroke="var(--ic)" stroke-width="2.4" stroke-linecap="round" opacity="1"/>
+<line x1="213.35" y1="124.63" x2="264.35" y2="134.78" stroke="var(--ink-3)" stroke-width="1.2" stroke-linecap="round" opacity="0.4"/>
+<line x1="212.54" y1="127.87" x2="283.13" y2="149.28" stroke="var(--ic)" stroke-width="2.4" stroke-linecap="round" opacity="1"/>
+<line x1="211.41" y1="131.01" x2="256.08" y2="149.51" stroke="var(--ink-3)" stroke-width="1.2" stroke-linecap="round" opacity="0.4"/>
+<line x1="209.99" y1="134.03" x2="271.52" y2="166.92" stroke="var(--ic)" stroke-width="2.4" stroke-linecap="round" opacity="1"/>
+<line x1="208.27" y1="136.89" x2="268.98" y2="177.45" stroke="var(--ic)" stroke-width="2.4" stroke-linecap="round" opacity="1"/>
+<circle cx="274.8" cy="181.34" r="2.1" fill="var(--ic)" opacity="0.75"/>
+<line x1="206.28" y1="139.57" x2="260.97" y2="184.45" stroke="var(--ic)" stroke-width="2.4" stroke-linecap="round" opacity="1"/>
+<line x1="204.04" y1="142.04" x2="253.18" y2="191.18" stroke="var(--ic)" stroke-width="2.4" stroke-linecap="round" opacity="1"/>
+<circle cx="258.13" cy="196.13" r="2.1" fill="var(--ic)" opacity="0.75"/>
+<line x1="201.57" y1="144.28" x2="238.17" y2="188.88" stroke="var(--ic)" stroke-width="2.4" stroke-linecap="round" opacity="1"/>
+<line x1="198.89" y1="146.27" x2="219.84" y2="177.63" stroke="var(--ink-3)" stroke-width="1.2" stroke-linecap="round" opacity="0.4"/>
+<line x1="196.03" y1="147.99" x2="229.83" y2="211.23" stroke="var(--ic)" stroke-width="2.4" stroke-linecap="round" opacity="1"/>
+<line x1="193.01" y1="149.41" x2="217.7" y2="209.03" stroke="var(--ic)" stroke-width="2.4" stroke-linecap="round" opacity="1"/>
+<circle cx="220.38" cy="215.49" r="2.1" fill="var(--ic)" opacity="0.75"/>
+<line x1="189.87" y1="150.54" x2="202.97" y2="193.74" stroke="var(--ink-3)" stroke-width="1.2" stroke-linecap="round" opacity="0.4"/>
+<line x1="186.63" y1="151.35" x2="202.75" y2="232.36" stroke="var(--ic)" stroke-width="2.4" stroke-linecap="round" opacity="1"/>
+<circle cx="204.11" cy="239.22" r="2.1" fill="var(--ic)" opacity="0.75"/>
+<line x1="183.33" y1="151.84" x2="191.35" y2="233.25" stroke="var(--ic)" stroke-width="2.4" stroke-linecap="round" opacity="1"/>
+<line x1="180" y1="152" x2="180" y2="237.09" stroke="var(--ic)" stroke-width="2.4" stroke-linecap="round" opacity="1"/>
+<circle cx="180" cy="244.09" r="2.1" fill="var(--ic)" opacity="0.75"/>
+<line x1="176.67" y1="151.84" x2="169.63" y2="223.3" stroke="var(--ic)" stroke-width="2.4" stroke-linecap="round" opacity="1"/>
+<line x1="173.37" y1="151.35" x2="157.41" y2="231.59" stroke="var(--ic)" stroke-width="2.4" stroke-linecap="round" opacity="1"/>
+<circle cx="156.04" cy="238.46" r="2.1" fill="var(--ic)" opacity="0.75"/>
+<line x1="170.13" y1="150.54" x2="145.59" y2="231.44" stroke="var(--ic)" stroke-width="2.4" stroke-linecap="round" opacity="1"/>
+<line x1="166.99" y1="149.41" x2="139.39" y2="216.05" stroke="var(--ic)" stroke-width="2.4" stroke-linecap="round" opacity="1"/>
+<circle cx="136.71" cy="222.51" r="2.1" fill="var(--ic)" opacity="0.75"/>
+<line x1="163.97" y1="147.99" x2="129.74" y2="212.02" stroke="var(--ic)" stroke-width="2.4" stroke-linecap="round" opacity="1"/>
+<line x1="161.11" y1="146.27" x2="137.94" y2="180.94" stroke="var(--ink-3)" stroke-width="1.2" stroke-linecap="round" opacity="0.4"/>
+<line x1="158.43" y1="144.28" x2="120.12" y2="190.96" stroke="var(--ic)" stroke-width="2.4" stroke-linecap="round" opacity="1"/>
+<line x1="155.96" y1="142.04" x2="106.57" y2="191.43" stroke="var(--ic)" stroke-width="2.4" stroke-linecap="round" opacity="1"/>
+<circle cx="101.62" cy="196.38" r="2.1" fill="var(--ic)" opacity="0.75"/>
+<line x1="153.72" y1="139.57" x2="94.76" y2="187.95" stroke="var(--ic)" stroke-width="2.4" stroke-linecap="round" opacity="1"/>
+<line x1="151.73" y1="136.89" x2="87.71" y2="179.66" stroke="var(--ic)" stroke-width="2.4" stroke-linecap="round" opacity="1"/>
+<circle cx="81.89" cy="183.55" r="2.1" fill="var(--ic)" opacity="0.75"/>
+<line x1="150.01" y1="134.03" x2="81.69" y2="170.55" stroke="var(--ic)" stroke-width="2.4" stroke-linecap="round" opacity="1"/>
+<line x1="148.59" y1="131.01" x2="68.65" y2="164.12" stroke="var(--ic)" stroke-width="2.4" stroke-linecap="round" opacity="1"/>
+<circle cx="62.18" cy="166.8" r="2.1" fill="var(--ic)" opacity="0.75"/>
+<line x1="147.46" y1="127.87" x2="73.78" y2="150.22" stroke="var(--ic)" stroke-width="2.4" stroke-linecap="round" opacity="1"/>
+<line x1="146.65" y1="124.63" x2="103.42" y2="133.23" stroke="var(--ink-3)" stroke-width="1.2" stroke-linecap="round" opacity="0.4"/>
+<line x1="146.16" y1="121.33" x2="58.93" y2="129.92" stroke="var(--ic)" stroke-width="2.4" stroke-linecap="round" opacity="1"/>
+<line x1="146" y1="118" x2="98.66" y2="118" stroke="var(--ink-3)" stroke-width="1.2" stroke-linecap="round" opacity="0.4"/>
+<line x1="146.16" y1="114.67" x2="75.01" y2="107.66" stroke="var(--ic)" stroke-width="2.4" stroke-linecap="round" opacity="1"/>
+<line x1="146.65" y1="111.37" x2="80.74" y2="98.26" stroke="var(--ic)" stroke-width="2.4" stroke-linecap="round" opacity="1"/>
+<circle cx="73.87" cy="96.89" r="2.1" fill="var(--ic)" opacity="0.75"/>
+<line x1="147.46" y1="108.13" x2="95.09" y2="92.24" stroke="var(--ic)" stroke-width="2.4" stroke-linecap="round" opacity="1"/>
+<line x1="148.59" y1="104.99" x2="89.82" y2="80.65" stroke="var(--ic)" stroke-width="2.4" stroke-linecap="round" opacity="1"/>
+<circle cx="83.35" cy="77.97" r="2.1" fill="var(--ic)" opacity="0.75"/>
+<line x1="150.01" y1="101.97" x2="88.87" y2="69.29" stroke="var(--ic)" stroke-width="2.4" stroke-linecap="round" opacity="1"/>
+<line x1="151.73" y1="99.11" x2="97.5" y2="62.87" stroke="var(--ic)" stroke-width="2.4" stroke-linecap="round" opacity="1"/>
+<circle cx="91.68" cy="58.98" r="2.1" fill="var(--ic)" opacity="0.75"/>
+<line x1="153.72" y1="96.43" x2="94.44" y2="47.79" stroke="var(--ic)" stroke-width="2.4" stroke-linecap="round" opacity="1"/>
+<line x1="155.96" y1="93.96" x2="105.16" y2="43.16" stroke="var(--ic)" stroke-width="2.4" stroke-linecap="round" opacity="1"/>
+<circle cx="100.21" cy="38.21" r="2.1" fill="var(--ic)" opacity="0.75"/>
+<line x1="158.43" y1="91.72" x2="111.23" y2="34.21" stroke="var(--ic)" stroke-width="2.4" stroke-linecap="round" opacity="1"/>
+<line x1="161.11" y1="89.73" x2="111.22" y2="15.06" stroke="var(--ic)" stroke-width="2.4" stroke-linecap="round" opacity="1"/>
+<circle cx="107.33" cy="9.24" r="2.1" fill="var(--ic)" opacity="0.75"/>
+<line x1="163.97" y1="88.01" x2="124.56" y2="14.28" stroke="var(--ic)" stroke-width="2.4" stroke-linecap="round" opacity="1"/>
+<line x1="166.99" y1="86.59" x2="136.52" y2="13.04" stroke="var(--ic)" stroke-width="2.4" stroke-linecap="round" opacity="1"/>
+<circle cx="133.84" cy="6.57" r="2.1" fill="var(--ic)" opacity="0.75"/>
+<line x1="170.13" y1="85.46" x2="146.22" y2="6.64" stroke="var(--ic)" stroke-width="2.4" stroke-linecap="round" opacity="1"/>
+<line x1="173.37" y1="84.65" x2="161" y2="22.46" stroke="var(--ic)" stroke-width="2.4" stroke-linecap="round" opacity="1"/>
+<circle cx="159.63" cy="15.6" r="2.1" fill="var(--ic)" opacity="0.75"/>
+<line x1="176.67" y1="84.16" x2="170.09" y2="17.35" stroke="var(--ic)" stroke-width="2.4" stroke-linecap="round" opacity="1"/>
+<circle cx="180" cy="118" r="30" fill="var(--ic-soft)" stroke="var(--ic)" stroke-width="2"/>
+<circle cx="180" cy="118" r="12" fill="var(--ic)"/>
+<path d="M30,214 C34.55,212.73 48.18,208.25 57.27,206.38 C66.36,204.5 75.45,203.73 84.55,202.74 C93.64,201.76 102.73,202.55 111.82,200.46 C120.91,198.37 130,192.91 139.09,190.2 C148.18,187.49 157.27,184.28 166.36,184.21 C175.45,184.14 184.55,189.32 193.64,189.77 C202.73,190.23 211.82,189.52 220.91,186.94 C230,184.36 239.09,176.12 248.18,174.31 C257.27,172.49 266.36,174.16 275.45,176.07 C284.55,177.99 293.64,185.27 302.73,185.77 C311.82,186.27 325.45,180.21 330,179.1" fill="none" stroke="var(--ic)" stroke-width="2.6" stroke-linecap="round" opacity="0.9"/>
+<circle cx="30" cy="214" r="2.6" fill="var(--ic)"/>
+<circle cx="57.27" cy="206.38" r="2.6" fill="var(--ic)"/>
+<circle cx="84.55" cy="202.74" r="2.6" fill="var(--ic)"/>
+<circle cx="111.82" cy="200.46" r="2.6" fill="var(--ic)"/>
+<circle cx="139.09" cy="190.2" r="2.6" fill="var(--ic)"/>
+<circle cx="166.36" cy="184.21" r="2.6" fill="var(--ic)"/>
+<circle cx="193.64" cy="189.77" r="2.6" fill="var(--ic)"/>
+<circle cx="220.91" cy="186.94" r="2.6" fill="var(--ic)"/>
+<circle cx="248.18" cy="174.31" r="2.6" fill="var(--ic)"/>
+<circle cx="275.45" cy="176.07" r="2.6" fill="var(--ic)"/>
+<circle cx="302.73" cy="185.77" r="2.6" fill="var(--ic)"/>
+<circle cx="330" cy="179.1" r="4.6" fill="var(--ic)"/>
+<line x1="24" y1="230" x2="336" y2="230" stroke="var(--line)" stroke-width="1.5"/>
+
+</svg></div>
+      <div>
+        <span class="lbl">North Star</span>
+        <h3>Weekly Successful Credit Burn</h3>
+        <p>Credits settled on jobs that <strong>completed</strong> and were <strong>kept</strong> —
+        not discarded, not refunded — summed every week.</p>
+        <p>It only rises when three things are true at once: people are <strong>active</strong>, they are
+        doing work <strong>valuable enough to keep</strong>, and you are <strong>getting paid</strong>.</p>
+        <p>It cannot be gamed by breaking things, because failed jobs are free by policy. And it leads
+        revenue by two to four weeks, so it doubles as an early warning.</p>
+      </div>
+    </div>
+
+    <h3>The six branches</h3>
+    <p class="lede">Each one has a single number you can move next week.</p>
+
+    <div class="branches">
+      <article class="br" style="--ic:var(--i1); --ic-soft:var(--i1-soft)">
+        <div class="art"><svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+<path d="M48,28 L312,28 L210,196 L150,196 Z" fill="var(--ic-soft)" stroke="var(--ic)" stroke-width="1.6" stroke-linejoin="round"/>
+<circle cx="169.19" cy="101.71" r="3" fill="var(--ic)"/>
+<circle cx="175.06" cy="94.12" r="3" fill="var(--ic)"/>
+<circle cx="120.35" cy="171.27" r="2.2" fill="none" stroke="var(--ink-3)" stroke-width="1.1" opacity="0.5"/>
+<circle cx="204.66" cy="87.71" r="3" fill="var(--ic)"/>
+<circle cx="279.1" cy="50.74" r="3" fill="var(--ic)"/>
+<circle cx="272.07" cy="123.95" r="2.2" fill="none" stroke="var(--ink-3)" stroke-width="1.1" opacity="0.5"/>
+<circle cx="133.01" cy="132.42" r="2.2" fill="none" stroke="var(--ink-3)" stroke-width="1.1" opacity="0.5"/>
+<circle cx="214" cy="177.87" r="2.2" fill="none" stroke="var(--ink-3)" stroke-width="1.1" opacity="0.5"/>
+<circle cx="140.03" cy="94.02" r="3" fill="var(--ic)"/>
+<circle cx="157.14" cy="100.64" r="3" fill="var(--ic)"/>
+<circle cx="224.33" cy="124.45" r="3" fill="var(--ic)"/>
+<circle cx="220.64" cy="167.44" r="3" fill="var(--ic)"/>
+<circle cx="119.98" cy="133.35" r="3" fill="var(--ic)"/>
+<circle cx="84.64" cy="45.06" r="3" fill="var(--ic)"/>
+<circle cx="240.08" cy="95.59" r="3" fill="var(--ic)"/>
+<circle cx="216.71" cy="68.6" r="3" fill="var(--ic)"/>
+<circle cx="66.03" cy="41.35" r="3" fill="var(--ic)"/>
+<circle cx="203.61" cy="68.01" r="3" fill="var(--ic)"/>
+<circle cx="286.24" cy="77.5" r="3" fill="var(--ic)"/>
+<circle cx="243.41" cy="173.14" r="2.2" fill="none" stroke="var(--ink-3)" stroke-width="1.1" opacity="0.5"/>
+<circle cx="241.72" cy="49.14" r="3" fill="var(--ic)"/>
+<circle cx="144.55" cy="153.25" r="2.2" fill="none" stroke="var(--ink-3)" stroke-width="1.1" opacity="0.5"/>
+<circle cx="129.16" cy="164.43" r="2.2" fill="none" stroke="var(--ink-3)" stroke-width="1.1" opacity="0.5"/>
+<circle cx="86.2" cy="96.26" r="3" fill="var(--ic)"/>
+<circle cx="125.28" cy="179.6" r="2.2" fill="none" stroke="var(--ink-3)" stroke-width="1.1" opacity="0.5"/>
+<circle cx="225.85" cy="65.94" r="3" fill="var(--ic)"/>
+<circle cx="256.7" cy="123.74" r="3" fill="var(--ic)"/>
+<circle cx="223.92" cy="43.5" r="3" fill="var(--ic)"/>
+<circle cx="108.6" cy="139.36" r="3" fill="var(--ic)"/>
+<circle cx="142.76" cy="134.45" r="3" fill="var(--ic)"/>
+<circle cx="120" cy="172.19" r="2.2" fill="none" stroke="var(--ink-3)" stroke-width="1.1" opacity="0.5"/>
+<circle cx="290.97" cy="137.96" r="2.2" fill="none" stroke="var(--ink-3)" stroke-width="1.1" opacity="0.5"/>
+<circle cx="194.43" cy="148.67" r="3" fill="var(--ic)"/>
+<circle cx="207.24" cy="124.45" r="3" fill="var(--ic)"/>
+<circle cx="249.75" cy="107.3" r="3" fill="var(--ic)"/>
+<circle cx="107.49" cy="44.8" r="3" fill="var(--ic)"/>
+<circle cx="112.37" cy="135.45" r="3" fill="var(--ic)"/>
+<circle cx="276.31" cy="97.91" r="3" fill="var(--ic)"/>
+<circle cx="140.21" cy="137.78" r="2.2" fill="none" stroke="var(--ink-3)" stroke-width="1.1" opacity="0.5"/>
+<circle cx="163.38" cy="69.28" r="3" fill="var(--ic)"/>
+<circle cx="266.79" cy="64.16" r="3" fill="var(--ic)"/>
+<circle cx="246.73" cy="129.76" r="3" fill="var(--ic)"/>
+<circle cx="143.47" cy="116.32" r="3" fill="var(--ic)"/>
+<circle cx="131.08" cy="58.43" r="3" fill="var(--ic)"/>
+<circle cx="248.18" cy="120.19" r="2.2" fill="none" stroke="var(--ink-3)" stroke-width="1.1" opacity="0.5"/>
+<circle cx="247.96" cy="101.09" r="3" fill="var(--ic)"/>
+<circle cx="246.41" cy="161.74" r="2.2" fill="none" stroke="var(--ink-3)" stroke-width="1.1" opacity="0.5"/>
+<circle cx="265.06" cy="165.26" r="2.2" fill="none" stroke="var(--ink-3)" stroke-width="1.1" opacity="0.5"/>
+<circle cx="254.59" cy="148.41" r="2.2" fill="none" stroke="var(--ink-3)" stroke-width="1.1" opacity="0.5"/>
+<circle cx="208.09" cy="65.95" r="3" fill="var(--ic)"/>
+<circle cx="218.07" cy="142.31" r="3" fill="var(--ic)"/>
+<circle cx="228.79" cy="194.46" r="2.2" fill="none" stroke="var(--ink-3)" stroke-width="1.1" opacity="0.5"/>
+<circle cx="282.7" cy="62.88" r="3" fill="var(--ic)"/>
+<circle cx="191.15" cy="130.21" r="3" fill="var(--ic)"/>
+<circle cx="240.9" cy="127.91" r="2.2" fill="none" stroke="var(--ink-3)" stroke-width="1.1" opacity="0.5"/>
+<circle cx="256.69" cy="114.34" r="3" fill="var(--ic)"/>
+<circle cx="169.07" cy="122.99" r="3" fill="var(--ic)"/>
+<circle cx="121.76" cy="134.31" r="3" fill="var(--ic)"/>
+<circle cx="217.14" cy="154.34" r="3" fill="var(--ic)"/>
+<circle cx="225.88" cy="157.43" r="2.2" fill="none" stroke="var(--ink-3)" stroke-width="1.1" opacity="0.5"/>
+<circle cx="161.14" cy="101.85" r="3" fill="var(--ic)"/>
+<circle cx="194.31" cy="159.1" r="3" fill="var(--ic)"/>
+<circle cx="90.62" cy="72.5" r="3" fill="var(--ic)"/>
+<circle cx="193.4" cy="130.11" r="3" fill="var(--ic)"/>
+<circle cx="159.22" cy="108.29" r="3" fill="var(--ic)"/>
+<circle cx="267.96" cy="49.52" r="3" fill="var(--ic)"/>
+<circle cx="80.76" cy="106.46" r="2.2" fill="none" stroke="var(--ink-3)" stroke-width="1.1" opacity="0.5"/>
+<circle cx="160.73" cy="47.54" r="3" fill="var(--ic)"/>
+<circle cx="153.66" cy="113.44" r="3" fill="var(--ic)"/>
+<circle cx="87.64" cy="48.13" r="3" fill="var(--ic)"/>
+<circle cx="296.17" cy="45.85" r="3" fill="var(--ic)"/>
+<circle cx="170.5" cy="139.04" r="3" fill="var(--ic)"/>
+<circle cx="149.46" cy="143.4" r="2.2" fill="none" stroke="var(--ink-3)" stroke-width="1.1" opacity="0.5"/>
+<circle cx="101.31" cy="163.21" r="2.2" fill="none" stroke="var(--ink-3)" stroke-width="1.1" opacity="0.5"/>
+<circle cx="207.67" cy="142.87" r="3" fill="var(--ic)"/>
+<circle cx="244.23" cy="75.37" r="3" fill="var(--ic)"/>
+<circle cx="251.38" cy="126.66" r="3" fill="var(--ic)"/>
+<circle cx="233.8" cy="161.23" r="3" fill="var(--ic)"/>
+<circle cx="108.3" cy="136.99" r="3" fill="var(--ic)"/>
+<circle cx="234.14" cy="84.76" r="3" fill="var(--ic)"/>
+<circle cx="171.09" cy="140.37" r="3" fill="var(--ic)"/>
+<circle cx="158.16" cy="100.34" r="3" fill="var(--ic)"/>
+<circle cx="89.52" cy="36.39" r="3" fill="var(--ic)"/>
+<circle cx="106.65" cy="114.67" r="3" fill="var(--ic)"/>
+<circle cx="182.12" cy="120.85" r="3" fill="var(--ic)"/>
+<circle cx="217.48" cy="59.17" r="3" fill="var(--ic)"/>
+<circle cx="183.59" cy="79.86" r="3" fill="var(--ic)"/>
+<circle cx="216.58" cy="190.25" r="2.2" fill="none" stroke="var(--ink-3)" stroke-width="1.1" opacity="0.5"/>
+<circle cx="46.67" cy="97.12" r="2.2" fill="none" stroke="var(--ink-3)" stroke-width="1.1" opacity="0.5"/>
+<circle cx="103.36" cy="149.84" r="2.2" fill="none" stroke="var(--ink-3)" stroke-width="1.1" opacity="0.5"/>
+<circle cx="148.08" cy="168.33" r="2.2" fill="none" stroke="var(--ink-3)" stroke-width="1.1" opacity="0.5"/>
+<circle cx="204.3" cy="127.85" r="3" fill="var(--ic)"/>
+<circle cx="66.76" cy="120.48" r="2.2" fill="none" stroke="var(--ink-3)" stroke-width="1.1" opacity="0.5"/>
+<circle cx="102.56" cy="167.46" r="2.2" fill="none" stroke="var(--ink-3)" stroke-width="1.1" opacity="0.5"/>
+<circle cx="134.8" cy="130.09" r="3" fill="var(--ic)"/>
+<circle cx="151.63" cy="76.12" r="3" fill="var(--ic)"/>
+<circle cx="177.63" cy="85.44" r="3" fill="var(--ic)"/>
+<circle cx="102.53" cy="47.43" r="3" fill="var(--ic)"/>
+<circle cx="113.23" cy="141.95" r="2.2" fill="none" stroke="var(--ink-3)" stroke-width="1.1" opacity="0.5"/>
+<circle cx="271.76" cy="76.02" r="3" fill="var(--ic)"/>
+<circle cx="221.97" cy="180.14" r="2.2" fill="none" stroke="var(--ink-3)" stroke-width="1.1" opacity="0.5"/>
+<circle cx="229.24" cy="151.1" r="3" fill="var(--ic)"/>
+<circle cx="238.49" cy="54.75" r="3" fill="var(--ic)"/>
+<circle cx="196.38" cy="58.47" r="3" fill="var(--ic)"/>
+<circle cx="287.78" cy="62.52" r="3" fill="var(--ic)"/>
+<circle cx="111.9" cy="189.14" r="2.2" fill="none" stroke="var(--ink-3)" stroke-width="1.1" opacity="0.5"/>
+<circle cx="118.54" cy="63.37" r="3" fill="var(--ic)"/>
+<circle cx="176.95" cy="156.54" r="3" fill="var(--ic)"/>
+<circle cx="143.39" cy="128.3" r="2.2" fill="none" stroke="var(--ink-3)" stroke-width="1.1" opacity="0.5"/>
+<circle cx="249.73" cy="125.19" r="2.2" fill="none" stroke="var(--ink-3)" stroke-width="1.1" opacity="0.5"/>
+<circle cx="167.66" cy="166.47" r="3" fill="var(--ic)"/>
+<circle cx="105.42" cy="117.28" r="3" fill="var(--ic)"/>
+<circle cx="297.22" cy="53.23" r="3" fill="var(--ic)"/>
+<circle cx="197.25" cy="86.8" r="3" fill="var(--ic)"/>
+<circle cx="151.36" cy="123.1" r="3" fill="var(--ic)"/>
+<circle cx="267.86" cy="92.82" r="3" fill="var(--ic)"/>
+<circle cx="206.68" cy="107.85" r="3" fill="var(--ic)"/>
+<circle cx="115.43" cy="196.32" r="2.2" fill="none" stroke="var(--ink-3)" stroke-width="1.1" opacity="0.5"/>
+<circle cx="212.66" cy="116.21" r="3" fill="var(--ic)"/>
+<circle cx="124.33" cy="64.15" r="3" fill="var(--ic)"/>
+<circle cx="124.5" cy="134.06" r="3" fill="var(--ic)"/>
+<circle cx="119.32" cy="78.9" r="3" fill="var(--ic)"/>
+<circle cx="101.01" cy="40.63" r="3" fill="var(--ic)"/>
+<circle cx="106.09" cy="108.12" r="3" fill="var(--ic)"/>
+<circle cx="213.24" cy="119.98" r="3" fill="var(--ic)"/>
+<circle cx="107.7" cy="166.74" r="2.2" fill="none" stroke="var(--ink-3)" stroke-width="1.1" opacity="0.5"/>
+<circle cx="246.91" cy="149.02" r="2.2" fill="none" stroke="var(--ink-3)" stroke-width="1.1" opacity="0.5"/>
+<circle cx="230.1" cy="94.08" r="3" fill="var(--ic)"/>
+<circle cx="159.12" cy="84.58" r="3" fill="var(--ic)"/>
+<circle cx="280.95" cy="54.55" r="3" fill="var(--ic)"/>
+<circle cx="214.37" cy="122.53" r="3" fill="var(--ic)"/>
+<circle cx="240.72" cy="62.19" r="3" fill="var(--ic)"/>
+<circle cx="242.19" cy="167.38" r="2.2" fill="none" stroke="var(--ink-3)" stroke-width="1.1" opacity="0.5"/>
+<circle cx="106.11" cy="167.58" r="2.2" fill="none" stroke="var(--ink-3)" stroke-width="1.1" opacity="0.5"/>
+<circle cx="129.27" cy="93.65" r="3" fill="var(--ic)"/>
+<circle cx="157.76" cy="69.3" r="3" fill="var(--ic)"/>
+<circle cx="258.2" cy="96.11" r="3" fill="var(--ic)"/>
+<circle cx="178.5" cy="64.74" r="3" fill="var(--ic)"/>
+<circle cx="243.61" cy="146.65" r="3" fill="var(--ic)"/>
+<circle cx="217.53" cy="160.22" r="2.2" fill="none" stroke="var(--ink-3)" stroke-width="1.1" opacity="0.5"/>
+<circle cx="114.78" cy="70.27" r="3" fill="var(--ic)"/>
+<circle cx="117.71" cy="119.84" r="2.2" fill="none" stroke="var(--ink-3)" stroke-width="1.1" opacity="0.5"/>
+<circle cx="81.15" cy="48.48" r="3" fill="var(--ic)"/>
+<circle cx="141.95" cy="186.86" r="2.2" fill="none" stroke="var(--ink-3)" stroke-width="1.1" opacity="0.5"/>
+<circle cx="237.47" cy="130.13" r="3" fill="var(--ic)"/>
+<circle cx="165.58" cy="78.8" r="3" fill="var(--ic)"/>
+<circle cx="146.56" cy="54.72" r="3" fill="var(--ic)"/>
+<circle cx="256.12" cy="117.29" r="3" fill="var(--ic)"/>
+<circle cx="136.46" cy="189.88" r="2.2" fill="none" stroke="var(--ink-3)" stroke-width="1.1" opacity="0.5"/>
+<circle cx="200.37" cy="57.94" r="3" fill="var(--ic)"/>
+<rect x="136" y="206" width="88" height="30" rx="15" fill="var(--ic)"/>
+<text x="180" y="226" text-anchor="middle" font-family="var(--mono)" font-size="14" font-weight="600" fill="var(--on-ic)">first GO</text>
+
+</svg></div>
+        <div class="txt">
+          <span class="n">Branch 1</span>
+          <h4>Acquisition</h4>
+          <p>Signups, cost to acquire, and the share of them who reach a first GO within a day. Most
+          people who never finish one job never come back.</p>
+          <div class="tgt"><b>Target</b> — 60% of signups reach a first GO on day one</div>
+        </div>
+      </article>
+
+      <article class="br" style="--ic:var(--i2); --ic-soft:var(--i2-soft)">
+        <div class="art"><svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+<circle cx="180" cy="116" r="78" fill="var(--ic-soft)" stroke="var(--line)" stroke-width="1.5"/>
+<line x1="180" y1="50" x2="180" y2="39" stroke="var(--ink-3)" stroke-width="2" opacity="0.8"/>
+<line x1="187.53" y1="44.39" x2="188.05" y2="39.42" stroke="var(--ink-3)" stroke-width="1" opacity="0.4"/>
+<line x1="194.97" y1="45.57" x2="196.01" y2="40.68" stroke="var(--ink-3)" stroke-width="1" opacity="0.4"/>
+<line x1="202.25" y1="47.52" x2="203.79" y2="42.77" stroke="var(--ink-3)" stroke-width="1" opacity="0.4"/>
+<line x1="209.29" y1="50.22" x2="211.32" y2="45.66" stroke="var(--ink-3)" stroke-width="1" opacity="0.4"/>
+<line x1="213" y1="58.84" x2="218.5" y2="49.32" stroke="var(--ink-3)" stroke-width="2" opacity="0.8"/>
+<line x1="222.32" y1="57.75" x2="225.26" y2="53.71" stroke="var(--ink-3)" stroke-width="1" opacity="0.4"/>
+<line x1="228.18" y1="62.49" x2="231.52" y2="58.78" stroke="var(--ink-3)" stroke-width="1" opacity="0.4"/>
+<line x1="233.51" y1="67.82" x2="237.22" y2="64.48" stroke="var(--ink-3)" stroke-width="1" opacity="0.4"/>
+<line x1="238.25" y1="73.68" x2="242.29" y2="70.74" stroke="var(--ink-3)" stroke-width="1" opacity="0.4"/>
+<line x1="237.16" y1="83" x2="246.68" y2="77.5" stroke="var(--ink-3)" stroke-width="2" opacity="0.8"/>
+<line x1="245.78" y1="86.71" x2="250.34" y2="84.68" stroke="var(--ink-3)" stroke-width="1" opacity="0.4"/>
+<line x1="248.48" y1="93.75" x2="253.23" y2="92.21" stroke="var(--ink-3)" stroke-width="1" opacity="0.4"/>
+<line x1="250.43" y1="101.03" x2="255.32" y2="99.99" stroke="var(--ink-3)" stroke-width="1" opacity="0.4"/>
+<line x1="251.61" y1="108.47" x2="256.58" y2="107.95" stroke="var(--ink-3)" stroke-width="1" opacity="0.4"/>
+<line x1="246" y1="116" x2="257" y2="116" stroke="var(--ink-3)" stroke-width="2" opacity="0.8"/>
+<line x1="251.61" y1="123.53" x2="256.58" y2="124.05" stroke="var(--ink-3)" stroke-width="1" opacity="0.4"/>
+<line x1="250.43" y1="130.97" x2="255.32" y2="132.01" stroke="var(--ink-3)" stroke-width="1" opacity="0.4"/>
+<line x1="248.48" y1="138.25" x2="253.23" y2="139.79" stroke="var(--ink-3)" stroke-width="1" opacity="0.4"/>
+<line x1="245.78" y1="145.29" x2="250.34" y2="147.32" stroke="var(--ink-3)" stroke-width="1" opacity="0.4"/>
+<line x1="237.16" y1="149" x2="246.68" y2="154.5" stroke="var(--ink-3)" stroke-width="2" opacity="0.8"/>
+<line x1="238.25" y1="158.32" x2="242.29" y2="161.26" stroke="var(--ink-3)" stroke-width="1" opacity="0.4"/>
+<line x1="233.51" y1="164.18" x2="237.22" y2="167.52" stroke="var(--ink-3)" stroke-width="1" opacity="0.4"/>
+<line x1="228.18" y1="169.51" x2="231.52" y2="173.22" stroke="var(--ink-3)" stroke-width="1" opacity="0.4"/>
+<line x1="222.32" y1="174.25" x2="225.26" y2="178.29" stroke="var(--ink-3)" stroke-width="1" opacity="0.4"/>
+<line x1="213" y1="173.16" x2="218.5" y2="182.68" stroke="var(--ink-3)" stroke-width="2" opacity="0.8"/>
+<line x1="209.29" y1="181.78" x2="211.32" y2="186.34" stroke="var(--ink-3)" stroke-width="1" opacity="0.4"/>
+<line x1="202.25" y1="184.48" x2="203.79" y2="189.23" stroke="var(--ink-3)" stroke-width="1" opacity="0.4"/>
+<line x1="194.97" y1="186.43" x2="196.01" y2="191.32" stroke="var(--ink-3)" stroke-width="1" opacity="0.4"/>
+<line x1="187.53" y1="187.61" x2="188.05" y2="192.58" stroke="var(--ink-3)" stroke-width="1" opacity="0.4"/>
+<line x1="180" y1="182" x2="180" y2="193" stroke="var(--ink-3)" stroke-width="2" opacity="0.8"/>
+<line x1="172.47" y1="187.61" x2="171.95" y2="192.58" stroke="var(--ink-3)" stroke-width="1" opacity="0.4"/>
+<line x1="165.03" y1="186.43" x2="163.99" y2="191.32" stroke="var(--ink-3)" stroke-width="1" opacity="0.4"/>
+<line x1="157.75" y1="184.48" x2="156.21" y2="189.23" stroke="var(--ink-3)" stroke-width="1" opacity="0.4"/>
+<line x1="150.71" y1="181.78" x2="148.68" y2="186.34" stroke="var(--ink-3)" stroke-width="1" opacity="0.4"/>
+<line x1="147" y1="173.16" x2="141.5" y2="182.68" stroke="var(--ink-3)" stroke-width="2" opacity="0.8"/>
+<line x1="137.68" y1="174.25" x2="134.74" y2="178.29" stroke="var(--ink-3)" stroke-width="1" opacity="0.4"/>
+<line x1="131.82" y1="169.51" x2="128.48" y2="173.22" stroke="var(--ink-3)" stroke-width="1" opacity="0.4"/>
+<line x1="126.49" y1="164.18" x2="122.78" y2="167.52" stroke="var(--ink-3)" stroke-width="1" opacity="0.4"/>
+<line x1="121.75" y1="158.32" x2="117.71" y2="161.26" stroke="var(--ink-3)" stroke-width="1" opacity="0.4"/>
+<line x1="122.84" y1="149" x2="113.32" y2="154.5" stroke="var(--ink-3)" stroke-width="2" opacity="0.8"/>
+<line x1="114.22" y1="145.29" x2="109.66" y2="147.32" stroke="var(--ink-3)" stroke-width="1" opacity="0.4"/>
+<line x1="111.52" y1="138.25" x2="106.77" y2="139.79" stroke="var(--ink-3)" stroke-width="1" opacity="0.4"/>
+<line x1="109.57" y1="130.97" x2="104.68" y2="132.01" stroke="var(--ink-3)" stroke-width="1" opacity="0.4"/>
+<line x1="108.39" y1="123.53" x2="103.42" y2="124.05" stroke="var(--ink-3)" stroke-width="1" opacity="0.4"/>
+<line x1="114" y1="116" x2="103" y2="116" stroke="var(--ink-3)" stroke-width="2" opacity="0.8"/>
+<line x1="108.39" y1="108.47" x2="103.42" y2="107.95" stroke="var(--ink-3)" stroke-width="1" opacity="0.4"/>
+<line x1="109.57" y1="101.03" x2="104.68" y2="99.99" stroke="var(--ink-3)" stroke-width="1" opacity="0.4"/>
+<line x1="111.52" y1="93.75" x2="106.77" y2="92.21" stroke="var(--ink-3)" stroke-width="1" opacity="0.4"/>
+<line x1="114.22" y1="86.71" x2="109.66" y2="84.68" stroke="var(--ink-3)" stroke-width="1" opacity="0.4"/>
+<line x1="122.84" y1="83" x2="113.32" y2="77.5" stroke="var(--ink-3)" stroke-width="2" opacity="0.8"/>
+<line x1="121.75" y1="73.68" x2="117.71" y2="70.74" stroke="var(--ink-3)" stroke-width="1" opacity="0.4"/>
+<line x1="126.49" y1="67.82" x2="122.78" y2="64.48" stroke="var(--ink-3)" stroke-width="1" opacity="0.4"/>
+<line x1="131.82" y1="62.49" x2="128.48" y2="58.78" stroke="var(--ink-3)" stroke-width="1" opacity="0.4"/>
+<line x1="137.68" y1="57.75" x2="134.74" y2="53.71" stroke="var(--ink-3)" stroke-width="1" opacity="0.4"/>
+<line x1="147" y1="58.84" x2="141.5" y2="49.32" stroke="var(--ink-3)" stroke-width="2" opacity="0.8"/>
+<line x1="150.71" y1="50.22" x2="148.68" y2="45.66" stroke="var(--ink-3)" stroke-width="1" opacity="0.4"/>
+<line x1="157.75" y1="47.52" x2="156.21" y2="42.77" stroke="var(--ink-3)" stroke-width="1" opacity="0.4"/>
+<line x1="165.03" y1="45.57" x2="163.99" y2="40.68" stroke="var(--ink-3)" stroke-width="1" opacity="0.4"/>
+<line x1="172.47" y1="44.39" x2="171.95" y2="39.42" stroke="var(--ink-3)" stroke-width="1" opacity="0.4"/>
+<path d="M180,40 A76,76 0 0 1 236.48,65.15 L218.64,81.21 A52,52 0 0 0 180,64 Z" fill="var(--ic)"/>
+<line x1="180" y1="116" x2="215.67" y2="83.88" stroke="var(--ink)" stroke-width="3.4" stroke-linecap="round"/>
+<circle cx="180" cy="116" r="7" fill="var(--ink)"/>
+<line x1="252.83" y1="45.43" x2="252.83" y2="38.43" stroke="var(--ic)" stroke-width="2.2" stroke-linecap="round"/>
+<line x1="256.36" y1="46.89" x2="261.31" y2="41.94" stroke="var(--ic)" stroke-width="2.2" stroke-linecap="round"/>
+<line x1="257.83" y1="50.43" x2="264.83" y2="50.43" stroke="var(--ic)" stroke-width="2.2" stroke-linecap="round"/>
+<line x1="256.36" y1="53.96" x2="261.31" y2="58.91" stroke="var(--ic)" stroke-width="2.2" stroke-linecap="round"/>
+<line x1="252.83" y1="55.43" x2="252.83" y2="62.43" stroke="var(--ic)" stroke-width="2.2" stroke-linecap="round"/>
+<line x1="249.29" y1="53.96" x2="244.34" y2="58.91" stroke="var(--ic)" stroke-width="2.2" stroke-linecap="round"/>
+<line x1="247.83" y1="50.43" x2="240.83" y2="50.43" stroke="var(--ic)" stroke-width="2.2" stroke-linecap="round"/>
+<line x1="249.29" y1="46.89" x2="244.34" y2="41.94" stroke="var(--ic)" stroke-width="2.2" stroke-linecap="round"/>
+<circle cx="252.83" cy="50.43" r="4.5" fill="var(--ic)"/>
+<text x="180" y="102" text-anchor="middle" font-family="var(--mono)" font-size="26" font-weight="600" fill="var(--ink)">8</text>
+<text x="180" y="150" text-anchor="middle" font-family="var(--mono)" font-size="12" fill="var(--ink-2)">minutes</text>
+<text x="180" y="226" text-anchor="middle" font-family="var(--mono)" font-size="12.5" fill="var(--ink-3)">sign-in → first finished job</text>
+
+</svg></div>
+        <div class="txt">
+          <span class="n">Branch 2</span>
+          <h4>Activation</h4>
+          <p>Time to First GO — minutes from sign-in to the first job that actually finishes. This is
+          the single best predictor of whether someone ever pays you.</p>
+          <div class="tgt"><b>Target</b> — median under 8 minutes</div>
+        </div>
+      </article>
+
+      <article class="br" style="--ic:var(--i3); --ic-soft:var(--i3-soft)">
+        <div class="art"><svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+<circle cx="180" cy="116" r="74" fill="none" stroke="var(--line)" stroke-width="1.4" />
+<circle cx="180" cy="116" r="50" fill="none" stroke="var(--line)" stroke-width="1.4" stroke-dasharray="3 5"/>
+<circle cx="180" cy="116" r="26" fill="none" stroke="var(--line)" stroke-width="1.4" stroke-dasharray="3 5"/>
+<path d="M180,190 Q176.03,121.15 157.3,71.45" fill="none" stroke="var(--ic)" stroke-width="1.2" opacity="0.38"/>
+<path d="M219.93,85.91 Q182.22,118.07 152.77,157.93" fill="none" stroke="var(--ic)" stroke-width="1.2" opacity="0.38"/>
+<path d="M180,42 Q176.03,95.25 157.3,71.45" fill="none" stroke="var(--ic)" stroke-width="1.2" opacity="0.38"/>
+<path d="M180,42 Q190.12,94.98 237.86,69.86" fill="none" stroke="var(--ic)" stroke-width="1.2" opacity="0.38"/>
+<path d="M107.86,99.53 Q168.44,121.8 186.09,165.63" fill="none" stroke="var(--ic)" stroke-width="1.2" opacity="0.38"/>
+<path d="M107.86,132.47 Q172.99,107.21 212.11,49.33" fill="none" stroke="var(--ic)" stroke-width="1.2" opacity="0.38"/>
+<path d="M122.14,162.14 Q161.51,126.63 132.18,130.62" fill="none" stroke="var(--ic)" stroke-width="1.2" opacity="0.38"/>
+<path d="M180,190 Q190.12,137.02 237.86,162.14" fill="none" stroke="var(--ic)" stroke-width="1.2" opacity="0.38"/>
+<path d="M122.14,69.86 Q161.82,104.51 133.97,96.46" fill="none" stroke="var(--ic)" stroke-width="1.2" opacity="0.38"/>
+<path d="M147.89,49.33 Q174.38,117.28 180,190" fill="none" stroke="var(--ic)" stroke-width="1.2" opacity="0.38"/>
+<path d="M219.93,85.91 Q178.93,107.32 133.97,96.46" fill="none" stroke="var(--ic)" stroke-width="1.2" opacity="0.38"/>
+<path d="M107.86,132.47 Q159.32,115.46 133.97,96.46" fill="none" stroke="var(--ic)" stroke-width="1.2" opacity="0.38"/>
+<path d="M161.3,97.94 Q178.7,104.31 191.25,67.28" fill="none" stroke="var(--ic)" stroke-width="1.2" opacity="0.38"/>
+<path d="M180,190 Q175.98,131.09 157.04,128.21" fill="none" stroke="var(--ic)" stroke-width="1.2" opacity="0.38"/>
+<path d="M237.86,162.14 Q180,116 122.14,69.86" fill="none" stroke="var(--ic)" stroke-width="1.2" opacity="0.38"/>
+<path d="M152.77,157.93 Q162.61,126.22 107.86,132.47" fill="none" stroke="var(--ic)" stroke-width="1.2" opacity="0.38"/>
+<circle cx="180" cy="116" r="12" fill="var(--ic-soft)" stroke="var(--ic)" stroke-width="2"/>
+<circle cx="180" cy="42" r="5.4" fill="var(--ic)" stroke="var(--surface)" stroke-width="1.6"/>
+<circle cx="212.11" cy="49.33" r="5.4" fill="var(--ic)" stroke="var(--surface)" stroke-width="1.6"/>
+<circle cx="237.86" cy="69.86" r="5.4" fill="var(--ic)" stroke="var(--surface)" stroke-width="1.6"/>
+<circle cx="252.14" cy="99.53" r="5.4" fill="var(--ic)" stroke="var(--surface)" stroke-width="1.6"/>
+<circle cx="252.14" cy="132.47" r="5.4" fill="var(--ic)" stroke="var(--surface)" stroke-width="1.6"/>
+<circle cx="237.86" cy="162.14" r="5.4" fill="var(--ic)" stroke="var(--surface)" stroke-width="1.6"/>
+<circle cx="212.11" cy="182.67" r="5.4" fill="var(--ic)" stroke="var(--surface)" stroke-width="1.6"/>
+<circle cx="180" cy="190" r="5.4" fill="var(--ic)" stroke="var(--surface)" stroke-width="1.6"/>
+<circle cx="147.89" cy="182.67" r="5.4" fill="var(--ic)" stroke="var(--surface)" stroke-width="1.6"/>
+<circle cx="122.14" cy="162.14" r="5.4" fill="var(--ic)" stroke="var(--surface)" stroke-width="1.6"/>
+<circle cx="107.86" cy="132.47" r="5.4" fill="var(--ic)" stroke="var(--surface)" stroke-width="1.6"/>
+<circle cx="107.86" cy="99.53" r="5.4" fill="var(--ic)" stroke="var(--surface)" stroke-width="1.6"/>
+<circle cx="122.14" cy="69.86" r="5.4" fill="var(--ic)" stroke="var(--surface)" stroke-width="1.6"/>
+<circle cx="147.89" cy="49.33" r="5.4" fill="var(--ic)" stroke="var(--surface)" stroke-width="1.6"/>
+<circle cx="191.25" cy="67.28" r="4.4" fill="var(--ic)" stroke="var(--surface)" stroke-width="1.6"/>
+<circle cx="219.93" cy="85.91" r="4.4" fill="var(--ic)" stroke="var(--surface)" stroke-width="1.6"/>
+<circle cx="229.93" cy="118.62" r="4.4" fill="var(--ic)" stroke="var(--surface)" stroke-width="1.6"/>
+<circle cx="216.57" cy="150.1" r="4.4" fill="var(--ic)" stroke="var(--surface)" stroke-width="1.6"/>
+<circle cx="186.09" cy="165.63" r="4.4" fill="var(--ic)" stroke="var(--surface)" stroke-width="1.6"/>
+<circle cx="152.77" cy="157.93" r="4.4" fill="var(--ic)" stroke="var(--surface)" stroke-width="1.6"/>
+<circle cx="132.18" cy="130.62" r="4.4" fill="var(--ic)" stroke="var(--surface)" stroke-width="1.6"/>
+<circle cx="133.97" cy="96.46" r="4.4" fill="var(--ic)" stroke="var(--surface)" stroke-width="1.6"/>
+<circle cx="157.3" cy="71.45" r="4.4" fill="var(--ic)" stroke="var(--surface)" stroke-width="1.6"/>
+<circle cx="191.4" cy="92.63" r="3.6" fill="var(--ic)" stroke="var(--surface)" stroke-width="1.6"/>
+<circle cx="205.75" cy="119.62" r="3.6" fill="var(--ic)" stroke="var(--surface)" stroke-width="1.6"/>
+<circle cx="184.51" cy="141.61" r="3.6" fill="var(--ic)" stroke="var(--surface)" stroke-width="1.6"/>
+<circle cx="157.04" cy="128.21" r="3.6" fill="var(--ic)" stroke="var(--surface)" stroke-width="1.6"/>
+<circle cx="161.3" cy="97.94" r="3.6" fill="var(--ic)" stroke="var(--surface)" stroke-width="1.6"/>
+<text x="180" y="226" text-anchor="middle" font-family="var(--mono)" font-size="12.5" fill="var(--ink-3)">one Scircle · rooms · spaces</text>
+
+</svg></div>
+        <div class="txt">
+          <span class="n">Branch 3</span>
+          <h4>Engagement</h4>
+          <p>Weekly active Prime members, live Scircles, and GOs per active per week. Below four a week
+          they are visiting, not playing.</p>
+          <div class="tgt"><b>Target</b> — 12 GOs per active per week</div>
+        </div>
+      </article>
+
+      <article class="br" style="--ic:var(--i4); --ic-soft:var(--i4-soft)">
+        <div class="art"><svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+<path d="M96.86,198 A96,96 0 1 1 263.14,198 L233.69,181 A62,62 0 1 0 126.31,181 Z" fill="var(--ink-3)" opacity="0.16"/>
+<path d="M219.05,62.3 A96,96 0 0 1 271.3,120.33 L238.97,130.84 A62,62 0 0 0 205.22,93.36 Z" fill="var(--ic-soft)" stroke="var(--ic)" stroke-width="1.5"/>
+<path d="M102.06,195 A90,90 0 0 1 232.9,77.19 L219.97,94.99 A68,68 0 0 0 121.11,184 Z" fill="var(--ic)"/>
+<line x1="93.4" y1="200" x2="88.2" y2="203" stroke="var(--ink-3)" stroke-width="1.4"/>
+<line x1="93.4" y1="100" x2="88.2" y2="97" stroke="var(--ink-3)" stroke-width="1.4"/>
+<line x1="180" y1="50" x2="180" y2="44" stroke="var(--ink-3)" stroke-width="1.4"/>
+<line x1="220.67" y1="58.65" x2="225.15" y2="48.6" stroke="var(--ic)" stroke-width="2.4"/>
+<text x="230.44" y="36.72" text-anchor="middle" font-family="var(--mono)" font-size="13" font-weight="600" fill="var(--ic)">60%</text>
+<line x1="266.6" y1="100" x2="271.8" y2="97" stroke="var(--ink-3)" stroke-width="1.4"/>
+<line x1="275.11" y1="119.1" x2="285.57" y2="115.7" stroke="var(--ic)" stroke-width="2.4"/>
+<text x="297.93" y="111.68" text-anchor="middle" font-family="var(--mono)" font-size="13" font-weight="600" fill="var(--ic)">80%</text>
+<line x1="266.6" y1="200" x2="271.8" y2="203" stroke="var(--ink-3)" stroke-width="1.4"/>
+<line x1="180" y1="150" x2="234.08" y2="75.57" stroke="var(--ink)" stroke-width="4" stroke-linecap="round"/>
+<circle cx="180" cy="150" r="9" fill="var(--ink)"/>
+<text x="180" y="124" text-anchor="middle" font-family="var(--mono)" font-size="30" font-weight="600" fill="var(--ink)">65%</text>
+<text x="180" y="184" text-anchor="middle" font-family="var(--mono)" font-size="12.5" fill="var(--ink-3)">of the allotment used</text>
+
+</svg></div>
+        <div class="txt">
+          <span class="n">Branch 4</span>
+          <h4>Consumption</h4>
+          <p>Burn depth — how much of the monthly allotment actually gets used. Under 30% they will
+          churn. Over 95% they are rationing, and rationing people stop exploring.</p>
+          <div class="tgt"><b>Healthy band</b> — 60% to 80% of the allotment</div>
+        </div>
+      </article>
+
+      <article class="br" style="--ic:var(--i5); --ic-soft:var(--i5-soft)">
+        <div class="art"><svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+<path d="M116,30 A86,86 0 1 1 34.21,89.42 L64.64,99.31 A54,54 0 1 0 116,62 Z" fill="var(--ic)"/>
+<path d="M34.21,89.42 A86,86 0 0 1 116,30 L116,62 A54,54 0 0 0 64.64,99.31 Z" fill="var(--ink-3)" opacity="0.45"/>
+<text x="116" y="114" text-anchor="middle" font-family="var(--mono)" font-size="34" font-weight="600" fill="var(--ink)">80%</text>
+<text x="116" y="138" text-anchor="middle" font-family="var(--mono)" font-size="12.5" fill="var(--ink-3)">kept</text>
+<line x1="248" y1="30" x2="248" y2="206" stroke="var(--line)" stroke-width="1.5"/>
+<rect x="252" y="30" width="34" height="176" rx="4" fill="var(--ic-soft)" stroke="var(--ic)" stroke-width="1.4"/>
+<rect x="252" y="30" width="34" height="29.33" rx="3" fill="var(--ink-3)" opacity="0.5"/>
+<text x="294" y="48.67" font-family="var(--mono)" font-size="11.5" fill="var(--ink-2)">credits</text>
+<rect x="252" y="59.33" width="34" height="6.45" rx="3" fill="var(--ink-3)" opacity="0.5"/>
+<text x="294" y="66.56" font-family="var(--mono)" font-size="11.5" fill="var(--ink-2)">fees</text>
+<rect x="252" y="65.79" width="34" height="4.96" rx="3" fill="var(--ink-3)" opacity="0.5"/>
+<text x="294" y="72.27" font-family="var(--mono)" font-size="11.5" fill="var(--ink-2)">infra</text>
+<rect x="252" y="70.75" width="34" height="28.21" rx="3" fill="var(--ic)" opacity="1"/>
+<text x="294" y="88.85" font-family="var(--mono)" font-size="11.5" fill="var(--ink-2)">guardian</text>
+<text x="294" y="114.96" font-family="var(--mono)" font-size="12" font-weight="600" fill="var(--ic)">$23.72</text>
+<text x="294" y="129.96" font-family="var(--mono)" font-size="11" fill="var(--ink-3)">kept</text>
+<text x="252" y="22" font-family="var(--mono)" font-size="11.5" fill="var(--ink-3)">$39</text>
+
+</svg></div>
+        <div class="txt">
+          <span class="n">Branch 5</span>
+          <h4>Economics</h4>
+          <p>Cost per credit, margin per credit, and accounts per guardian. The guardian share is the
+          second-biggest line in a Prime account — and the only one you control by operations, not code.</p>
+          <div class="tgt"><b>Target</b> — $0.002 cost per credit · 80% margin · 80+ accounts per guardian</div>
+        </div>
+      </article>
+
+      <article class="br" style="--ic:var(--i6); --ic-soft:var(--i6-soft)">
+        <div class="art"><svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+<line x1="26" y1="206" x2="334" y2="206" stroke="var(--line)" stroke-width="1.5"/>
+<path d="M26,180 C28.57,180.12 36.27,180.48 41.4,180.7 C46.53,180.93 51.67,181.14 56.8,181.35 C61.93,181.56 67.07,181.76 72.2,181.96 C77.33,182.15 82.47,182.34 87.6,182.51 C92.73,182.69 97.87,182.86 103,183.03 C108.13,183.19 113.27,183.35 118.4,183.5 C123.53,183.65 128.67,183.79 133.8,183.93 C138.93,184.07 144.07,184.2 149.2,184.32 C154.33,184.45 159.47,184.57 164.6,184.68 C169.73,184.79 174.87,184.9 180,185 C185.13,185.1 190.27,185.2 195.4,185.29 C200.53,185.38 205.67,185.46 210.8,185.54 C215.93,185.62 221.07,185.7 226.2,185.77 C231.33,185.84 236.47,185.9 241.6,185.96 C246.73,186.03 251.87,186.08 257,186.13 C262.13,186.18 267.27,186.23 272.4,186.27 C277.53,186.32 282.67,186.35 287.8,186.39 C292.93,186.42 298.07,186.45 303.2,186.48 C308.33,186.5 313.47,186.53 318.6,186.54 C323.73,186.56 331.43,186.58 334,186.59 L334,206 L26,206 Z" fill="var(--ic)" opacity="0.1"/>
+<path d="M26,180 C28.57,180.12 36.27,180.48 41.4,180.7 C46.53,180.93 51.67,181.14 56.8,181.35 C61.93,181.56 67.07,181.76 72.2,181.96 C77.33,182.15 82.47,182.34 87.6,182.51 C92.73,182.69 97.87,182.86 103,183.03 C108.13,183.19 113.27,183.35 118.4,183.5 C123.53,183.65 128.67,183.79 133.8,183.93 C138.93,184.07 144.07,184.2 149.2,184.32 C154.33,184.45 159.47,184.57 164.6,184.68 C169.73,184.79 174.87,184.9 180,185 C185.13,185.1 190.27,185.2 195.4,185.29 C200.53,185.38 205.67,185.46 210.8,185.54 C215.93,185.62 221.07,185.7 226.2,185.77 C231.33,185.84 236.47,185.9 241.6,185.96 C246.73,186.03 251.87,186.08 257,186.13 C262.13,186.18 267.27,186.23 272.4,186.27 C277.53,186.32 282.67,186.35 287.8,186.39 C292.93,186.42 298.07,186.45 303.2,186.48 C308.33,186.5 313.47,186.53 318.6,186.54 C323.73,186.56 331.43,186.58 334,186.59" fill="none" stroke="var(--ic)" stroke-width="1.3" opacity="0.5"/>
+<path d="M40,175.84 C42.45,176 49.8,176.5 54.7,176.82 C59.6,177.13 64.5,177.43 69.4,177.71 C74.3,178 79.2,178.27 84.1,178.53 C89,178.79 93.9,179.04 98.8,179.27 C103.7,179.51 108.6,179.74 113.5,179.95 C118.4,180.16 123.3,180.37 128.2,180.56 C133.1,180.75 138,180.93 142.9,181.11 C147.8,181.28 152.7,181.44 157.6,181.6 C162.5,181.75 167.4,181.89 172.3,182.03 C177.2,182.17 182.1,182.29 187,182.41 C191.9,182.53 196.8,182.64 201.7,182.74 C206.6,182.84 211.5,182.94 216.4,183.02 C221.3,183.11 226.2,183.19 231.1,183.26 C236,183.33 240.9,183.4 245.8,183.46 C250.7,183.51 255.6,183.56 260.5,183.61 C265.4,183.65 270.3,183.69 275.2,183.73 C280.1,183.76 285,183.78 289.9,183.8 C294.8,183.82 299.7,183.84 304.6,183.85 C309.5,183.86 314.4,183.86 319.3,183.86 C324.2,183.86 331.55,183.84 334,183.84 L334,206 L40,206 Z" fill="var(--ic)" opacity="0.155"/>
+<path d="M40,175.84 C42.45,176 49.8,176.5 54.7,176.82 C59.6,177.13 64.5,177.43 69.4,177.71 C74.3,178 79.2,178.27 84.1,178.53 C89,178.79 93.9,179.04 98.8,179.27 C103.7,179.51 108.6,179.74 113.5,179.95 C118.4,180.16 123.3,180.37 128.2,180.56 C133.1,180.75 138,180.93 142.9,181.11 C147.8,181.28 152.7,181.44 157.6,181.6 C162.5,181.75 167.4,181.89 172.3,182.03 C177.2,182.17 182.1,182.29 187,182.41 C191.9,182.53 196.8,182.64 201.7,182.74 C206.6,182.84 211.5,182.94 216.4,183.02 C221.3,183.11 226.2,183.19 231.1,183.26 C236,183.33 240.9,183.4 245.8,183.46 C250.7,183.51 255.6,183.56 260.5,183.61 C265.4,183.65 270.3,183.69 275.2,183.73 C280.1,183.76 285,183.78 289.9,183.8 C294.8,183.82 299.7,183.84 304.6,183.85 C309.5,183.86 314.4,183.86 319.3,183.86 C324.2,183.86 331.55,183.84 334,183.84" fill="none" stroke="var(--ic)" stroke-width="1.3" opacity="0.5"/>
+<path d="M54,171.68 C56.33,171.9 63.33,172.56 68,172.97 C72.67,173.38 77.33,173.77 82,174.14 C86.67,174.51 91.33,174.86 96,175.2 C100.67,175.53 105.33,175.85 110,176.14 C114.67,176.44 119.33,176.72 124,176.99 C128.67,177.26 133.33,177.5 138,177.74 C142.67,177.98 147.33,178.19 152,178.4 C156.67,178.61 161.33,178.8 166,178.98 C170.67,179.16 175.33,179.32 180,179.47 C184.67,179.63 189.33,179.77 194,179.89 C198.67,180.02 203.33,180.14 208,180.25 C212.67,180.35 217.33,180.45 222,180.53 C226.67,180.62 231.33,180.69 236,180.76 C240.67,180.82 245.33,180.88 250,180.92 C254.67,180.97 259.33,181 264,181.03 C268.67,181.06 273.33,181.08 278,181.09 C282.67,181.1 287.33,181.1 292,181.1 C296.67,181.1 301.33,181.08 306,181.06 C310.67,181.05 315.33,181.02 320,180.99 C324.67,180.95 331.67,180.89 334,180.87 L334,206 L54,206 Z" fill="var(--ic)" opacity="0.21000000000000002"/>
+<path d="M54,171.68 C56.33,171.9 63.33,172.56 68,172.97 C72.67,173.38 77.33,173.77 82,174.14 C86.67,174.51 91.33,174.86 96,175.2 C100.67,175.53 105.33,175.85 110,176.14 C114.67,176.44 119.33,176.72 124,176.99 C128.67,177.26 133.33,177.5 138,177.74 C142.67,177.98 147.33,178.19 152,178.4 C156.67,178.61 161.33,178.8 166,178.98 C170.67,179.16 175.33,179.32 180,179.47 C184.67,179.63 189.33,179.77 194,179.89 C198.67,180.02 203.33,180.14 208,180.25 C212.67,180.35 217.33,180.45 222,180.53 C226.67,180.62 231.33,180.69 236,180.76 C240.67,180.82 245.33,180.88 250,180.92 C254.67,180.97 259.33,181 264,181.03 C268.67,181.06 273.33,181.08 278,181.09 C282.67,181.1 287.33,181.1 292,181.1 C296.67,181.1 301.33,181.08 306,181.06 C310.67,181.05 315.33,181.02 320,180.99 C324.67,180.95 331.67,180.89 334,180.87" fill="none" stroke="var(--ic)" stroke-width="1.3" opacity="0.5"/>
+<path d="M68,167.52 C70.22,167.79 76.87,168.65 81.3,169.17 C85.73,169.69 90.17,170.18 94.6,170.64 C99.03,171.11 103.47,171.54 107.9,171.96 C112.33,172.37 116.77,172.75 121.2,173.12 C125.63,173.48 130.07,173.82 134.5,174.14 C138.93,174.45 143.37,174.75 147.8,175.02 C152.23,175.3 156.67,175.55 161.1,175.79 C165.53,176.02 169.97,176.24 174.4,176.43 C178.83,176.63 183.27,176.81 187.7,176.97 C192.13,177.14 196.57,177.28 201,177.42 C205.43,177.55 209.87,177.66 214.3,177.76 C218.73,177.87 223.17,177.95 227.6,178.02 C232.03,178.1 236.47,178.16 240.9,178.2 C245.33,178.25 249.77,178.29 254.2,178.31 C258.63,178.33 263.07,178.34 267.5,178.34 C271.93,178.34 276.37,178.33 280.8,178.31 C285.23,178.29 289.67,178.26 294.1,178.22 C298.53,178.18 302.97,178.13 307.4,178.07 C311.83,178.01 316.27,177.94 320.7,177.86 C325.13,177.79 331.78,177.65 334,177.61 L334,206 L68,206 Z" fill="var(--ic)" opacity="0.265"/>
+<path d="M68,167.52 C70.22,167.79 76.87,168.65 81.3,169.17 C85.73,169.69 90.17,170.18 94.6,170.64 C99.03,171.11 103.47,171.54 107.9,171.96 C112.33,172.37 116.77,172.75 121.2,173.12 C125.63,173.48 130.07,173.82 134.5,174.14 C138.93,174.45 143.37,174.75 147.8,175.02 C152.23,175.3 156.67,175.55 161.1,175.79 C165.53,176.02 169.97,176.24 174.4,176.43 C178.83,176.63 183.27,176.81 187.7,176.97 C192.13,177.14 196.57,177.28 201,177.42 C205.43,177.55 209.87,177.66 214.3,177.76 C218.73,177.87 223.17,177.95 227.6,178.02 C232.03,178.1 236.47,178.16 240.9,178.2 C245.33,178.25 249.77,178.29 254.2,178.31 C258.63,178.33 263.07,178.34 267.5,178.34 C271.93,178.34 276.37,178.33 280.8,178.31 C285.23,178.29 289.67,178.26 294.1,178.22 C298.53,178.18 302.97,178.13 307.4,178.07 C311.83,178.01 316.27,177.94 320.7,177.86 C325.13,177.79 331.78,177.65 334,177.61" fill="none" stroke="var(--ic)" stroke-width="1.3" opacity="0.5"/>
+<path d="M82,163.36 C84.1,163.7 90.4,164.77 94.6,165.41 C98.8,166.05 103,166.65 107.2,167.22 C111.4,167.78 115.6,168.31 119.8,168.8 C124,169.3 128.2,169.75 132.4,170.18 C136.6,170.61 140.8,171.01 145,171.37 C149.2,171.74 153.4,172.08 157.6,172.39 C161.8,172.7 166,172.98 170.2,173.24 C174.4,173.5 178.6,173.73 182.8,173.94 C187,174.15 191.2,174.34 195.4,174.51 C199.6,174.67 203.8,174.82 208,174.94 C212.2,175.07 216.4,175.17 220.6,175.26 C224.8,175.34 229,175.41 233.2,175.46 C237.4,175.51 241.6,175.55 245.8,175.57 C250,175.58 254.2,175.59 258.4,175.57 C262.6,175.56 266.8,175.54 271,175.5 C275.2,175.46 279.4,175.4 283.6,175.34 C287.8,175.27 292,175.19 296.2,175.11 C300.4,175.02 304.6,174.92 308.8,174.8 C313,174.69 317.2,174.57 321.4,174.44 C325.6,174.31 331.9,174.08 334,174.01 L334,206 L82,206 Z" fill="var(--ic)" opacity="0.32"/>
+<path d="M82,163.36 C84.1,163.7 90.4,164.77 94.6,165.41 C98.8,166.05 103,166.65 107.2,167.22 C111.4,167.78 115.6,168.31 119.8,168.8 C124,169.3 128.2,169.75 132.4,170.18 C136.6,170.61 140.8,171.01 145,171.37 C149.2,171.74 153.4,172.08 157.6,172.39 C161.8,172.7 166,172.98 170.2,173.24 C174.4,173.5 178.6,173.73 182.8,173.94 C187,174.15 191.2,174.34 195.4,174.51 C199.6,174.67 203.8,174.82 208,174.94 C212.2,175.07 216.4,175.17 220.6,175.26 C224.8,175.34 229,175.41 233.2,175.46 C237.4,175.51 241.6,175.55 245.8,175.57 C250,175.58 254.2,175.59 258.4,175.57 C262.6,175.56 266.8,175.54 271,175.5 C275.2,175.46 279.4,175.4 283.6,175.34 C287.8,175.27 292,175.19 296.2,175.11 C300.4,175.02 304.6,174.92 308.8,174.8 C313,174.69 317.2,174.57 321.4,174.44 C325.6,174.31 331.9,174.08 334,174.01" fill="none" stroke="var(--ic)" stroke-width="1.3" opacity="0.5"/>
+<path d="M96,159.2 C97.98,159.61 103.93,160.91 107.9,161.69 C111.87,162.46 115.83,163.18 119.8,163.85 C123.77,164.53 127.73,165.15 131.7,165.73 C135.67,166.31 139.63,166.84 143.6,167.33 C147.57,167.83 151.53,168.28 155.5,168.69 C159.47,169.11 163.43,169.48 167.4,169.82 C171.37,170.17 175.33,170.47 179.3,170.75 C183.27,171.02 187.23,171.27 191.2,171.48 C195.17,171.7 199.13,171.88 203.1,172.04 C207.07,172.2 211.03,172.33 215,172.44 C218.97,172.55 222.93,172.63 226.9,172.69 C230.87,172.75 234.83,172.79 238.8,172.81 C242.77,172.83 246.73,172.82 250.7,172.8 C254.67,172.78 258.63,172.74 262.6,172.68 C266.57,172.62 270.53,172.55 274.5,172.46 C278.47,172.37 282.43,172.26 286.4,172.14 C290.37,172.02 294.33,171.88 298.3,171.73 C302.27,171.58 306.23,171.42 310.2,171.24 C314.17,171.07 318.13,170.88 322.1,170.68 C326.07,170.48 332.02,170.15 334,170.05 L334,206 L96,206 Z" fill="var(--ic)" opacity="0.375"/>
+<path d="M96,159.2 C97.98,159.61 103.93,160.91 107.9,161.69 C111.87,162.46 115.83,163.18 119.8,163.85 C123.77,164.53 127.73,165.15 131.7,165.73 C135.67,166.31 139.63,166.84 143.6,167.33 C147.57,167.83 151.53,168.28 155.5,168.69 C159.47,169.11 163.43,169.48 167.4,169.82 C171.37,170.17 175.33,170.47 179.3,170.75 C183.27,171.02 187.23,171.27 191.2,171.48 C195.17,171.7 199.13,171.88 203.1,172.04 C207.07,172.2 211.03,172.33 215,172.44 C218.97,172.55 222.93,172.63 226.9,172.69 C230.87,172.75 234.83,172.79 238.8,172.81 C242.77,172.83 246.73,172.82 250.7,172.8 C254.67,172.78 258.63,172.74 262.6,172.68 C266.57,172.62 270.53,172.55 274.5,172.46 C278.47,172.37 282.43,172.26 286.4,172.14 C290.37,172.02 294.33,171.88 298.3,171.73 C302.27,171.58 306.23,171.42 310.2,171.24 C314.17,171.07 318.13,170.88 322.1,170.68 C326.07,170.48 332.02,170.15 334,170.05" fill="none" stroke="var(--ic)" stroke-width="2.6" opacity="1"/>
+<line x1="26" y1="180" x2="334" y2="180" stroke="var(--ink-3)" stroke-width="1.3" stroke-dasharray="5 4"/>
+<text x="334" y="172" text-anchor="end" font-family="var(--mono)" font-size="12" fill="var(--ink-3)">100% — what they started at</text>
+<text x="26" y="34" font-family="var(--mono)" font-size="12.5" font-weight="600" fill="var(--ic)">above the line = expansion</text>
+<text x="26" y="228" font-family="var(--mono)" font-size="12.5" fill="var(--ink-3)">six monthly cohorts, twenty months</text>
+
+</svg></div>
+        <div class="txt">
+          <span class="n">Branch 6</span>
+          <h4>Retention</h4>
+          <p>Net revenue retention, logo churn, and the refund-and-waste rate. When a cohort rises back
+          above where it started, expansion is beating churn — and you have a business that compounds.</p>
+          <div class="tgt"><b>Target</b> — NRR above 110% · waste below 2%</div>
+        </div>
+      </article>
+    </div>
+
+    <h3>Guardrails you are never allowed to trade away</h3>
+    <p class="lede">A North Star creates pressure. These must hold <b>while</b> you push it —
+    if one breaks, the gain was borrowed from next quarter.</p>
+    <div class="tbl">
+      <table>
+        <thead><tr><th>Guardrail</th><th class="n">Limit</th><th>Why</th></tr></thead>
+        <tbody>
+          <tr><td>Credits charged for jobs that failed on our side</td><td class="n">0%</td><td>The fastest way to lose trust in a credit product. No exceptions, ever.</td></tr>
+          <tr><td>"I didn't expect that charge" reports</td><td class="n">&lt; 1 per 1,000 GOs</td><td>Every charge must have been previewed on a GO card first.</td></tr>
+          <tr><td>Accounts burning over 95% of their allotment</td><td class="n">&lt; 15%</td><td>People rationing credits stop exploring — and exploration is where expansion revenue comes from.</td></tr>
+          <tr><td>Breakage — credits sold, expired unused</td><td class="n">&lt; 8% of sales</td><td>Looks like free profit. Is actually a signal you sold people more than they can use.</td></tr>
+          <tr><td>Accounts per guardian</td><td class="n">&ge; 50</td><td>Below this one fixed $500 cost eats the margin of everyone it serves. Page four.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="note good">
+      <span class="t">How to review it</span>
+      One meeting a week, one screen. <b>This week's burn against last week's</b>, then the six branch
+      numbers, then the five guardrails. Burn up and nothing red: ship more of whatever you just shipped.
+      Burn up and something red: <b>you did not win.</b>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PAGE 3 ================= -->
+<section class="pg" id="p3" style="--ic:var(--i4); --ic-soft:var(--i4-soft)">
+  <div class="in">
+    <header class="pg-hd">
+      <span class="pg-n">03</span>
+      <div>
+        <p class="kicker">Page three — credits</p>
+        <h2>What every action costs</h2>
+      </div>
+    </header>
+
+    <div class="key">
+      <span class="tag">The anchor</span>
+      <p><strong>1 credit = $0.01 of list value.</strong> 100 credits = $1. Plans buy credits below list,
+      so the plan always beats paying as you go — that is your upgrade engine.</p>
+      <p><strong>Our target cost is $0.002 per credit.</strong> Every price is set at <strong>5× our cost</strong>,
+      which is an 80% margin. If a new action can't be priced at 5× its cost, it doesn't ship until it can.</p>
+    </div>
+
+    <h3>The model problem, and the clean fix</h3>
+    <p class="lede">Your <code>agents-data.js</code> offers four models whose cost differs by <b>ten times</b>
+    for the identical action. Charge one flat price and either Haiku users are overcharged or Fable users
+    bankrupt you. So give each model a multiplier that tracks cost exactly — then margin comes out at 80%
+    <b>whichever model the person picks</b>, and you can let them choose freely.</p>
+
+    <figure>
+      <div class="panel"><svg viewBox="0 0 760 440" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Four model tiers priced at 15, 30, 75 and 150 credits, each holding an 80 percent margin.">
+<text x="24" y="34" font-family="var(--mono)" font-size="14" letter-spacing="1.6" fill="var(--ink-3)">ONE GUARDIAN RUN · 20K IN / 2K OUT</text>
+<rect x="470" y="14" width="16" height="16" rx="4" fill="var(--i4)"/>
+<text x="494" y="27" font-family="var(--mono)" font-size="14" fill="var(--ink-2)">what we keep</text>
+<rect x="470" y="38" width="16" height="16" rx="4" fill="var(--ink-3)"/>
+<text x="494" y="51" font-family="var(--mono)" font-size="14" fill="var(--ink-2)">what the model costs us</text>
+<line x1="40" y1="300" x2="730" y2="300" stroke="var(--line-2)" stroke-width="2"/>
+<rect x="50" y="275" width="110" height="25" rx="5" fill="var(--i4)"/>
+<rect x="50" y="295" width="110" height="5" fill="var(--ink-3)"/>
+<text x="105" y="241" text-anchor="middle" font-family="var(--mono)" font-size="22" font-weight="600" fill="var(--ink)">15 cr</text>
+<text x="105" y="262" text-anchor="middle" font-family="var(--mono)" font-size="15" fill="var(--ink-2)">$0.15</text>
+<text x="105" y="330" text-anchor="middle" font-family="var(--body)" font-size="20" font-weight="700" fill="var(--ink)">Swift</text>
+<text x="105" y="352" text-anchor="middle" font-family="var(--mono)" font-size="14" fill="var(--ink-3)">Haiku 4.5</text>
+<text x="105" y="374" text-anchor="middle" font-family="var(--mono)" font-size="14" fill="var(--ink-2)">costs us $0.030</text>
+<rect x="49" y="386" width="112" height="30" rx="15" fill="var(--i4-soft)" stroke="var(--i4)" stroke-width="1.5"/>
+<text x="105" y="406" text-anchor="middle" font-family="var(--mono)" font-size="15" font-weight="600" fill="var(--i4)">80% · ×0.5</text>
+<rect x="215" y="250" width="110" height="50" rx="5" fill="var(--i4)"/>
+<rect x="215" y="290" width="110" height="10" fill="var(--ink-3)"/>
+<text x="270" y="216" text-anchor="middle" font-family="var(--mono)" font-size="22" font-weight="600" fill="var(--ink)">30 cr</text>
+<text x="270" y="237" text-anchor="middle" font-family="var(--mono)" font-size="15" fill="var(--ink-2)">$0.30</text>
+<text x="270" y="330" text-anchor="middle" font-family="var(--body)" font-size="20" font-weight="700" fill="var(--ink)">Standard</text>
+<text x="270" y="352" text-anchor="middle" font-family="var(--mono)" font-size="14" fill="var(--ink-3)">Sonnet 5</text>
+<text x="270" y="374" text-anchor="middle" font-family="var(--mono)" font-size="14" fill="var(--ink-2)">costs us $0.060</text>
+<rect x="214" y="386" width="112" height="30" rx="15" fill="var(--i4-soft)" stroke="var(--i4)" stroke-width="1.5"/>
+<text x="270" y="406" text-anchor="middle" font-family="var(--mono)" font-size="15" font-weight="600" fill="var(--i4)">80% · ×1</text>
+<rect x="380" y="175" width="110" height="125" rx="5" fill="var(--i4)"/>
+<rect x="380" y="275" width="110" height="25" fill="var(--ink-3)"/>
+<text x="435" y="141" text-anchor="middle" font-family="var(--mono)" font-size="22" font-weight="600" fill="var(--ink)">75 cr</text>
+<text x="435" y="162" text-anchor="middle" font-family="var(--mono)" font-size="15" fill="var(--ink-2)">$0.75</text>
+<text x="435" y="330" text-anchor="middle" font-family="var(--body)" font-size="20" font-weight="700" fill="var(--ink)">Deep</text>
+<text x="435" y="352" text-anchor="middle" font-family="var(--mono)" font-size="14" fill="var(--ink-3)">Opus 5</text>
+<text x="435" y="374" text-anchor="middle" font-family="var(--mono)" font-size="14" fill="var(--ink-2)">costs us $0.150</text>
+<rect x="379" y="386" width="112" height="30" rx="15" fill="var(--i4-soft)" stroke="var(--i4)" stroke-width="1.5"/>
+<text x="435" y="406" text-anchor="middle" font-family="var(--mono)" font-size="15" font-weight="600" fill="var(--i4)">80% · ×2.5</text>
+<rect x="545" y="50" width="110" height="250" rx="5" fill="var(--i4)"/>
+<rect x="545" y="250" width="110" height="50" fill="var(--ink-3)"/>
+<text x="600" y="16" text-anchor="middle" font-family="var(--mono)" font-size="22" font-weight="600" fill="var(--ink)">150 cr</text>
+<text x="600" y="37" text-anchor="middle" font-family="var(--mono)" font-size="15" fill="var(--ink-2)">$1.50</text>
+<text x="600" y="330" text-anchor="middle" font-family="var(--body)" font-size="20" font-weight="700" fill="var(--ink)">Cinematic</text>
+<text x="600" y="352" text-anchor="middle" font-family="var(--mono)" font-size="14" fill="var(--ink-3)">Fable 5.1</text>
+<text x="600" y="374" text-anchor="middle" font-family="var(--mono)" font-size="14" fill="var(--ink-2)">costs us $0.300</text>
+<rect x="544" y="386" width="112" height="30" rx="15" fill="var(--i4-soft)" stroke="var(--i4)" stroke-width="1.5"/>
+<text x="600" y="406" text-anchor="middle" font-family="var(--mono)" font-size="15" font-weight="600" fill="var(--i4)">80% · ×5</text>
+<text x="24" y="426" font-family="var(--body)" font-size="16" fill="var(--ink-2)">The bars differ by ten times. The margin does not move at all — that is the whole trick.</text>
+
+</svg></div>
+      <figcaption>Prices from your own June 2026 table: Haiku $1/$5, Sonnet $2/$10, Opus $5/$25, Fable $10/$50 per million tokens.</figcaption>
+    </figure>
+
+    <div class="note warn">
+      <span class="t">Two changes this implies</span>
+      <b>(a)</b> Your default is <b>Opus 5</b> — a ×2.5 multiplier on the most common action in the product.
+      Make <b>Sonnet 5</b> the default and let Deep be a deliberate choice on the GO card. Worth roughly
+      <b>$5,700 a month</b> at the month-12 scale, and it is one line.
+      <b>(b)</b> Turn on prompt caching for Scircle and room context — your most repeated payload, at
+      about a tenth the price when cached.
+    </div>
+
+    <h3>The GO gate</h3>
+    <p class="lede">You already named this: NOW decides whether the scripting is possible.
+    That is the authorisation gate, and every metered action walks it.</p>
+
+    <figure>
+      <div class="panel"><svg viewBox="0 0 980 330" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Six-step credit flow: quote, GO card, hold, run, settle, ledger, with a free lane and a failure rule.">
+<text x="24" y="36" font-family="var(--mono)" font-size="14" letter-spacing="1.6" fill="var(--ink-3)">EVERY METERED ACTION WALKS THIS PATH, EVERY TIME</text>
+<rect x="24" y="74" width="143.67" height="124" rx="12" fill="var(--surface-2)" stroke="var(--line)" stroke-width="1.5"/>
+<text x="95.83" y="108" text-anchor="middle" font-family="var(--mono)" font-size="15" font-weight="600" letter-spacing="1" fill="var(--i4)">QUOTE</text>
+<text x="95.83" y="138" text-anchor="middle" font-family="var(--body)" font-size="13.5" fill="var(--ink)">units × rate from</text>
+<text x="95.83" y="159" text-anchor="middle" font-family="var(--body)" font-size="13.5" fill="var(--ink)">the tool manifest</text>
+<text x="95.83" y="184" text-anchor="middle" font-family="var(--mono)" font-size="13" fill="var(--ink-3)">01</text>
+<path d="M169.67,129 L178.67,136 L169.67,143" fill="none" stroke="var(--ink-3)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="181.67" y="74" width="143.67" height="124" rx="12" fill="var(--i4-soft)" stroke="var(--i4)" stroke-width="2.5"/>
+<text x="253.5" y="108" text-anchor="middle" font-family="var(--mono)" font-size="15" font-weight="600" letter-spacing="1" fill="var(--i4)">GO CARD</text>
+<text x="253.5" y="138" text-anchor="middle" font-family="var(--body)" font-size="13.5" fill="var(--ink)">what runs · model</text>
+<text x="253.5" y="159" text-anchor="middle" font-family="var(--body)" font-size="13.5" fill="var(--ink)">cost · hard cap</text>
+<text x="253.5" y="184" text-anchor="middle" font-family="var(--mono)" font-size="13" fill="var(--ink-3)">02</text>
+<path d="M327.33,129 L336.33,136 L327.33,143" fill="none" stroke="var(--ink-3)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="339.33" y="74" width="143.67" height="124" rx="12" fill="var(--surface-2)" stroke="var(--line)" stroke-width="1.5"/>
+<text x="411.17" y="108" text-anchor="middle" font-family="var(--mono)" font-size="15" font-weight="600" letter-spacing="1" fill="var(--i4)">HOLD</text>
+<text x="411.17" y="138" text-anchor="middle" font-family="var(--body)" font-size="13.5" fill="var(--ink)">reserve the estimate</text>
+<text x="411.17" y="159" text-anchor="middle" font-family="var(--body)" font-size="13.5" fill="var(--ink)">it is not a charge</text>
+<text x="411.17" y="184" text-anchor="middle" font-family="var(--mono)" font-size="13" fill="var(--ink-3)">03</text>
+<path d="M485,129 L494,136 L485,143" fill="none" stroke="var(--ink-3)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="497" y="74" width="143.67" height="124" rx="12" fill="var(--surface-2)" stroke="var(--line)" stroke-width="1.5"/>
+<text x="568.83" y="108" text-anchor="middle" font-family="var(--mono)" font-size="15" font-weight="600" letter-spacing="1" fill="var(--i4)">RUN</text>
+<text x="568.83" y="138" text-anchor="middle" font-family="var(--body)" font-size="13.5" fill="var(--ink)">meter the real units</text>
+<text x="568.83" y="159" text-anchor="middle" font-family="var(--body)" font-size="13.5" fill="var(--ink)">as they happen</text>
+<text x="568.83" y="184" text-anchor="middle" font-family="var(--mono)" font-size="13" fill="var(--ink-3)">04</text>
+<path d="M642.67,129 L651.67,136 L642.67,143" fill="none" stroke="var(--ink-3)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="654.67" y="74" width="143.67" height="124" rx="12" fill="var(--surface-2)" stroke="var(--line)" stroke-width="1.5"/>
+<text x="726.5" y="108" text-anchor="middle" font-family="var(--mono)" font-size="15" font-weight="600" letter-spacing="1" fill="var(--i4)">SETTLE</text>
+<text x="726.5" y="138" text-anchor="middle" font-family="var(--body)" font-size="13.5" fill="var(--ink)">charge the measured</text>
+<text x="726.5" y="159" text-anchor="middle" font-family="var(--body)" font-size="13.5" fill="var(--ink)">amount, release rest</text>
+<text x="726.5" y="184" text-anchor="middle" font-family="var(--mono)" font-size="13" fill="var(--ink-3)">05</text>
+<path d="M800.33,129 L809.33,136 L800.33,143" fill="none" stroke="var(--ink-3)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="812.33" y="74" width="143.67" height="124" rx="12" fill="var(--surface-2)" stroke="var(--line)" stroke-width="1.5"/>
+<text x="884.17" y="108" text-anchor="middle" font-family="var(--mono)" font-size="15" font-weight="600" letter-spacing="1" fill="var(--i4)">LEDGER</text>
+<text x="884.17" y="138" text-anchor="middle" font-family="var(--body)" font-size="13.5" fill="var(--ink)">one immutable row,</text>
+<text x="884.17" y="159" text-anchor="middle" font-family="var(--body)" font-size="13.5" fill="var(--ink)">a receipt in NOW</text>
+<text x="884.17" y="184" text-anchor="middle" font-family="var(--mono)" font-size="13" fill="var(--ink-3)">06</text>
+<rect x="24" y="224" width="458" height="78" rx="12" fill="var(--good-wash)" stroke="var(--good-line)" stroke-width="1.5"/>
+<text x="48" y="254" font-family="var(--mono)" font-size="14" font-weight="600" letter-spacing="1" fill="var(--good)">FREE LANE — NEVER METERED</text>
+<text x="48" y="277" font-family="var(--body)" font-size="15" fill="var(--ink)">read · browse · replay · join a Scircle</text>
+<text x="48" y="296" font-family="var(--body)" font-size="15" fill="var(--ink)">cancel before GO · retry after our failure</text>
+<rect x="498" y="224" width="458" height="78" rx="12" fill="var(--risk-wash)" stroke="var(--risk-line)" stroke-width="1.5"/>
+<text x="522" y="254" font-family="var(--mono)" font-size="14" font-weight="600" letter-spacing="1" fill="var(--risk)">IF IT FAILS ON OUR SIDE</text>
+<text x="522" y="277" font-family="var(--body)" font-size="15" fill="var(--ink)">void the hold · zero credits charged</text>
+<text x="522" y="296" font-family="var(--body)" font-size="15" fill="var(--ink)">and the retry is free</text>
+
+</svg></div>
+      <figcaption>The only two places anyone is interrupted are the GO card and a not-enough-balance offer. Everything else is silent.</figcaption>
+    </figure>
+
+    <h3>The rate card</h3>
+    <div class="tbl">
+      <table>
+        <thead><tr><th>Action</th><th>Metered by</th><th class="n">Costs us</th><th class="n">Credits</th><th class="n">= $</th></tr></thead>
+        <tbody>
+          <tr class="grp"><td colspan="5">Tier 0 — free forever. The product existing is not a billable event.</td></tr>
+          <tr><td colspan="4">Sign in · browse · read a room · replay a recording you own · re-read a transcript you paid for · join a Scircle · open NOW · cancel before GO · <strong>any retry after a failure on our side</strong></td><td class="n">$0.00</td></tr>
+
+          <tr class="grp"><td colspan="5">Tier 1 — conversation and guardian work</td></tr>
+          <tr><td>Room turn — Swift / Standard / Deep / Cinematic</td><td>turn</td><td class="n">$0.006 → $0.060</td><td class="n">3 / 6 / 15 / 30</td><td class="n">$0.03 → $0.30</td></tr>
+          <tr><td>Guardian run — Swift / Standard / Deep / Cinematic</td><td>run</td><td class="n">$0.030 → $0.300</td><td class="n">15 / 30 / 75 / 150</td><td class="n">$0.15 → $1.50</td></tr>
+          <tr><td>Build a specialised guardian (3 steps, ~4 runs)</td><td>build</td><td class="n">$0.240</td><td class="n">120</td><td class="n">$1.20</td></tr>
+          <tr><td>Publish a guardian version</td><td>version</td><td class="n">~0</td><td class="n">0</td><td class="n">$0.00</td></tr>
+
+          <tr class="grp"><td colspan="5">Tier 2 — Capture &amp; stream</td></tr>
+          <tr><td>Transcription</td><td>audio minute</td><td class="n">$0.006</td><td class="n">3</td><td class="n">$0.03</td></tr>
+          <tr><td>Transcript as Word or PDF</td><td>document</td><td class="n">$0.002</td><td class="n">2</td><td class="n">$0.02</td></tr>
+          <tr><td>Edit render (FFmpeg)</td><td>output minute</td><td class="n">$0.040</td><td class="n">20</td><td class="n">$0.20</td></tr>
+          <tr><td>Live production</td><td>stream minute</td><td class="n">$0.030</td><td class="n">15</td><td class="n">$0.15</td></tr>
+
+          <tr class="grp"><td colspan="5">Tier 3 — media, world and data</td></tr>
+          <tr><td>Image or scene frame</td><td>image</td><td class="n">$0.040</td><td class="n">20</td><td class="n">$0.20</td></tr>
+          <tr><td>Video generation</td><td>5 seconds</td><td class="n">$0.400</td><td class="n">200</td><td class="n">$2.00</td></tr>
+          <tr><td>Scircle world recompute</td><td>recompute</td><td class="n">$0.090</td><td class="n">45</td><td class="n">$0.45</td></tr>
+          <tr><td>Cerebral deep analysis</td><td>analysis</td><td class="n">$0.700</td><td class="n">350</td><td class="n">$3.50</td></tr>
+          <tr><td>Web / source extraction · Muse tool call</td><td>page · call</td><td class="n">$0.002 · $0.004</td><td class="n">1 · 2</td><td class="n">$0.01 · $0.02</td></tr>
+
+          <tr class="grp"><td colspan="5">Tier 4 — carry costs, monthly, never per click</td></tr>
+          <tr><td>Retained media · delivery</td><td>GB·month · GB</td><td class="n">$0.023 · $0.085</td><td class="n">15 · 40</td><td class="n">$0.15 · $0.40</td></tr>
+          <tr><td>Motion embed licence</td><td>site · month</td><td class="n">~$0.10</td><td class="n">flat</td><td class="n">$2.00</td></tr>
+
+          <tr class="grp"><td colspan="5">Tier 5 — pass-through. Separately authorised, never inside an allotment.</td></tr>
+          <tr><td>Dialog matter intelligence · any vendor via NOW</td><td>measured</td><td class="n">actual</td><td class="n">× 1.35 · × 1.30</td><td class="n">—</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="grid g3">
+      <div class="card"><span class="lbl">A working session</span><span class="big">78 cr</span><p>20 min capture + transcript + one Standard guardian run. <strong>$0.78</strong> — costs us $0.156.</p></div>
+      <div class="card"><span class="lbl">Building a guardian</span><span class="big">120 cr</span><p><strong>$1.20</strong>, costs us $0.24. Cheap enough that nobody hesitates — and guardians drive retention.</p></div>
+      <div class="card"><span class="lbl">A heavy Scircle week</span><span class="big">2,400 cr</span><p>40 turns, 6 runs, 90 min capture, 3 renders, 2 recomputes, 1 Cerebral pass. <strong>$24</strong> — inside one Prime allotment.</p></div>
+    </div>
+
+    <h3>Where credits live: four buckets, one order</h3>
+    <p class="lede">A wallet is not one number. It is four buckets that always spend in the same order —
+    <b>whatever expires soonest goes first</b>. Show this order in NOW; it is the thing people most often
+    accuse credit products of cheating on.</p>
+    <div class="tbl">
+      <table>
+        <thead><tr><th class="n">Order</th><th>Bucket</th><th>Where it came from</th><th class="n">Expires</th></tr></thead>
+        <tbody>
+          <tr><td class="n">1st</td><td><strong>Promo</strong></td><td>Onboarding grant, a campaign, an apology</td><td class="n">7–30 days</td></tr>
+          <tr><td class="n">2nd</td><td><strong>Plan</strong></td><td>This month's allotment</td><td class="n">End of cycle, +30 days grace</td></tr>
+          <tr><td class="n">3rd</td><td><strong>Purchased</strong></td><td>Top-ups they paid cash for</td><td class="n">12 months</td></tr>
+          <tr><td class="n">4th</td><td><strong>Overdraft</strong></td><td>Studio and World only</td><td class="n">Settles on the next invoice</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="note risk">
+      <span class="t">The hard floor</span>
+      <b>Never sell a credit below $0.004</b> — 2× cost, 50% margin. That is the lowest an enterprise
+      negotiation may reach. Write it down before your first big customer asks for a discount, because
+      in the room you will want to say yes.
+    </div>
+  </div>
+</section>
+
+<!-- ================= PAGE 4 ================= -->
+<section class="pg" id="p4" style="--ic:var(--i5); --ic-soft:var(--i5-soft)">
+  <div class="in">
+    <header class="pg-hd">
+      <span class="pg-n">04</span>
+      <div>
+        <p class="kicker">Page four — billing and the fixed cost</p>
+        <h2>Money in, revenue later</h2>
+      </div>
+    </header>
+
+    <p class="lede">Billing is a different machine with a different rhythm: per cycle, in months.
+    The thing most founders get wrong is that <b>taking money is not the same as earning it</b>.</p>
+
+    <figure>
+      <div class="panel"><svg viewBox="0 0 980 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Eight-step billing lifecycle from JEM identity to breakage.">
+<text x="24" y="34" font-family="var(--mono)" font-size="14" letter-spacing="1.6" fill="var(--ink-3)">MONEY IN IS NOT REVENUE — IT BECOMES REVENUE WHEN CREDITS BURN</text>
+<rect x="24" y="58" width="221" height="118" rx="12" fill="var(--surface-2)" stroke="var(--line)" stroke-width="1.5"/>
+<text x="134.5" y="104" text-anchor="middle" font-family="var(--body)" font-size="19" font-weight="700" fill="var(--ink)">JEM identity</text>
+<text x="134.5" y="134" text-anchor="middle" font-family="var(--body)" font-size="14.5" fill="var(--ink-2)">no HERE profile needed</text>
+<text x="134.5" y="158" text-anchor="middle" font-family="var(--mono)" font-size="13" fill="var(--ink-3)">01</text>
+<path d="M248,110 L257,117 L248,124" fill="none" stroke="var(--ink-3)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="261" y="58" width="221" height="118" rx="12" fill="var(--surface-2)" stroke="var(--line)" stroke-width="1.5"/>
+<text x="371.5" y="104" text-anchor="middle" font-family="var(--body)" font-size="19" font-weight="700" fill="var(--ink)">Choose a plan</text>
+<text x="371.5" y="134" text-anchor="middle" font-family="var(--body)" font-size="14.5" fill="var(--ink-2)">in NOW</text>
+<text x="371.5" y="158" text-anchor="middle" font-family="var(--mono)" font-size="13" fill="var(--ink-3)">02</text>
+<path d="M485,110 L494,117 L485,124" fill="none" stroke="var(--ink-3)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="498" y="58" width="221" height="118" rx="12" fill="var(--surface-2)" stroke="var(--line)" stroke-width="1.5"/>
+<text x="608.5" y="104" text-anchor="middle" font-family="var(--body)" font-size="19" font-weight="700" fill="var(--ink)">Vault the card</text>
+<text x="608.5" y="134" text-anchor="middle" font-family="var(--body)" font-size="14.5" fill="var(--ink-2)">the gateway holds it, not us</text>
+<text x="608.5" y="158" text-anchor="middle" font-family="var(--mono)" font-size="13" fill="var(--ink-3)">03</text>
+<path d="M722,110 L731,117 L722,124" fill="none" stroke="var(--ink-3)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="735" y="58" width="221" height="118" rx="12" fill="var(--surface-2)" stroke="var(--line)" stroke-width="1.5"/>
+<text x="845.5" y="104" text-anchor="middle" font-family="var(--body)" font-size="19" font-weight="700" fill="var(--ink)">Entitlement grant</text>
+<text x="845.5" y="134" text-anchor="middle" font-family="var(--body)" font-size="14.5" fill="var(--ink-2)">credits · seats · caps · lane</text>
+<text x="845.5" y="158" text-anchor="middle" font-family="var(--mono)" font-size="13" fill="var(--ink-3)">04</text>
+<path d="M845.5,176 L845.5,198 L134.5,198 L134.5,216" fill="none" stroke="var(--ink-3)" stroke-width="2" stroke-dasharray="6 5"/>
+<path d="M128.5,209 L134.5,218 L140.5,209" fill="none" stroke="var(--ink-3)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="24" y="238" width="221" height="118" rx="12" fill="var(--surface-2)" stroke="var(--line)" stroke-width="1.5"/>
+<text x="134.5" y="284" text-anchor="middle" font-family="var(--body)" font-size="19" font-weight="700" fill="var(--ink)">Each cycle</text>
+<text x="134.5" y="314" text-anchor="middle" font-family="var(--body)" font-size="14.5" fill="var(--ink-2)">renew · overage · change</text>
+<text x="134.5" y="338" text-anchor="middle" font-family="var(--mono)" font-size="13" fill="var(--ink-3)">05</text>
+<path d="M248,290 L257,297 L248,304" fill="none" stroke="var(--ink-3)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="261" y="238" width="221" height="118" rx="12" fill="var(--i0-soft)" stroke="var(--i0)" stroke-width="2"/>
+<text x="371.5" y="284" text-anchor="middle" font-family="var(--body)" font-size="19" font-weight="700" fill="var(--ink)">Cash in</text>
+<text x="371.5" y="314" text-anchor="middle" font-family="var(--body)" font-size="14.5" fill="var(--ink-2)">books as a liability</text>
+<text x="371.5" y="338" text-anchor="middle" font-family="var(--mono)" font-size="13" fill="var(--ink-3)">06</text>
+<path d="M485,290 L494,297 L485,304" fill="none" stroke="var(--ink-3)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="498" y="238" width="221" height="118" rx="12" fill="var(--i0-soft)" stroke="var(--i0)" stroke-width="2"/>
+<text x="608.5" y="284" text-anchor="middle" font-family="var(--body)" font-size="19" font-weight="700" fill="var(--ink)">Credits burn</text>
+<text x="608.5" y="314" text-anchor="middle" font-family="var(--body)" font-size="14.5" fill="var(--ink-2)">now it becomes revenue</text>
+<text x="608.5" y="338" text-anchor="middle" font-family="var(--mono)" font-size="13" fill="var(--ink-3)">07</text>
+<path d="M722,290 L731,297 L722,304" fill="none" stroke="var(--ink-3)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="735" y="238" width="221" height="118" rx="12" fill="var(--i0-soft)" stroke="var(--i0)" stroke-width="2"/>
+<text x="845.5" y="284" text-anchor="middle" font-family="var(--body)" font-size="19" font-weight="700" fill="var(--ink)">Credits expire</text>
+<text x="845.5" y="314" text-anchor="middle" font-family="var(--body)" font-size="14.5" fill="var(--ink-2)">breakage — keep under 8%</text>
+<text x="845.5" y="338" text-anchor="middle" font-family="var(--mono)" font-size="13" fill="var(--ink-3)">08</text>
+<text x="24" y="386" font-family="var(--body)" font-size="16" fill="var(--ink-2)">Report the unburned balance monthly. It is service you still owe — and the first number an investor checks.</text>
+
+</svg></div>
+      <figcaption>Get steps 6–8 right from day one. Retrofitting them later is a painful audit, and it is the first thing an investor or acquirer checks.</figcaption>
+    </figure>
+
+    <h3>The three calls you own</h3>
+    <div class="grid g3">
+      <div class="card">
+        <span class="lbl">Gateway</span>
+        <h4>Paddle now, Stripe later</h4>
+        <p><strong>Paddle</strong> (~5% + $0.50) becomes the legal seller and handles worldwide VAT, GST
+        and US sales tax. You cannot afford global tax compliance as a team of one.</p>
+        <p><strong>Stripe Billing</strong> (2.9% + $0.30 + ~0.5%) has native meters, credit grants and
+        entitlements — the closest match to this model. Move there when someone owns finance.</p>
+        <p><strong>Razorpay</strong> if the entity is Indian — UPI AutoPay is the recurring rail that
+        actually works there.</p>
+      </div>
+      <div class="card">
+        <span class="lbl">Currency</span>
+        <h4>Credits inside, local prices outside</h4>
+        <p>One internal unit of account: <strong>USD</strong>, because your costs are in USD.</p>
+        <p>The ledger holds <strong>credits, never currency</strong>. A euro customer and a rupee customer
+        burn the identical credit, so your margin analysis needs no conversion at all.</p>
+        <p>Sell at <strong>fixed local price points</strong> — $39 / €39 / £33 / ₹2,999 — re-priced quarterly.
+        Live FX gives you prices like €36.42, which reads as careless.</p>
+      </div>
+      <div class="card">
+        <span class="lbl">Legal shape</span>
+        <h4>Credits are not money</h4>
+        <p>Structure them as <strong>non-refundable, non-transferable, expiring service usage rights</strong>.</p>
+        <p><strong>Never</strong> cash-out, peer transfer, a published redemption guarantee, or credits with
+        no expiry. Each of those edges you toward being regulated as a payments business.</p>
+        <p>Have a lawyer in your billing jurisdiction read the credit terms before the first payment.
+        It is a one-hour conversation that is very hard to have retroactively.</p>
+      </div>
+    </div>
+
+    <div class="note warn">
+      <span class="t">Why the $10 minimum top-up isn't arbitrary</span>
+      At 2.9% + $0.30, a <b>$5</b> top-up costs you <b>$0.45 — nine percent</b>. A $2 top-up costs 18% and is
+      pure loss. Floor it at $10, push auto-recharge in $25 and $50 blocks, and your processing line drops
+      by about a third.
+    </div>
+
+    <h3>The $500 guardian — your one fixed cost</h3>
+    <p class="lede">Everything else in your cost base moves with usage. This does not: $500 goes out
+    whether that guardian did one job or ten thousand. That single fact set the whole model on page one.</p>
+
+    <div class="key" style="--ic:var(--i5)">
+      <span class="tag">One number to manage</span>
+      <p><strong>Accounts per Guardian.</strong> A Prime account contributes about <strong>$30</strong> a month
+      before guardian cost. So <strong>17 accounts</strong> on one guardian is break-even, <strong>50</strong>
+      is the alert floor, and <strong>80+</strong> is where the margin you actually want lives.</p>
+      <p>A dedicated guardian is not a feature you include — it is a <strong>SKU you sell at $899 a month</strong>.
+      Shared pools amortise the fixed cost; dedicated capacity gets charged for.</p>
+    </div>
+
+    <figure>
+      <div class="panel"><svg viewBox="0 0 800 450" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Contribution margin against accounts per guardian, crossing break-even at 17 accounts.">
+<text x="92" y="30" font-family="var(--mono)" font-size="14" letter-spacing="1.6" fill="var(--ink-3)">CONTRIBUTION MARGIN % — ONE PRIME ACCOUNT AT $39</text>
+<rect x="92" y="50" width="69.65" height="290" fill="var(--risk-wash)"/>
+<rect x="161.65" y="50" width="139.1" height="290" fill="var(--warn-wash)"/>
+<rect x="426" y="50" width="334" height="290" fill="var(--good-wash)"/>
+<line x1="92" y1="50" x2="92" y2="340" stroke="var(--line-2)" stroke-width="2"/>
+<line x1="92" y1="340" x2="760" y2="340" stroke="var(--line-2)" stroke-width="2"/>
+<line x1="92" y1="215.71" x2="760" y2="215.71" stroke="var(--ink-3)" stroke-width="1.6" stroke-dasharray="6 5"/>
+<polyline points="133.75,322.1 137.93,297.96 142.1,277.84 146.28,260.82 150.45,246.22 154.63,233.58 158.8,222.51 162.98,212.75 167.15,204.07 171.33,196.31 175.5,189.32 179.68,182.99 183.85,177.25 188.02,172 192.2,167.19 196.38,162.76 200.55,158.67 204.73,154.89 208.9,151.38 213.08,148.11 217.25,145.06 221.43,142.2 225.6,139.52 229.78,137.01 233.95,134.64 238.13,132.41 242.3,130.3 246.48,128.31 250.65,126.42 254.83,124.63 259,122.92 263.17,121.31 267.35,119.76 271.52,118.29 275.7,116.89 279.88,115.55 284.05,114.27 288.23,113.04 292.4,111.86 296.58,110.73 300.75,109.65 304.92,108.61 309.1,107.6 313.27,106.64 317.45,105.71 321.63,104.82 325.8,103.96 329.98,103.12 334.15,102.32 338.33,101.54 342.5,100.79 346.67,100.07 350.85,99.37 355.03,98.69 359.2,98.03 363.38,97.39 367.55,96.77 371.73,96.17 375.9,95.59 380.08,95.02 384.25,94.47 388.43,93.94 392.6,93.42 396.78,92.91 400.95,92.42 405.13,91.94 409.3,91.48 413.48,91.02 417.65,90.58 421.83,90.15 426,89.73 430.18,89.32 434.35,88.92 438.53,88.53 442.7,88.15 446.88,87.78 451.05,87.41 455.23,87.06 459.4,86.71 463.58,86.37 467.75,86.04 471.93,85.72 476.1,85.4 480.28,85.09 484.45,84.78 488.63,84.49 492.8,84.2 496.98,83.91 501.15,83.63 505.33,83.36 509.5,83.09 513.67,82.83 517.85,82.57 522.03,82.32 526.2,82.07 530.38,81.83 534.55,81.59 538.72,81.35 542.9,81.12 547.08,80.9 551.25,80.68 555.42,80.46 559.6,80.24 563.78,80.03 567.95,79.83 572.13,79.63 576.3,79.43 580.47,79.23 584.65,79.04 588.83,78.85 593,78.66 597.17,78.48 601.35,78.3 605.53,78.12 609.7,77.95 613.88,77.78 618.05,77.61 622.23,77.44 626.4,77.28 630.58,77.12 634.75,76.96 638.92,76.81 643.1,76.65 647.28,76.5 651.45,76.35 655.63,76.2 659.8,76.06 663.98,75.92 668.15,75.78 672.33,75.64 676.5,75.5 680.68,75.37 684.85,75.23 689.03,75.1 693.2,74.98 697.38,74.85 701.55,74.72 705.73,74.6 709.9,74.48 714.08,74.36 718.25,74.24 722.43,74.12 726.6,74 730.78,73.89 734.95,73.78 739.13,73.67 743.3,73.56 747.48,73.45 751.65,73.34 755.83,73.24 760,73.13" fill="none" stroke="var(--i5)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="161.65" cy="215.71" r="7" fill="var(--surface)" stroke="var(--risk)" stroke-width="4"/>
+<text x="175.65" y="245.71" font-family="var(--mono)" font-size="16" font-weight="600" fill="var(--risk)">17 · break even</text>
+<text x="175.65" y="266.71" font-family="var(--body)" font-size="15" fill="var(--ink-2)">below this, every account loses money</text>
+<circle cx="300.75" cy="109.65" r="7" fill="var(--surface)" stroke="var(--warn)" stroke-width="4"/>
+<text x="314.75" y="143.65" font-family="var(--mono)" font-size="16" font-weight="600" fill="var(--warn)">50 · alert floor</text>
+<text x="314.75" y="164.65" font-family="var(--body)" font-size="15" fill="var(--ink-2)">51% margin</text>
+<circle cx="426" cy="89.73" r="7" fill="var(--surface)" stroke="var(--good)" stroke-width="4"/>
+<text x="440" y="59.73" font-family="var(--mono)" font-size="16" font-weight="600" fill="var(--good)">80 · target</text>
+<text x="440" y="80.73" font-family="var(--body)" font-size="15" fill="var(--ink-2)">61% margin</text>
+<text x="92" y="366" text-anchor="middle" font-family="var(--mono)" font-size="14" fill="var(--ink-3)">0</text>
+<text x="259" y="366" text-anchor="middle" font-family="var(--mono)" font-size="14" fill="var(--ink-3)">40</text>
+<text x="426" y="366" text-anchor="middle" font-family="var(--mono)" font-size="14" fill="var(--ink-3)">80</text>
+<text x="593" y="366" text-anchor="middle" font-family="var(--mono)" font-size="14" fill="var(--ink-3)">120</text>
+<text x="760" y="366" text-anchor="middle" font-family="var(--mono)" font-size="14" fill="var(--ink-3)">160</text>
+<text x="80" y="303.57" text-anchor="end" font-family="var(--mono)" font-size="14" fill="var(--ink-3)">-40%</text>
+<text x="80" y="220.71" text-anchor="end" font-family="var(--mono)" font-size="14" fill="var(--ink-3)">0%</text>
+<text x="80" y="137.86" text-anchor="end" font-family="var(--mono)" font-size="14" fill="var(--ink-3)">40%</text>
+<text x="80" y="55" text-anchor="end" font-family="var(--mono)" font-size="14" fill="var(--ink-3)">80%</text>
+<text x="426" y="394" text-anchor="middle" font-family="var(--body)" font-size="17" fill="var(--ink-2)">accounts sharing one guardian</text>
+
+</svg></div>
+      <figcaption>Between 17 and 80 accounts, margin swings 61 points — then the curve flattens, so chasing 140 buys almost nothing. This is why accounts-per-guardian is a North Star branch and not a footnote.</figcaption>
+    </figure>
+
+    <div class="tbl">
+      <table>
+        <thead><tr><th>Tier</th><th class="n">Price</th><th class="n">Credits burned</th><th class="n">Contribution before guardian</th><th class="n">Break-even APG</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Prime</strong></td><td class="n">$39</td><td class="n">3,250 · $6.50</td><td class="n">$29.97</td><td class="n">17</td></tr>
+          <tr><td><strong>Studio</strong></td><td class="n">$199</td><td class="n">19,500 · $39.00</td><td class="n">$149.93</td><td class="n">3.4</td></tr>
+          <tr><td><strong>World</strong></td><td class="n">$999</td><td class="n">105,000 · $210</td><td class="n">$744.73</td><td class="n">0.7</td></tr>
+          <tr class="total"><td>Dedicated Guardian <span class="pill">add-on</span></td><td class="n">$899</td><td class="n">billed separately</td><td class="n">$399 · 44%</td><td class="n">—</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Four rules for guardian capacity</h3>
+    <ol>
+      <li><strong>Never provision on hope.</strong> Add a guardian only when <span class="mono">$1,600/month</span>
+      of attributed revenue is committed behind it — a 2.5× coverage ratio. Queue depth is not a reason; revenue is.</li>
+      <li><strong>Measure coverage monthly.</strong> Gross profit attributed to that guardian ÷ $500.
+      Target <span class="pill good">≥ 2.5×</span>, warn <span class="pill warn">&lt; 1.5×</span>,
+      act <span class="pill risk">&lt; 1.0× twice</span> — consolidate its accounts and retire it.</li>
+      <li><strong>Hibernate idle dedicated guardians.</strong> Under 10% utilisation for 14 days, sleep it and
+      prorate the next invoice. They will love you for it, and you stop paying for air.</li>
+      <li><strong>Rebalance pools weekly.</strong> Keep every pool inside 60–120 accounts. Below 60 you burn
+      margin; above 120 you buy queue latency that shows up as churn.</li>
+    </ol>
+
+    <div class="note risk">
+      <span class="t">This whole page rests on one assumption</span>
+      I have assumed <b>one guardian serves many accounts at once</b>, with a ceiling near 120. If a guardian
+      is one-to-one with a customer — or is a person with a real hour budget — then accounts-per-guardian
+      collapses to 1 and <b>every price here has to roughly triple</b>. It is the first question on page five.
+    </div>
+  </div>
+</section>
+
+<!-- ================= PAGE 5 ================= -->
+<section class="pg" id="p5" style="--ic:var(--i6); --ic-soft:var(--i6-soft)">
+  <div class="in">
+    <header class="pg-hd">
+      <span class="pg-n">05</span>
+      <div>
+        <p class="kicker">Page five — the plans, and what happens next</p>
+        <h2>Two ways to sell it. One of them loses money.</h2>
+      </div>
+    </header>
+
+    <p class="lede">Same product, same rate card, same costs. The only difference is the <b>shape</b> of
+    what you sell — and that difference is 85 margin points.</p>
+
+    <figure>
+      <div class="panel"><svg viewBox="0 0 900 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Gross margin by plan design: minus 25 percent, 21 percent, 60 percent and 72 percent.">
+<text x="24" y="30" font-family="var(--mono)" font-size="14" letter-spacing="1.6" fill="var(--ink-3)">GROSS MARGIN AT MONTH 12, BY PLAN DESIGN</text>
+<line x1="300" y1="44" x2="300" y2="360" stroke="var(--ink-3)" stroke-width="2"/>
+<text x="24" y="54" font-family="var(--body)" font-size="17" font-weight="700" fill="var(--ink)">Plan A — Open Meter, as designed</text>
+<rect x="135" y="64" width="165" height="40" rx="5" fill="var(--risk)"/>
+<text x="123" y="91" text-anchor="end" font-family="var(--mono)" font-size="22" font-weight="600" fill="var(--risk)">−25%</text>
+<text x="24" y="138" font-family="var(--body)" font-size="17" font-weight="700" fill="var(--ink)">Plan A repaired — smaller free tier, guardians gated</text>
+<rect x="300" y="148" width="138.6" height="40" rx="5" fill="var(--warn)"/>
+<text x="450.6" y="175" text-anchor="start" font-family="var(--mono)" font-size="22" font-weight="600" fill="var(--warn)">+21%</text>
+<text x="24" y="222" font-family="var(--body)" font-size="17" font-weight="700" fill="var(--ink)">Plan B — Seat + Fuel</text>
+<rect x="300" y="232" width="396" height="40" rx="5" fill="var(--good)"/>
+<text x="708" y="259" text-anchor="start" font-family="var(--mono)" font-size="22" font-weight="600" fill="var(--good)">+60%</text>
+<text x="24" y="306" font-family="var(--body)" font-size="17" font-weight="700" fill="var(--ink)">Plan B tuned — with the margin levers</text>
+<rect x="300" y="316" width="475.2" height="40" rx="5" fill="var(--good)" stroke="var(--ink)" stroke-width="2"/>
+<text x="787.2" y="343" text-anchor="start" font-family="var(--mono)" font-size="22" font-weight="600" fill="var(--good)">+72%</text>
+<text x="24" y="386" font-family="var(--body)" font-size="16" fill="var(--ink-2)">Same product, same rate card, same costs. The only variable is the shape of what you sell.</text>
+
+</svg></div>
+      <figcaption>Plan A is not a worse product. It is the same product sold in a shape that cannot carry a fixed cost.</figcaption>
+    </figure>
+
+    <div class="grid g2" style="margin-top:-12px">
+      <div class="card" style="--ic:var(--risk)"><span class="lbl">−25% · Plan A as designed</span><p>The free tier and the guardians eat the entire meter. A quiet month is a loss.</p></div>
+      <div class="card" style="--ic:var(--warn)"><span class="lbl">+21% · Plan A repaired</span><p>Smaller free tier, guardians gated behind a first purchase. Survivable — but it cannot fund a team.</p></div>
+      <div class="card" style="--ic:var(--good)"><span class="lbl">+60% · Plan B</span><p>Eight times the revenue of Plan A at month 12, and profitable from the gross-margin line down.</p></div>
+      <div class="card" style="--ic:var(--good)"><span class="lbl">+72% · Plan B tuned</span><p>The eight levers below. Not one price changes and not one feature is removed.</p></div>
+    </div>
+
+    <h3>Plan B — Seat + Fuel <span class="pill good">recommended</span></h3>
+    <p class="lede">A two-part tariff. The subscription pays the fixed costs and buys credits below list.
+    Top-ups cost <b>more</b> than the allotment rate — so the upgrade sells itself.</p>
+
+    <div class="tbl">
+      <table>
+        <thead><tr><th>Tier</th><th class="n">$ / month</th><th class="n">Credits</th><th class="n">Effective $/cr</th><th class="n">Scircles</th><th>Guardian</th><th class="n">Top-up</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Signal</strong> <span class="pill">free</span></td><td class="n">$0</td><td class="n">500</td><td class="n">—</td><td class="n">1</td><td>Shared, low priority</td><td class="n">upgrade only</td></tr>
+          <tr><td><strong>Prime</strong></td><td class="n">$39</td><td class="n">5,000</td><td class="n">$0.0078</td><td class="n">3</td><td>Shared pool</td><td class="n">$0.0095</td></tr>
+          <tr><td><strong>Studio</strong></td><td class="n">$199</td><td class="n">30,000</td><td class="n">$0.0066</td><td class="n">10</td><td>Shared, priority lane</td><td class="n">$0.0085</td></tr>
+          <tr><td><strong>World</strong></td><td class="n">$999</td><td class="n">175,000</td><td class="n">$0.0057</td><td class="n">unlimited</td><td>Priority pool, JEM SSO</td><td class="n">$0.0075</td></tr>
+          <tr class="total"><td>Dedicated Guardian</td><td class="n">+$899</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td>One guardian, one account</td><td class="n">—</td></tr>
+          <tr><td>Motion embed licence</td><td class="n">$2 / site</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td>—</td><td class="n">—</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="note good">
+      <span class="t">The mechanic that makes it work</span>
+      Read the last two columns together. Prime's included credits cost them <b>$0.0078</b>; their top-ups
+      cost <b>$0.0095</b>. The moment they top up regularly, Studio is visibly cheaper <em>for them</em>.
+      You are not upselling — you are showing arithmetic. That is where NRR above 110% comes from, with no
+      sales team. Offer annual at <b>two months free</b>: cash forward, lower churn, fewer fees.
+    </div>
+
+    <h3>The same twelve months, run both ways</h3>
+    <div class="tbl">
+      <table>
+        <thead><tr><th>Month 12</th><th class="n">Plan A — Open Meter</th><th class="n">Plan B — Seat + Fuel</th></tr></thead>
+        <tbody>
+          <tr><td>Signups · conversion · paying accounts</td><td class="n">25,000 · 4% · 620</td><td class="n">16,000 · 7% · 1,120</td></tr>
+          <tr class="grp"><td colspan="3">Revenue</td></tr>
+          <tr><td>Subscriptions</td><td class="n">—</td><td class="n">$142,240</td></tr>
+          <tr><td>Credit packs and top-ups</td><td class="n">$21,080</td><td class="n">$8,064</td></tr>
+          <tr><td>Dedicated guardians (22) · Motion (3,000 sites)</td><td class="n">—</td><td class="n">$25,778</td></tr>
+          <tr class="total"><td>MRR</td><td class="n">$21,080</td><td class="n">$176,082</td></tr>
+          <tr class="grp"><td colspan="3">Cost of revenue</td></tr>
+          <tr><td>Credits burned — paying accounts</td><td class="n">$4,216</td><td class="n">$29,389</td></tr>
+          <tr><td>Credits burned — the free tier</td><td class="n">$9,120</td><td class="n">$4,800</td></tr>
+          <tr><td>Guardians</td><td class="n">$8,000 <span class="pill risk">16</span></td><td class="n">$20,500 <span class="pill">41</span></td></tr>
+          <tr><td>Payment processing · infrastructure</td><td class="n">$4,950</td><td class="n">$14,900</td></tr>
+          <tr class="total"><td>Total COGS</td><td class="n">$26,286</td><td class="n">$69,589</td></tr>
+          <tr class="grp"><td colspan="3">Outcome</td></tr>
+          <tr class="total"><td>Gross profit · margin</td><td class="n" style="color:var(--risk)">−$5,206 · −25%</td><td class="n" style="color:var(--good)">$106,493 · 60%</td></tr>
+          <tr><td>Year one — revenue · gross profit</td><td class="n" style="color:var(--risk)">~$126k · ~−$31k</td><td class="n" style="color:var(--good)">~$1.05M · ~$630k</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="grid g3">
+      <div class="card"><span class="lbl">Why A fails · 1</span><h4>Free costs real money</h4><p>12,000 free accounts burning 380 credits a month costs <strong>$9,120</strong> — more than double what the payers cost. In a subscription model the free tier is a capped marketing expense. In a pure meter it is uncapped.</p></div>
+      <div class="card"><span class="lbl">Why A fails · 2</span><h4>Fixed costs have nothing to attach to</h4><p>Sixteen guardians cost <strong>$8,000</strong> whether or not anyone bought credits that month. With no subscription floor, a quiet month is a loss — and quiet months are not rare.</p></div>
+      <div class="card"><span class="lbl">Why A fails · 3</span><h4>Pay-as-you-go decays</h4><p>Of 1,000 who ever bought a pack, ~620 are still active at month 12. No renewal moment, no reason to return. Subscription revenue compounds; pack revenue leaks.</p></div>
+    </div>
+
+    <div class="key" style="--ic:var(--i6)">
+      <span class="tag">The call</span>
+      <p><strong>Ship Plan B</strong> — but steal Plan A's generosity at the very start. Give every new
+      account a one-time <strong>2,000-credit grant that expires in 7 days</strong>, separate from the
+      monthly free allotment.</p>
+      <p>It costs about <strong>$4</strong> per signup at worst, it is capped and time-boxed so it can never
+      become the uncapped free tier that sinks Plan A, and it buys the one thing you most need:
+      <strong>Time to First GO under eight minutes</strong>.</p>
+    </div>
+
+    <h3>Eight levers from 60% to 72% — without touching a price</h3>
+    <div class="tbl">
+      <table>
+        <thead><tr><th class="n">#</th><th>Lever</th><th class="n">Monthly</th><th class="n">Effort</th></tr></thead>
+        <tbody>
+          <tr><td class="n">1</td><td><strong>Default model Opus → Sonnet.</strong> A ×2.5 multiplier is not a default.</td><td class="n" style="color:var(--good)">+$5,700</td><td class="n"><span class="pill good">1 line</span></td></tr>
+          <tr><td class="n">2</td><td><strong>Cache Scircle context.</strong> Your most repeated payload, at a tenth the price.</td><td class="n" style="color:var(--good)">+$3,700</td><td class="n"><span class="pill good">small</span></td></tr>
+          <tr><td class="n">3</td><td><strong>Accounts per guardian 90 → 130.</strong> Six fewer guardians, same service.</td><td class="n" style="color:var(--good)">+$3,000</td><td class="n"><span class="pill">ops</span></td></tr>
+          <tr><td class="n">4</td><td><strong>Free allotment 500 → 300</strong>, expiring monthly. Keep the welcome grant.</td><td class="n" style="color:var(--good)">+$1,900</td><td class="n"><span class="pill good">config</span></td></tr>
+          <tr><td class="n">5</td><td><strong>Fewer, larger payments.</strong> $10 floor, auto-recharge in blocks.</td><td class="n" style="color:var(--good)">+$1,700</td><td class="n"><span class="pill good">config</span></td></tr>
+          <tr><td class="n">6</td><td><strong>Annual plans and breakage discipline.</strong></td><td class="n" style="color:var(--good)">+$1,700</td><td class="n"><span class="pill">medium</span></td></tr>
+          <tr><td class="n">7</td><td><strong>Render on interruptible compute.</strong> Retryable batch work, ~30% off.</td><td class="n" style="color:var(--good)">+$1,500</td><td class="n"><span class="pill">medium</span></td></tr>
+          <tr><td class="n">8</td><td><strong>Storage lifecycle.</strong> Cold storage after 90 days; retention is already a tier feature.</td><td class="n" style="color:var(--good)">+$1,200</td><td class="n"><span class="pill">medium</span></td></tr>
+          <tr class="total"><td class="n">—</td><td>No price changed. No feature removed.</td><td class="n" style="color:var(--good)">+$20,400</td><td class="n">60% → 72%</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="note">
+      <span class="t">Order</span>
+      <b>1, 4 and 5 first</b> — config, land this week, worth $9,300 a month at scale. Then 2 and 3.
+      Leave 6–8 until you have a real usage baseline. And the lever I have deliberately left out is
+      <b>raising credit prices</b>: it works arithmetically and it is poison early, because your rate card
+      is a promise about what things cost.
+    </div>
+
+    <h3>What I need from you</h3>
+    <div class="tbl">
+      <table>
+        <thead><tr><th class="n">#</th><th>Question</th><th>Why it matters</th><th class="n">Status</th></tr></thead>
+        <tbody>
+          <tr><td class="n">1</td><td><strong>What exactly is the $500/month guardian, and how many accounts can one serve at once?</strong></td><td>The entire model. One-to-one means every price here roughly triples. 100+ means Plan B works as written.</td><td class="n"><span class="pill risk">blocking</span></td></tr>
+          <tr><td class="n">2</td><td><strong>Your real cost per action, last month.</strong> Models, transcription, render, storage, egress.</td><td>Every price is 5× cost. If my estimates are off by 2×, the margins here are fiction. One afternoon with your invoices.</td><td class="n"><span class="pill risk">blocking</span></td></tr>
+          <tr><td class="n">3</td><td><strong>Growth or profit for the next twelve months</strong> — and what runway is behind that answer?</td><td>Funded land-grab makes Plan A's shape a defensible deliberate loss. Needing profitability makes Plan B the only option.</td><td class="n"><span class="pill risk">blocking</span></td></tr>
+          <tr><td class="n">4</td><td><strong>Who is the buyer?</strong> Creators, small studios, or companies?</td><td>This ladder is priced for prosumer-to-small-studio. A company buyer carries 3–5×; a pure consumer needs it to start near $9.</td><td class="n"><span class="pill warn">shapes it</span></td></tr>
+          <tr><td class="n">5</td><td><strong>Which legal entity bills, from which country?</strong></td><td>Decides gateway, tax treatment, whether Razorpay belongs in the stack, and how careful the stored-value wording must be.</td><td class="n"><span class="pill warn">shapes it</span></td></tr>
+          <tr><td class="n">6</td><td><strong>Your current baseline.</strong> Signups a month, weekly actives, actions per active per week.</td><td>Replaces the illustrative funnel on this page with a real forecast.</td><td class="n"><span class="pill warn">shapes it</span></td></tr>
+          <tr><td class="n">7</td><td><strong>Dialog — pass-through or absorbed?</strong></td><td>Modelled as pass-through at ×1.35, matching your own rule that Dialog carries separately authorised spend. If you absorb it, it becomes an uncapped line needing a hard budget.</td><td class="n"><span class="pill">confirm</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>First ninety days</h3>
+    <div class="tbl">
+      <table>
+        <thead><tr><th class="n">Days</th><th>What ships</th><th>Gate to the next phase</th></tr></thead>
+        <tbody>
+          <tr><td class="n">1–15</td><td><strong>Meter everything, charge nothing.</strong> A <code>meter</code> block on every tool. Ledger rows written. Wallet built but hidden.</td><td>Every billable surface writes a row, and the rows reconcile against your real invoices within 5%.</td></tr>
+          <tr><td class="n">16–30</td><td><strong>Shadow billing.</strong> Nobody is charged; internally compute what each account <em>would</em> have paid.</td><td>A median Prime-shaped account lands at 50–80% burn depth. If not, resize the allotment — not the prices.</td></tr>
+          <tr><td class="n">31–45</td><td><strong>Signal and Prime go live.</strong> GO cards, holds, settle, receipts. Hard caps, no overage yet.</td><td>Zero charges on failed jobs. Under 1 surprise report per 1,000 GOs.</td></tr>
+          <tr><td class="n">46–60</td><td><strong>Top-ups and auto-recharge.</strong> $10 minimum, auto-recharge strictly opt-in.</td><td>Waste below 2% of credits burned. Refund requests are about scope, not surprise.</td></tr>
+          <tr><td class="n">61–75</td><td><strong>Studio and the Dedicated Guardian add-on.</strong> Priority lane, coverage reporting, pool rebalancing.</td><td>Accounts per guardian above 50 on every pool, coverage above 1.5×.</td></tr>
+          <tr><td class="n">76–90</td><td><strong>World, annual, expiry and breakage.</strong> First formal margin review against the page-two tree.</td><td>Blended margin above 55% and climbing. Then start the levers.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="key" style="--ic:var(--i6)">
+      <span class="tag">The one thing to protect</span>
+      <p>Through all ninety days, one rule outranks every revenue target: <strong>nobody is ever charged for
+      something they did not knowingly start, and nobody is ever charged for something that failed.</strong></p>
+      <p>Credits are a promise that the machine is being honest about what it costs to do work for you.
+      Every other number in these five pages is recoverable if you get it wrong. That one is not.</p>
+    </div>
+  </div>
+</section>
