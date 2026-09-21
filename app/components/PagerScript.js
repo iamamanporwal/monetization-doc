@@ -6,7 +6,11 @@ import { useEffect } from "react";
 // scrolls, using the same IntersectionObserver logic as the original page.
 export default function PagerScript() {
   useEffect(() => {
-    const links = Array.prototype.slice.call(document.querySelectorAll(".pager a"));
+    // Only the in-page anchors take part in scroll highlighting; the pager also
+    // carries a cross-document link (Summary Update / back to the money model).
+    const links = Array.prototype.slice
+      .call(document.querySelectorAll(".pager a"))
+      .filter((a) => (a.getAttribute("href") || "").charAt(0) === "#");
     const pages = links.map((a) => document.querySelector(a.getAttribute("href")));
     if (!("IntersectionObserver" in window)) return;
 
