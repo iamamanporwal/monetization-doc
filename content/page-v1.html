@@ -2,10 +2,10 @@
   <a href="#p1" class="on">01</a><a href="#p2">02</a><a href="#p3">03</a><a href="#p4">04</a><a href="#p5">05</a>
   <span class="sep" aria-hidden="true"></span>
   <details class="vsw">
-    <summary aria-label="Switch document version">v2 &middot; Tier 8<span class="cev" aria-hidden="true"></span></summary>
+    <summary aria-label="Switch document version">v1 &middot; original<span class="cev" aria-hidden="true"></span></summary>
     <div class="vmenu">
       <span class="vhd">Versions of this document</span>
-      <a href="/" class="cur" aria-current="page"><span class="vk">v2</span><span class="vt">Tier 8 &middot; Live Surfaces<em>21 Sep 2026 &middot; current</em></span></a><a href="/summary-update"><span class="vk">upd</span><span class="vt">What changed, in brief<em>the five-minute read</em></span></a><a href="/v1"><span class="vk">v1</span><span class="vt">The original five pages<em>20 Sep 2026 &middot; archived</em></span></a>
+      <a href="/"><span class="vk">v2</span><span class="vt">Tier 8 &middot; Live Surfaces<em>21 Sep 2026 &middot; current</em></span></a><a href="/summary-update"><span class="vk">upd</span><span class="vt">What changed, in brief<em>the five-minute read</em></span></a><a href="/v1" class="cur" aria-current="page"><span class="vk">v1</span><span class="vt">The original five pages<em>20 Sep 2026 &middot; archived</em></span></a>
     </div>
   </details>
 </nav>
@@ -16,124 +16,85 @@
     <header class="hero">
       <p class="kicker">HERE · NOW · Guardians · Scircles</p>
       <h1>The money model.</h1>
-      <p class="lede">Every action in HERE costs us something and is worth something &mdash; and now,
-      so does <b>every hour a guardian&rsquo;s work stays switched on</b>. Five pages: what to measure,
-      what each action costs in credits, what it costs to keep a built thing alive on our servers,
-      how billing runs underneath, and two plans modelled to month twelve.</p>
+      <p class="lede">Every action in HERE costs us something and is worth something.
+      Five pages: <b>what to measure</b>, <b>what each action costs in credits</b>,
+      <b>how billing runs underneath</b>, and <b>two plans modelled to month twelve</b>.</p>
       <div class="tags">
-        <span>Monetization PRD &middot; v2</span>
-        <span>21 Sep 2026</span>
+        <span>Monetization PRD · draft v2</span>
+        <span>20 Sep 2026</span>
         <span>1 credit = $0.01</span>
-        <span>Two fixed costs</span>
-        <span>Blended margin 70%+</span>
+        <span>Target margin 70%+</span>
       </div>
     </header>
-
-    <div class="note good">
-      <span class="t">What is new in v2</span>
-      Guardians are no longer the only fixed cost. <b>Tier 8 &mdash; Live Surfaces</b> prices the servers that
-      keep a user&rsquo;s published site or app running, costed against real Google Cloud rates. The
-      &ldquo;every price is 5&times; cost&rdquo; rule gains a deliberate exception for infrastructure, every plan gains a
-      free hosting envelope, and three numbers in v1 turned out to be wrong. The original is still
-      readable &mdash; use the version switch at the bottom of the screen.
-    </div>
 
     <header class="pg-hd">
       <span class="pg-n">01</span>
       <div>
-        <p class="kicker">Page one &mdash; the decision</p>
-        <h2>Two systems, two jobs, two fixed costs</h2>
+        <p class="kicker">Page one — the decision</p>
+        <h2>Two systems, two jobs</h2>
       </div>
     </header>
 
-    <p class="lede">You named it exactly right, so let&rsquo;s build on your words:
+    <p class="lede">You named it exactly right, so let's build on your words:
     <b>credits are trust, control and perceived value. Billing is unit economics, revenue and profit.</b>
     They are different machines and must not be the same machine.</p>
 
     <div class="grid g2">
       <div class="card" style="--ic:var(--i4)">
-        <span class="lbl">The credit system&rsquo;s job</span>
+        <span class="lbl">The credit system's job</span>
         <h4>Make people feel in control</h4>
-        <p>Predictable prices. A visible balance. Nothing charged for failure. A clear &ldquo;this will cost X&rdquo;
-        before anything runs &mdash; and, new in v2, before anything <em>keeps</em> running.</p>
+        <p>Predictable prices. A visible balance. Nothing charged for failure. A clear "this will cost X"
+        before anything runs.</p>
         <p>Credits are a <strong>trust interface</strong>. If someone is ever surprised by a charge, the
-        credit system has failed &mdash; even when the accounting was perfectly correct.</p>
+        credit system has failed — even when the accounting was perfectly correct.</p>
       </div>
       <div class="card" style="--ic:var(--i0)">
-        <span class="lbl">The billing system&rsquo;s job</span>
+        <span class="lbl">The billing system's job</span>
         <h4>Make the company survive</h4>
         <p>Recurring revenue. Gross margin. Cash collection. Deferred-revenue accounting. Dunning. Tax.</p>
-        <p>Billing is a <strong>finance machine</strong>. People should barely see it &mdash; and when they do,
+        <p>Billing is a <strong>finance machine</strong>. People should barely see it — and when they do,
         it should be one clean invoice.</p>
       </div>
     </div>
 
-    <h3>The fixed-cost problem, now doubled</h3>
-    <p class="lede">v1 was built around a single fixed cost: the $500-a-month guardian. But whatever a
-    guardian builds &mdash; a site, an app, an internal tool &mdash; <b>has to run somewhere, and that
-    somewhere is our Google Cloud account.</b></p>
-
-    <figure>
-      <div class="panel"><svg viewBox="0 0 900 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Two fixed-cost pillars: the 500 dollar guardian and the live surfaces fleet.">
-<text x="24" y="34" font-family="var(--mono)" font-size="14" letter-spacing="1.6" fill="var(--ink-3)">THE COST BASE NOW HAS TWO PILLARS, NOT ONE</text>
-<rect x="24" y="56" width="416" height="286" rx="14" fill="var(--surface-2)" stroke="var(--i0)" stroke-width="2.5"/>
-<text x="50" y="92" font-family="var(--mono)" font-size="13" letter-spacing="1.6" fill="var(--i0)">GUARDIANS</text>
-<text x="50" y="148" font-family="var(--mono)" font-size="42" font-weight="600" letter-spacing="-1.5" fill="var(--ink)">$500</text>
-<text x="50" y="174" font-family="var(--mono)" font-size="13" fill="var(--ink-3)">per guardian, per month</text>
-<text x="50" y="214" font-family="var(--body)" font-size="15" fill="var(--ink-2)">Runs whether it does one job or ten</text>
-<text x="50" y="235" font-family="var(--body)" font-size="15" fill="var(--ink-2)">thousand. Managed by accounts-per-guardian:</text>
-<text x="50" y="256" font-family="var(--body)" font-size="15" fill="var(--ink-2)">17 break-even, 80 target.</text>
-<text x="50" y="293" font-family="var(--body)" font-size="15" font-weight="700" fill="var(--ink)">A step cost. You buy it in $500 blocks.</text>
-<rect x="464" y="56" width="416" height="286" rx="14" fill="var(--surface-2)" stroke="var(--i4)" stroke-width="2.5"/>
-<text x="490" y="92" font-family="var(--mono)" font-size="13" letter-spacing="1.6" fill="var(--i4)">LIVE SURFACES</text>
-<text x="490" y="148" font-family="var(--mono)" font-size="42" font-weight="600" letter-spacing="-1.5" fill="var(--ink)">$0.30–$30</text>
-<text x="490" y="174" font-family="var(--mono)" font-size="13" fill="var(--ink-3)">per surface, per month</text>
-<text x="490" y="214" font-family="var(--body)" font-size="15" fill="var(--ink-2)">Runs whether anyone visits or not. Managed</text>
-<text x="490" y="235" font-family="var(--body)" font-size="15" fill="var(--ink-2)">by scale-to-zero, idle sleep and a per-plan</text>
-<text x="490" y="256" font-family="var(--body)" font-size="15" fill="var(--ink-2)">envelope.</text>
-<text x="490" y="293" font-family="var(--body)" font-size="15" font-weight="700" fill="var(--ink)">A creeping cost. It arrives one app at a time.</text>
-<text x="24" y="378" font-family="var(--body)" font-size="16" fill="var(--ink-2)">Neither pillar cares how much anyone uses the product. That is still why a pure pay-as-you-go meter cannot carry this business.</text>
-</svg></div>
-      <figcaption>Guardians are a step cost bought in $500 blocks. Hosting is a creeping cost that
-      arrives one published app at a time &mdash; which is exactly why it is easy to leave out of a
-      pricing model, and expensive to leave out of a business.</figcaption>
-    </figure>
-
-    <div class="key">
-      <span class="tag">The call, unchanged</span>
-      <p>A <strong>two-part tariff</strong>. A subscription floor pays the fixed costs &mdash; guardians,
-      the always-on parts, support. Metered credits pay the variable costs &mdash; model tokens, renders,
-      transcription, egress &mdash; with margin on top.</p>
-      <p>Credits never carry the fixed cost. The subscription never carries the variable cost.
-      Each part covers what it is shaped like. Adding a second fixed cost does not change the shape of
-      the answer; it raises the floor the subscription has to clear.</p>
-    </div>
-
-    <h3>The 5&times; rule gets one exception</h3>
-    <p class="lede">v1 said: every price is 5&times; our cost, or it does not ship. That rule is right for
-    model and media work, and <b>wrong for infrastructure</b>.</p>
-
+    <h3>What this document is called</h3>
+    <p class="lede">A <b>Monetization PRD</b>. That is the industry name. Call the file
+    <code>MONETIZATION.md</code> and keep it beside your other handoffs.</p>
     <div class="tbl">
       <table>
-        <thead><tr><th>Action class</th><th>Markup</th><th class="n">Target margin</th><th>Why</th></tr></thead>
+        <thead><tr><th>When someone asks for…</th><th>They mean</th><th class="n">Page</th></tr></thead>
         <tbody>
-          <tr><td><b>Model &amp; media actions</b><br><span class="mono" style="font-size:14px;color:var(--ink-3)">room turns, guardian runs, transcription, render, video</span></td><td>5&times; cost</td><td class="n">80%</td><td>Nobody can price-check a Sonnet run against a spreadsheet. The value is the outcome, not the tokens.</td></tr>
-          <tr><td><b>Infrastructure</b><br><span class="mono" style="font-size:14px;color:var(--ink-3)">hosting, compute, requests, egress, datastores</span></td><td>3&times; cost</td><td class="n">65&ndash;70%</td><td>Cloud Run, Replit and Emergent all publish their unit rates. A 5&times; markup on commodity compute is checkable &mdash; and it gets checked.</td></tr>
-          <tr><td><b>Third-party pass-through</b><br><span class="mono" style="font-size:14px;color:var(--ink-3)">Dialog, any vendor routed via NOW</span></td><td>&times;1.35 / &times;1.30</td><td class="n">23&ndash;26%</td><td>Unchanged. Separately authorised, never inside an allotment.</td></tr>
+          <tr><td>"the pricing doc"</td><td>Pricing &amp; Packaging Spec</td><td class="n">05</td></tr>
+          <tr><td>"the unit economics"</td><td>Unit Economics Model</td><td class="n">04</td></tr>
+          <tr><td>"how credits work"</td><td>Rate Card, a.k.a. the metering &amp; rating spec</td><td class="n">03</td></tr>
+          <tr><td>"the billing architecture"</td><td>Billing &amp; Entitlements Architecture</td><td class="n">04</td></tr>
+          <tr><td>"what are we optimising for"</td><td>North Star &amp; Metric Tree</td><td class="n">02</td></tr>
         </tbody>
       </table>
     </div>
 
+    <h3>The one decision everything hangs off</h3>
+    <div class="key">
+      <span class="tag">The call</span>
+      <p>You have <strong>one fixed cost that does not care how much anyone uses the product</strong> —
+      the $500-a-month guardian. A pure pay-as-you-go credit model cannot carry a fixed cost: it only
+      earns when someone is active, and the cost runs whether they are active or not.</p>
+      <p>So: a <strong>two-part tariff</strong>. A subscription floor pays for the fixed costs — guardians,
+      storage, support, the always-on parts. Metered credits pay for the variable costs — model tokens,
+      renders, transcription, egress — with margin on top.</p>
+      <p>Credits never carry the fixed cost. The subscription never carries the variable cost.
+      Each part covers what it is shaped like.</p>
+    </div>
+
     <div class="note warn">
       <span class="t">The trap to avoid</span>
-      The commonest failure in credit products is <b>letting the credit price float with your cost</b> &mdash;
-      &ldquo;this run cost us more, so it costs you more.&rdquo; It destroys trust and makes the product
-      impossible to budget for. Fix the price; manage the cost. That holds for hosting too: if Google
-      raises egress, we cache harder or eat it. The user&rsquo;s monthly number is a promise.
+      The commonest failure in credit products is <b>letting the credit price float with your cost</b> —
+      "this run cost us more, so it costs you more." It destroys trust and makes the product
+      impossible to budget for. Fix the price; manage the cost. Page three shows how to do that even
+      though your four models differ in cost by ten times.
     </div>
   </div>
 </section>
-
 
 <!-- ================= PAGE 2 ================= -->
 <section class="pg" id="p2" style="--ic:var(--i0); --ic-soft:var(--i0-soft)">
@@ -141,7 +102,7 @@
     <header class="pg-hd">
       <span class="pg-n">02</span>
       <div>
-        <p class="kicker">Page two &mdash; what to measure</p>
+        <p class="kicker">Page two — what to measure</p>
         <h2>The North Star, and its six branches</h2>
       </div>
     </header>
@@ -262,28 +223,20 @@
       <div>
         <span class="lbl">North Star</span>
         <h3>Weekly Successful Credit Burn</h3>
-        <p>Credits settled on jobs that <strong>completed and were kept</strong> &mdash;
-        not discarded, not refunded &mdash; summed every week.</p>
-        <p>It only rises when three things are true at once: people are <b>active</b>, they are
-        doing work <b>valuable enough to keep</b>, and you are <b>getting paid</b>.</p>
+        <p>Credits settled on jobs that <strong>completed</strong> and were <strong>kept</strong> —
+        not discarded, not refunded — summed every week.</p>
+        <p>It only rises when three things are true at once: people are <strong>active</strong>, they are
+        doing work <strong>valuable enough to keep</strong>, and you are <strong>getting paid</strong>.</p>
         <p>It cannot be gamed by breaking things, because failed jobs are free by policy. And it leads
         revenue by two to four weeks, so it doubles as an early warning.</p>
       </div>
-    </div>
-
-    <div class="note">
-      <span class="t">One refinement for v2</span>
-      Standing hosting charges settle every cycle without anyone pressing GO, so they would inflate
-      weekly burn without telling you anything about engagement. <b>Count them separately.</b> WSCB stays a
-      measure of work people chose to do; hosting revenue gets its own line, because it behaves like
-      subscription revenue, not like usage.
     </div>
 
     <h3>The six branches</h3>
     <p class="lede">Each one has a single number you can move next week.</p>
 
     <div class="branches">
-      <div class="br" style="--ic:var(--i1); --ic-soft:var(--i1-soft)">
+      <article class="br" style="--ic:var(--i1); --ic-soft:var(--i1-soft)">
         <div class="art"><svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
 <path d="M48,28 L312,28 L210,196 L150,196 Z" fill="var(--ic-soft)" stroke="var(--ic)" stroke-width="1.6" stroke-linejoin="round"/>
 <circle cx="169.19" cy="101.71" r="3" fill="var(--ic)"/>
@@ -440,12 +393,16 @@
 <text x="180" y="226" text-anchor="middle" font-family="var(--mono)" font-size="14" font-weight="600" fill="var(--on-ic)">first GO</text>
 
 </svg></div>
-        <div class="txt"><span class="n">Branch 1</span><h4>Acquisition</h4>
-        <p>Signups, cost to acquire, and the share of them who reach a first GO within a day. Most
-        people who never finish one job never come back.</p>
-        <div class="tgt">Target &mdash; <b>60% of signups reach a first GO on day one</b></div></div>
-      </div>
-      <div class="br" style="--ic:var(--i4); --ic-soft:var(--i4-soft)">
+        <div class="txt">
+          <span class="n">Branch 1</span>
+          <h4>Acquisition</h4>
+          <p>Signups, cost to acquire, and the share of them who reach a first GO within a day. Most
+          people who never finish one job never come back.</p>
+          <div class="tgt"><b>Target</b> — 60% of signups reach a first GO on day one</div>
+        </div>
+      </article>
+
+      <article class="br" style="--ic:var(--i2); --ic-soft:var(--i2-soft)">
         <div class="art"><svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
 <circle cx="180" cy="116" r="78" fill="var(--ic-soft)" stroke="var(--line)" stroke-width="1.5"/>
 <line x1="180" y1="50" x2="180" y2="39" stroke="var(--ink-3)" stroke-width="2" opacity="0.8"/>
@@ -525,12 +482,16 @@
 <text x="180" y="226" text-anchor="middle" font-family="var(--mono)" font-size="12.5" fill="var(--ink-3)">sign-in → first finished job</text>
 
 </svg></div>
-        <div class="txt"><span class="n">Branch 2</span><h4>Activation</h4>
-        <p>Time to First GO &mdash; minutes from sign-in to the first job that actually finishes. This is
-        the single best predictor of whether someone ever pays you.</p>
-        <div class="tgt">Target &mdash; <b>median under 8 minutes</b></div></div>
-      </div>
-      <div class="br" style="--ic:var(--i3); --ic-soft:var(--i3-soft)">
+        <div class="txt">
+          <span class="n">Branch 2</span>
+          <h4>Activation</h4>
+          <p>Time to First GO — minutes from sign-in to the first job that actually finishes. This is
+          the single best predictor of whether someone ever pays you.</p>
+          <div class="tgt"><b>Target</b> — median under 8 minutes</div>
+        </div>
+      </article>
+
+      <article class="br" style="--ic:var(--i3); --ic-soft:var(--i3-soft)">
         <div class="art"><svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
 <circle cx="180" cy="116" r="74" fill="none" stroke="var(--line)" stroke-width="1.4" />
 <circle cx="180" cy="116" r="50" fill="none" stroke="var(--line)" stroke-width="1.4" stroke-dasharray="3 5"/>
@@ -583,12 +544,16 @@
 <text x="180" y="226" text-anchor="middle" font-family="var(--mono)" font-size="12.5" fill="var(--ink-3)">one Scircle · rooms · spaces</text>
 
 </svg></div>
-        <div class="txt"><span class="n">Branch 3</span><h4>Engagement</h4>
-        <p>Weekly active Prime members, live Scircles, and GOs per active per week. Below four a week
-        they are visiting, not playing.</p>
-        <div class="tgt">Target &mdash; <b>12 GOs per active per week</b></div></div>
-      </div>
-      <div class="br" style="--ic:var(--i2); --ic-soft:var(--i2-soft)">
+        <div class="txt">
+          <span class="n">Branch 3</span>
+          <h4>Engagement</h4>
+          <p>Weekly active Prime members, live Scircles, and GOs per active per week. Below four a week
+          they are visiting, not playing.</p>
+          <div class="tgt"><b>Target</b> — 12 GOs per active per week</div>
+        </div>
+      </article>
+
+      <article class="br" style="--ic:var(--i4); --ic-soft:var(--i4-soft)">
         <div class="art"><svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
 <path d="M96.86,198 A96,96 0 1 1 263.14,198 L233.69,181 A62,62 0 1 0 126.31,181 Z" fill="var(--ink-3)" opacity="0.16"/>
 <path d="M219.05,62.3 A96,96 0 0 1 271.3,120.33 L238.97,130.84 A62,62 0 0 0 205.22,93.36 Z" fill="var(--ic-soft)" stroke="var(--ic)" stroke-width="1.5"/>
@@ -608,12 +573,16 @@
 <text x="180" y="184" text-anchor="middle" font-family="var(--mono)" font-size="12.5" fill="var(--ink-3)">of the allotment used</text>
 
 </svg></div>
-        <div class="txt"><span class="n">Branch 4</span><h4>Consumption</h4>
-        <p>Burn depth &mdash; how much of the monthly allotment actually gets used. Under 30% they will
-        churn. Over 95% they are rationing, and rationing people stop exploring.</p>
-        <div class="tgt">Healthy band &mdash; <b>60% to 80% of the allotment</b></div></div>
-      </div>
-      <div class="br" style="--ic:var(--i5); --ic-soft:var(--i5-soft)">
+        <div class="txt">
+          <span class="n">Branch 4</span>
+          <h4>Consumption</h4>
+          <p>Burn depth — how much of the monthly allotment actually gets used. Under 30% they will
+          churn. Over 95% they are rationing, and rationing people stop exploring.</p>
+          <div class="tgt"><b>Healthy band</b> — 60% to 80% of the allotment</div>
+        </div>
+      </article>
+
+      <article class="br" style="--ic:var(--i5); --ic-soft:var(--i5-soft)">
         <div class="art"><svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
 <path d="M116,30 A86,86 0 1 1 34.21,89.42 L64.64,99.31 A54,54 0 1 0 116,62 Z" fill="var(--ic)"/>
 <path d="M34.21,89.42 A86,86 0 0 1 116,30 L116,62 A54,54 0 0 0 64.64,99.31 Z" fill="var(--ink-3)" opacity="0.45"/>
@@ -634,12 +603,16 @@
 <text x="252" y="22" font-family="var(--mono)" font-size="11.5" fill="var(--ink-3)">$39</text>
 
 </svg></div>
-        <div class="txt"><span class="n">Branch 5</span><h4>Economics</h4>
-        <p>Cost per credit, margin per credit, accounts per guardian &mdash; and now <b>cost per live
-        surface</b>. Two fixed costs means two utilisation numbers to watch, not one.</p>
-        <div class="tgt">Target &mdash; <b>$0.002 cost per credit &middot; 80+ accounts per guardian</b></div></div>
-      </div>
-      <div class="br" style="--ic:var(--i6); --ic-soft:var(--i6-soft)">
+        <div class="txt">
+          <span class="n">Branch 5</span>
+          <h4>Economics</h4>
+          <p>Cost per credit, margin per credit, and accounts per guardian. The guardian share is the
+          second-biggest line in a Prime account — and the only one you control by operations, not code.</p>
+          <div class="tgt"><b>Target</b> — $0.002 cost per credit · 80% margin · 80+ accounts per guardian</div>
+        </div>
+      </article>
+
+      <article class="br" style="--ic:var(--i6); --ic-soft:var(--i6-soft)">
         <div class="art"><svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
 <line x1="26" y1="206" x2="334" y2="206" stroke="var(--line)" stroke-width="1.5"/>
 <path d="M26,180 C28.57,180.12 36.27,180.48 41.4,180.7 C46.53,180.93 51.67,181.14 56.8,181.35 C61.93,181.56 67.07,181.76 72.2,181.96 C77.33,182.15 82.47,182.34 87.6,182.51 C92.73,182.69 97.87,182.86 103,183.03 C108.13,183.19 113.27,183.35 118.4,183.5 C123.53,183.65 128.67,183.79 133.8,183.93 C138.93,184.07 144.07,184.2 149.2,184.32 C154.33,184.45 159.47,184.57 164.6,184.68 C169.73,184.79 174.87,184.9 180,185 C185.13,185.1 190.27,185.2 195.4,185.29 C200.53,185.38 205.67,185.46 210.8,185.54 C215.93,185.62 221.07,185.7 226.2,185.77 C231.33,185.84 236.47,185.9 241.6,185.96 C246.73,186.03 251.87,186.08 257,186.13 C262.13,186.18 267.27,186.23 272.4,186.27 C277.53,186.32 282.67,186.35 287.8,186.39 C292.93,186.42 298.07,186.45 303.2,186.48 C308.33,186.5 313.47,186.53 318.6,186.54 C323.73,186.56 331.43,186.58 334,186.59 L334,206 L26,206 Z" fill="var(--ic)" opacity="0.1"/>
@@ -660,49 +633,37 @@
 <text x="26" y="228" font-family="var(--mono)" font-size="12.5" fill="var(--ink-3)">six monthly cohorts, twenty months</text>
 
 </svg></div>
-        <div class="txt"><span class="n">Branch 6</span><h4>Retention</h4>
-        <p>Net revenue retention, logo churn, and the refund-and-waste rate. Hosting belongs here:
-        <b>you cannot churn without taking your own site down</b>, which makes a hosted account the
-        stickiest account in the model.</p>
-        <div class="tgt">Target &mdash; <b>NRR above 110% &middot; waste below 2%</b></div></div>
-      </div>
-    </div>
-
-    <h3>Two derived numbers v1 was missing</h3>
-    <div class="grid g2">
-      <div class="card" style="--ic:var(--i2)">
-        <span class="lbl">New &middot; 1</span>
-        <span class="big" style="font-size:30px">Monthly standing commitment</span>
-        <p>What this account owes every cycle before they do a single thing &mdash; every live surface,
-        datastore and domain, added up. A user needs to see it as one number, on one line.</p>
-      </div>
-      <div class="card" style="--ic:var(--risk)">
-        <span class="lbl">New &middot; 2</span>
-        <span class="big" style="font-size:30px">Runway after standing</span>
-        <p><b>v1&rsquo;s runway maths was wrong for anyone hosting anything.</b> It divided the balance by a
-        seven-day burn rate and ignored the recurring monthly draw entirely, so it overstated runway
-        for exactly the users most likely to be surprised.</p>
-      </div>
+        <div class="txt">
+          <span class="n">Branch 6</span>
+          <h4>Retention</h4>
+          <p>Net revenue retention, logo churn, and the refund-and-waste rate. When a cohort rises back
+          above where it started, expansion is beating churn — and you have a business that compounds.</p>
+          <div class="tgt"><b>Target</b> — NRR above 110% · waste below 2%</div>
+        </div>
+      </article>
     </div>
 
     <h3>Guardrails you are never allowed to trade away</h3>
+    <p class="lede">A North Star creates pressure. These must hold <b>while</b> you push it —
+    if one breaks, the gain was borrowed from next quarter.</p>
     <div class="tbl">
       <table>
-        <thead><tr><th class="n">#</th><th>Guardrail</th><th>Limit</th><th class="n">Status</th></tr></thead>
+        <thead><tr><th>Guardrail</th><th class="n">Limit</th><th>Why</th></tr></thead>
         <tbody>
-          <tr><td class="n">1</td><td>Credits charged for jobs that failed on our side</td><td>0%, no exceptions</td><td class="n"><span class="pill">v1</span></td></tr>
-          <tr><td class="n">2</td><td>&ldquo;I didn&rsquo;t expect that charge&rdquo; reports</td><td>under 1 per 1,000 GOs</td><td class="n"><span class="pill">v1</span></td></tr>
-          <tr><td class="n">3</td><td>Accounts burning over 95% of their allotment</td><td>under 15%</td><td class="n"><span class="pill">v1</span></td></tr>
-          <tr><td class="n">4</td><td>Breakage &mdash; credits sold, expired unused</td><td>under 8% of sales</td><td class="n"><span class="pill">v1</span></td></tr>
-          <tr><td class="n">5</td><td>Accounts per guardian</td><td>50 or more</td><td class="n"><span class="pill">v1</span></td></tr>
-          <tr><td class="n">6</td><td><b>No surface ever goes dark without two warnings and a sleep state</b></td><td>zero silent shutdowns</td><td class="n"><span class="pill good">new</span></td></tr>
+          <tr><td>Credits charged for jobs that failed on our side</td><td class="n">0%</td><td>The fastest way to lose trust in a credit product. No exceptions, ever.</td></tr>
+          <tr><td>"I didn't expect that charge" reports</td><td class="n">&lt; 1 per 1,000 GOs</td><td>Every charge must have been previewed on a GO card first.</td></tr>
+          <tr><td>Accounts burning over 95% of their allotment</td><td class="n">&lt; 15%</td><td>People rationing credits stop exploring — and exploration is where expansion revenue comes from.</td></tr>
+          <tr><td>Breakage — credits sold, expired unused</td><td class="n">&lt; 8% of sales</td><td>Looks like free profit. Is actually a signal you sold people more than they can use.</td></tr>
+          <tr><td>Accounts per guardian</td><td class="n">&ge; 50</td><td>Below this one fixed $500 cost eats the margin of everyone it serves. Page four.</td></tr>
         </tbody>
       </table>
     </div>
-    <div class="note">
-      Review cadence: one meeting a week, one screen. This week&rsquo;s burn against last week&rsquo;s, then the six
-      branches, then the six guardrails. <b>Burn up and nothing red</b> = ship more of whatever you just
-      shipped. <b>Burn up and something red</b> = you did not win, you borrowed from next quarter.
+
+    <div class="note good">
+      <span class="t">How to review it</span>
+      One meeting a week, one screen. <b>This week's burn against last week's</b>, then the six branch
+      numbers, then the five guardrails. Burn up and nothing red: ship more of whatever you just shipped.
+      Burn up and something red: <b>you did not win.</b>
     </div>
   </div>
 </section>
@@ -713,19 +674,24 @@
     <header class="pg-hd">
       <span class="pg-n">03</span>
       <div>
-        <p class="kicker">Page three &mdash; how credits work</p>
-        <h2>What everything costs</h2>
+        <p class="kicker">Page three — credits</p>
+        <h2>What every action costs</h2>
       </div>
     </header>
 
-    <p class="lede">The anchor: <b>1 credit = $0.01 of list value. 100 credits = $1.</b>
-    Model and media actions are priced at 5&times; our cost. Infrastructure is priced at 3&times;.
-    Every number below is computed from a real supplier rate, not chosen.</p>
+    <div class="key">
+      <span class="tag">The anchor</span>
+      <p><strong>1 credit = $0.01 of list value.</strong> 100 credits = $1. Plans buy credits below list,
+      so the plan always beats paying as you go — that is your upgrade engine.</p>
+      <p><strong>Our target cost is $0.002 per credit.</strong> Every price is set at <strong>5× our cost</strong>,
+      which is an 80% margin. If a new action can't be priced at 5× its cost, it doesn't ship until it can.</p>
+    </div>
 
-    <h3>Four models, one margin</h3>
-    <p>Your four Claude models differ in cost by ten times for the identical action. A flat price
-    either overcharges Haiku users or loses money on every Fable run. The fix is a multiplier tuned so
-    the margin is identical whichever tier a person picks &mdash; which is what lets you let them choose.</p>
+    <h3>The model problem, and the clean fix</h3>
+    <p class="lede">Your <code>agents-data.js</code> offers four models whose cost differs by <b>ten times</b>
+    for the identical action. Charge one flat price and either Haiku users are overcharged or Fable users
+    bankrupt you. So give each model a multiplier that tracks cost exactly — then margin comes out at 80%
+    <b>whichever model the person picks</b>, and you can let them choose freely.</p>
 
     <figure>
       <div class="panel"><svg viewBox="0 0 760 440" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Four model tiers priced at 15, 30, 75 and 150 credits, each holding an 80 percent margin.">
@@ -774,18 +740,22 @@
 <text x="24" y="426" font-family="var(--body)" font-size="16" fill="var(--ink-2)">The bars differ by ten times. The margin does not move at all — that is the whole trick.</text>
 
 </svg></div>
-      <figcaption>Prices from your own June 2026 table: Haiku $1/$5, Sonnet $2/$10, Opus $5/$25,
-      Fable $10/$50 per million tokens. One run = 20,000 input + 2,000 output tokens.</figcaption>
+      <figcaption>Prices from your own June 2026 table: Haiku $1/$5, Sonnet $2/$10, Opus $5/$25, Fable $10/$50 per million tokens.</figcaption>
     </figure>
 
     <div class="note warn">
-      <span class="t">One config change worth $5,700 a month</span>
-      Guardians currently default to <b>Opus 5</b> &mdash; a &times;2.5 multiplier on the most common action in
-      the product. Make <b>Sonnet 5 (&ldquo;Standard&rdquo;) the default</b> and let Deep be a deliberate choice on
-      the GO card. It is a one-line change.
+      <span class="t">Two changes this implies</span>
+      <b>(a)</b> Your default is <b>Opus 5</b> — a ×2.5 multiplier on the most common action in the product.
+      Make <b>Sonnet 5</b> the default and let Deep be a deliberate choice on the GO card. Worth roughly
+      <b>$5,700 a month</b> at the month-12 scale, and it is one line.
+      <b>(b)</b> Turn on prompt caching for Scircle and room context — your most repeated payload, at
+      about a tenth the price when cached.
     </div>
 
     <h3>The GO gate</h3>
+    <p class="lede">You already named this: NOW decides whether the scripting is possible.
+    That is the authorisation gate, and every metered action walks it.</p>
+
     <figure>
       <div class="panel"><svg viewBox="0 0 980 330" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Six-step credit flow: quote, GO card, hold, run, settle, ledger, with a free lane and a failure rule.">
 <text x="24" y="36" font-family="var(--mono)" font-size="14" letter-spacing="1.6" fill="var(--ink-3)">EVERY METERED ACTION WALKS THIS PATH, EVERY TIME</text>
@@ -834,8 +804,7 @@
 <text x="522" y="296" font-family="var(--body)" font-size="15" fill="var(--ink)">and the retry is free</text>
 
 </svg></div>
-      <figcaption>The only two places anyone is interrupted are the GO card and a not-enough-balance
-      offer. Everything else is silent.</figcaption>
+      <figcaption>The only two places anyone is interrupted are the GO card and a not-enough-balance offer. Everything else is silent.</figcaption>
     </figure>
 
     <h3>The rate card</h3>
@@ -843,280 +812,65 @@
       <table>
         <thead><tr><th>Action</th><th>Metered by</th><th class="n">Costs us</th><th class="n">Credits</th><th class="n">= $</th></tr></thead>
         <tbody>
-          <tr class="grp"><td colspan="5">Tier 0 &mdash; free forever. The product existing is not a billable event.</td></tr>
-          <tr><td colspan="4">Sign in &middot; browse &middot; read a room &middot; replay a recording you own &middot; re-read a transcript you
-          paid for &middot; join a Scircle &middot; open NOW &middot; cancel before GO &middot; any retry after a failure on our side
-          &middot; <b>publishing a guardian version</b></td><td class="n">$0.00</td></tr>
+          <tr class="grp"><td colspan="5">Tier 0 — free forever. The product existing is not a billable event.</td></tr>
+          <tr><td colspan="4">Sign in · browse · read a room · replay a recording you own · re-read a transcript you paid for · join a Scircle · open NOW · cancel before GO · <strong>any retry after a failure on our side</strong></td><td class="n">$0.00</td></tr>
 
-          <tr class="grp"><td colspan="5">Tier 1 &mdash; conversation and guardian work</td></tr>
-          <tr><td>Room turn &mdash; Swift / Standard / Deep / Cinematic</td><td>turn</td><td class="n">$0.006 &rarr; $0.060</td><td class="n">3 / 6 / 15 / 30</td><td class="n">$0.03 &rarr; $0.30</td></tr>
-          <tr><td>Guardian run &mdash; Swift / Standard / Deep / Cinematic</td><td>run</td><td class="n">$0.030 &rarr; $0.300</td><td class="n">15 / 30 / 75 / 150</td><td class="n">$0.15 &rarr; $1.50</td></tr>
-          <tr><td>Build a specialised guardian <span style="font-size:14px;color:var(--ink-3)" class="mono">3 steps, ~4 runs</span></td><td>build</td><td class="n">$0.240</td><td class="n">120</td><td class="n">$1.20</td></tr>
-          <tr><td>Scheduled / unattended queue run</td><td>run</td><td class="n">&mdash;</td><td class="n">+10%</td><td class="n">premium</td></tr>
+          <tr class="grp"><td colspan="5">Tier 1 — conversation and guardian work</td></tr>
+          <tr><td>Room turn — Swift / Standard / Deep / Cinematic</td><td>turn</td><td class="n">$0.006 → $0.060</td><td class="n">3 / 6 / 15 / 30</td><td class="n">$0.03 → $0.30</td></tr>
+          <tr><td>Guardian run — Swift / Standard / Deep / Cinematic</td><td>run</td><td class="n">$0.030 → $0.300</td><td class="n">15 / 30 / 75 / 150</td><td class="n">$0.15 → $1.50</td></tr>
+          <tr><td>Build a specialised guardian (3 steps, ~4 runs)</td><td>build</td><td class="n">$0.240</td><td class="n">120</td><td class="n">$1.20</td></tr>
+          <tr><td>Publish a guardian version</td><td>version</td><td class="n">~0</td><td class="n">0</td><td class="n">$0.00</td></tr>
 
-          <tr class="grp"><td colspan="5">Tier 2 &mdash; Capture &amp; stream</td></tr>
+          <tr class="grp"><td colspan="5">Tier 2 — Capture &amp; stream</td></tr>
           <tr><td>Transcription</td><td>audio minute</td><td class="n">$0.006</td><td class="n">3</td><td class="n">$0.03</td></tr>
           <tr><td>Transcript as Word or PDF</td><td>document</td><td class="n">$0.002</td><td class="n">2</td><td class="n">$0.02</td></tr>
           <tr><td>Edit render (FFmpeg)</td><td>output minute</td><td class="n">$0.040</td><td class="n">20</td><td class="n">$0.20</td></tr>
           <tr><td>Live production</td><td>stream minute</td><td class="n">$0.030</td><td class="n">15</td><td class="n">$0.15</td></tr>
-          <tr><td>Clip / short cut</td><td>clip</td><td class="n">$0.012</td><td class="n">6</td><td class="n">$0.06</td></tr>
 
-          <tr class="grp"><td colspan="5">Tier 3 &mdash; media, world and data</td></tr>
+          <tr class="grp"><td colspan="5">Tier 3 — media, world and data</td></tr>
           <tr><td>Image or scene frame</td><td>image</td><td class="n">$0.040</td><td class="n">20</td><td class="n">$0.20</td></tr>
           <tr><td>Video generation</td><td>5 seconds</td><td class="n">$0.400</td><td class="n">200</td><td class="n">$2.00</td></tr>
           <tr><td>Scircle world recompute</td><td>recompute</td><td class="n">$0.090</td><td class="n">45</td><td class="n">$0.45</td></tr>
           <tr><td>Cerebral deep analysis</td><td>analysis</td><td class="n">$0.700</td><td class="n">350</td><td class="n">$3.50</td></tr>
-          <tr><td>Web / source extraction &middot; Muse tool call</td><td>page &middot; call</td><td class="n">$0.002 &middot; $0.004</td><td class="n">1 &middot; 2</td><td class="n">$0.01 &middot; $0.02</td></tr>
+          <tr><td>Web / source extraction · Muse tool call</td><td>page · call</td><td class="n">$0.002 · $0.004</td><td class="n">1 · 2</td><td class="n">$0.01 · $0.02</td></tr>
 
-          <tr class="grp"><td colspan="5">Tier 6 &mdash; stored media, billed monthly, never per click</td></tr>
-          <tr><td>Retained media</td><td>GB &middot; month</td><td class="n">$0.023</td><td class="n">15</td><td class="n">$0.15</td></tr>
-          <tr><td>Motion embed licence <span style="font-size:14px;color:var(--ink-3)" class="mono">cost basis unverified &mdash; see page five</span></td><td>site &middot; month</td><td class="n">~$0.30</td><td class="n">flat 200</td><td class="n">$2.00</td></tr>
+          <tr class="grp"><td colspan="5">Tier 4 — carry costs, monthly, never per click</td></tr>
+          <tr><td>Retained media · delivery</td><td>GB·month · GB</td><td class="n">$0.023 · $0.085</td><td class="n">15 · 40</td><td class="n">$0.15 · $0.40</td></tr>
+          <tr><td>Motion embed licence</td><td>site · month</td><td class="n">~$0.10</td><td class="n">flat</td><td class="n">$2.00</td></tr>
 
-          <tr class="grp"><td colspan="5">Tier 7 &mdash; pass-through. Separately authorised, never inside an allotment.</td></tr>
-          <tr><td>Dialog matter intelligence &middot; any vendor via NOW</td><td>measured</td><td class="n">actual</td><td class="n">&times;1.35 &middot; &times;1.30</td><td class="n">&mdash;</td></tr>
+          <tr class="grp"><td colspan="5">Tier 5 — pass-through. Separately authorised, never inside an allotment.</td></tr>
+          <tr><td>Dialog matter intelligence · any vendor via NOW</td><td>measured</td><td class="n">actual</td><td class="n">× 1.35 · × 1.30</td><td class="n">—</td></tr>
         </tbody>
       </table>
     </div>
 
-    <div class="note risk">
-      <span class="t">Two corrections to v1&rsquo;s rate card</span>
-      <b>&ldquo;Publish a guardian version: free&rdquo; was the most expensive sentence in v1.</b> Publishing is still
-      free &mdash; <em>staying live</em> is not, and that is the whole of Tier 8 below.
-      And v1 priced delivery egress against an assumed cost of $0.085/GB at &ldquo;79% margin.&rdquo; Google Cloud
-      Premium Tier egress is <b>$0.12/GB</b> for the first terabyte, so the real margin on that line was
-      <b>70%</b>, not 79% &mdash; wrong before Tier 8 ever existed.
-    </div>
-
-    <h3>New &mdash; Tier 8 &middot; Live Surfaces</h3>
-    <p class="lede">Anything a guardian builds that <b>keeps running on our servers</b>: a published site,
-    an app, its database, its domain. Billed monthly as <b>standing charges</b>, priced at 3&times; our real
-    Google Cloud bill.</p>
-
-    <figure>
-      <div class="panel"><svg viewBox="0 0 900 492" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Tier 8 live surface SKUs: Google Cloud cost against price, each holding 67 to 70 percent margin.">
-<text x="24" y="34" font-family="var(--mono)" font-size="14" letter-spacing="1.6" fill="var(--ink-3)">TIER 8 · WHAT EACH LIVE SURFACE COSTS US AND WHAT IT SELLS FOR</text>
-<text x="286" y="64" font-family="var(--mono)" font-size="12" letter-spacing="1.2" fill="var(--ink-3)">GOOGLE CLOUD COST</text>
-<text x="858" y="64" text-anchor="end" font-family="var(--mono)" font-size="12" letter-spacing="1.2" fill="var(--ink-3)">GROSS MARGIN</text>
-<text x="24" y="108" font-family="var(--body)" font-size="16.5" font-weight="700" fill="var(--ink)">Static surface</text>
-<text x="24" y="128" font-family="var(--mono)" font-size="12.5" fill="var(--ink-3)">GCS + Cloud CDN</text>
-<rect x="286" y="92" width="572" height="42" rx="6" fill="var(--i4-soft)" stroke="var(--i4)" stroke-width="1.5"/>
-<rect x="286" y="92" width="171.6" height="42" rx="6" fill="var(--ink-2)"/>
-<text x="296" y="119" font-family="var(--mono)" font-size="14" font-weight="600" fill="var(--surface)">$0.30</text>
-<text x="846" y="119" text-anchor="end" font-family="var(--mono)" font-size="16" font-weight="600" fill="var(--i4)">70%  ·  $1.00/mo</text>
-<text x="24" y="180" font-family="var(--body)" font-size="16.5" font-weight="700" fill="var(--ink)">Live app base</text>
-<text x="24" y="200" font-family="var(--mono)" font-size="12.5" fill="var(--ink-3)">Cloud Run, scale-to-zero</text>
-<rect x="286" y="164" width="572" height="42" rx="6" fill="var(--i4-soft)" stroke="var(--i4)" stroke-width="1.5"/>
-<rect x="286" y="164" width="171.6" height="42" rx="6" fill="var(--ink-2)"/>
-<text x="296" y="191" font-family="var(--mono)" font-size="14" font-weight="600" fill="var(--surface)">$0.60</text>
-<text x="846" y="191" text-anchor="end" font-family="var(--mono)" font-size="16" font-weight="600" fill="var(--i4)">70%  ·  $2.00/mo</text>
-<text x="24" y="252" font-family="var(--body)" font-size="16.5" font-weight="700" fill="var(--ink)">Always-on app</text>
-<text x="24" y="272" font-family="var(--mono)" font-size="12.5" fill="var(--ink-3)">Cloud Run, min-instance 1</text>
-<rect x="286" y="236" width="572" height="42" rx="6" fill="var(--i4-soft)" stroke="var(--i4)" stroke-width="1.5"/>
-<rect x="286" y="236" width="190.7" height="42" rx="6" fill="var(--ink-2)"/>
-<text x="296" y="263" font-family="var(--mono)" font-size="14" font-weight="600" fill="var(--surface)">$10.00</text>
-<text x="846" y="263" text-anchor="end" font-family="var(--mono)" font-size="16" font-weight="600" fill="var(--i4)">67%  ·  $30.00/mo</text>
-<text x="24" y="324" font-family="var(--body)" font-size="16.5" font-weight="700" fill="var(--ink)">Managed Postgres</text>
-<text x="24" y="344" font-family="var(--mono)" font-size="12.5" fill="var(--ink-3)">Cloud SQL db-f1-micro</text>
-<rect x="286" y="308" width="572" height="42" rx="6" fill="var(--i4-soft)" stroke="var(--i4)" stroke-width="1.5"/>
-<rect x="286" y="308" width="190.7" height="42" rx="6" fill="var(--ink-2)"/>
-<text x="296" y="335" font-family="var(--mono)" font-size="14" font-weight="600" fill="var(--surface)">$10.00</text>
-<text x="846" y="335" text-anchor="end" font-family="var(--mono)" font-size="16" font-weight="600" fill="var(--i4)">67%  ·  $30.00/mo</text>
-<text x="24" y="396" font-family="var(--body)" font-size="16.5" font-weight="700" fill="var(--ink)">Custom domain + SSL</text>
-<text x="24" y="416" font-family="var(--mono)" font-size="12.5" fill="var(--ink-3)">shared LB + managed cert</text>
-<rect x="286" y="380" width="572" height="42" rx="6" fill="var(--i4-soft)" stroke="var(--i4)" stroke-width="1.5"/>
-<rect x="286" y="380" width="190.7" height="42" rx="6" fill="var(--ink-2)"/>
-<text x="296" y="407" font-family="var(--mono)" font-size="14" font-weight="600" fill="var(--surface)">$0.50</text>
-<text x="846" y="407" text-anchor="end" font-family="var(--mono)" font-size="16" font-weight="600" fill="var(--i4)">67%  ·  $1.50/mo</text>
-<text x="24" y="468" font-family="var(--body)" font-size="15.5" fill="var(--ink-2)">Bar length is the price. The dark part is our Google Cloud bill; the rest is margin. Target 3x, not the 5x used for model work.</text>
-</svg></div>
-      <figcaption>Costs are us-central1 list rates: Cloud Run $0.000024/vCPU-second and
-      $0.0000025/GiB-second plus $0.40 per million requests; Cloud SQL <code>db-f1-micro</code> at roughly
-      $8&ndash;10/month; Cloud Storage plus Cloud CDN for static. Re-check before release &mdash; these move.</figcaption>
-    </figure>
-
-    <div class="tbl">
-      <table>
-        <thead><tr><th>Standing SKU</th><th>Google service</th><th class="n">Costs us / mo</th><th class="n">Credits / mo</th><th class="n">= $ / mo</th><th class="n">GM</th></tr></thead>
-        <tbody>
-          <tr><td>Static surface</td><td>Cloud Storage + Cloud CDN</td><td class="n">~$0.30</td><td class="n">100</td><td class="n">$1.00</td><td class="n">70%</td></tr>
-          <tr><td>Live app base <span style="font-size:14px;color:var(--ink-3)" class="mono">scale-to-zero, wakes on request</span></td><td>Cloud Run, request-billed</td><td class="n">~$0.60</td><td class="n">200</td><td class="n">$2.00</td><td class="n">70%</td></tr>
-          <tr><td>Always-on app <span style="font-size:14px;color:var(--ink-3)" class="mono">no cold start</span></td><td>Cloud Run, min-instance 1</td><td class="n">~$10.00</td><td class="n">3,000</td><td class="n">$30.00</td><td class="n">67%</td></tr>
-          <tr><td>Managed Postgres</td><td>Cloud SQL <code>db-f1-micro</code></td><td class="n">~$10.00</td><td class="n">3,000</td><td class="n">$30.00</td><td class="n">67%</td></tr>
-          <tr><td>Serverless datastore <span style="font-size:14px;color:var(--ink-3)" class="mono">the default for new apps</span></td><td>Firestore</td><td class="n">$0 base</td><td class="n">metered</td><td class="n">metered</td><td class="n">67%</td></tr>
-          <tr><td>Custom domain + SSL</td><td>shared load balancer, managed cert</td><td class="n">~$0.50</td><td class="n">150</td><td class="n">$1.50</td><td class="n">67%</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <p><b>And metered on top of the base</b>, once a surface runs past its included envelope:</p>
-    <div class="tbl">
-      <table>
-        <thead><tr><th>Unit</th><th class="n">Costs us</th><th class="n">Credits</th><th class="n">= $</th><th class="n">GM</th></tr></thead>
-        <tbody>
-          <tr><td>App compute</td><td class="n">$0.0864 / vCPU-hr</td><td class="n">25 / vCPU-hr</td><td class="n">$0.25</td><td class="n">65%</td></tr>
-          <tr><td>App memory</td><td class="n">~$0.009 / GiB-hr</td><td class="n">3 / GiB-hr</td><td class="n">$0.03</td><td class="n">70%</td></tr>
-          <tr><td>Requests</td><td class="n">$0.40 / million</td><td class="n">12 / 100k</td><td class="n">$0.12</td><td class="n">67%</td></tr>
-          <tr><td>Egress &mdash; CDN-cached</td><td class="n">~$0.04 / GiB</td><td class="n">12 / GB</td><td class="n">$0.12</td><td class="n">67%</td></tr>
-          <tr><td>Egress &mdash; origin, Premium Tier</td><td class="n">$0.12 / GB</td><td class="n">40 / GB</td><td class="n">$0.40</td><td class="n">70%</td></tr>
-          <tr><td>Datastore storage</td><td class="n">~$0.20 / GB&middot;mo</td><td class="n">60 / GB&middot;mo</td><td class="n">$0.60</td><td class="n">67%</td></tr>
-          <tr class="total"><td>End-user AI inside their app <span style="font-size:14px;color:var(--ink-3)" class="mono">dormant until it ships</span></td><td class="n">actual</td><td class="n">&times;1.35</td><td class="n">pass-through</td><td class="n">26%</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="note risk">
-      <span class="t">The dangerous row</span>
-      Guardians build everything today, so nothing a user ships calls a model at runtime <em>yet</em>. The
-      moment one does, <b>their</b> users are spending <b>our</b> token budget with no ceiling. Build the meter
-      now and ship it switched off: declare it as pass-through at &times;1.35, separately authorised, never
-      inside an allotment. Retrofitting a budget gate after the first uncapped bill is the expensive order.
-    </div>
-
-    <h3>Every plan gets a free hosting envelope</h3>
-    <p class="lede">This is the single most important design choice in Tier 8, and it is borrowed
-    directly from Lovable: <b>the first thing you publish must cost nothing.</b> Otherwise people build
-    something, discover it costs money to show anyone, and never share it &mdash; which kills the only
-    growth loop a build product has.</p>
-
-    <div class="tbl">
-      <table>
-        <thead><tr><th>Plan</th><th>Included surfaces</th><th class="n">Hosting overage allowance</th><th>Idle policy</th></tr></thead>
-        <tbody>
-          <tr><td><b>Signal</b> &middot; free</td><td>1 static surface</td><td class="n">&mdash;</td><td>sleeps after 7 days idle</td></tr>
-          <tr><td><b>Prime</b> &middot; $39</td><td>1 live app + 1 static</td><td class="n">500 cr / mo</td><td>sleeps after 30 days idle</td></tr>
-          <tr><td><b>Studio</b> &middot; $199</td><td>3 live apps + static</td><td class="n">3,000 cr / mo</td><td>manual sleep only</td></tr>
-          <tr><td><b>World</b> &middot; $999</td><td>10 live apps + static</td><td class="n">15,000 cr / mo</td><td>manual sleep only</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="note warn">
-      <span class="t">The envelope is a real cost, not a free lunch</span>
-      Google&rsquo;s free tier &mdash; 180,000 vCPU-seconds, 2 million requests, one free Firestore database &mdash; is
-      <b>per billing account, not per app</b>. It is consumed once across every customer we host, not a
-      thousand times. So every &ldquo;hosting is basically free for small apps&rdquo; intuition from the consumer
-      tools does not transfer to us. <b>Model the envelope as a marketing cost in COGS</b>, the same way the
-      free credit tier is modelled. Page five puts a number on it.
-    </div>
-
-    <h3>A standing meter needs a lifecycle, not a moment</h3>
-    <figure>
-      <div class="panel"><svg viewBox="0 0 980 352" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Six-step surface lifecycle: publish, live, two warnings, sleep, wake.">
-<text x="24" y="34" font-family="var(--mono)" font-size="14" letter-spacing="1.6" fill="var(--ink-3)">A STANDING METER HAS A LIFECYCLE, NOT A MOMENT</text>
-<rect x="24.0" y="72" width="144.5" height="132" rx="12" fill="var(--surface-2)" stroke="var(--line)" stroke-width="1.5"/>
-<text x="96.2" y="104" text-anchor="middle" font-family="var(--mono)" font-size="14.5" font-weight="600" letter-spacing="1" fill="var(--i6)">PUBLISH</text>
-<text x="96.2" y="128" text-anchor="middle" font-family="var(--mono)" font-size="12" fill="var(--ink-3)">free, always</text>
-<text x="96.2" y="154" text-anchor="middle" font-family="var(--body)" font-size="13" fill="var(--ink)">but the button shows</text>
-<text x="96.2" y="173" text-anchor="middle" font-family="var(--body)" font-size="13" fill="var(--ink)">the monthly cost</text>
-<text x="96.2" y="195" text-anchor="middle" font-family="var(--mono)" font-size="12" fill="var(--ink-3)">01</text>
-<path d="M170.5,131 L178.5,138 L170.5,145" fill="none" stroke="var(--ink-3)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
-<rect x="181.5" y="72" width="144.5" height="132" rx="12" fill="var(--i4-soft)" stroke="var(--i4)" stroke-width="2.5"/>
-<text x="253.8" y="104" text-anchor="middle" font-family="var(--mono)" font-size="14.5" font-weight="600" letter-spacing="1" fill="var(--i4)">LIVE</text>
-<text x="253.8" y="128" text-anchor="middle" font-family="var(--mono)" font-size="12" fill="var(--ink-3)">metered monthly</text>
-<text x="253.8" y="154" text-anchor="middle" font-family="var(--body)" font-size="13" fill="var(--ink)">renewal GO each cycle</text>
-<text x="253.8" y="173" text-anchor="middle" font-family="var(--body)" font-size="13" fill="var(--ink)">budget + stop condition</text>
-<text x="253.8" y="195" text-anchor="middle" font-family="var(--mono)" font-size="12" fill="var(--ink-3)">02</text>
-<path d="M328.0,131 L336.0,138 L328.0,145" fill="none" stroke="var(--ink-3)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
-<rect x="339.0" y="72" width="144.5" height="132" rx="12" fill="var(--surface-2)" stroke="var(--line)" stroke-width="1.5"/>
-<text x="411.2" y="104" text-anchor="middle" font-family="var(--mono)" font-size="14.5" font-weight="600" letter-spacing="1" fill="var(--warn)">WARN 1</text>
-<text x="411.2" y="128" text-anchor="middle" font-family="var(--mono)" font-size="12" fill="var(--ink-3)">14 days out</text>
-<text x="411.2" y="154" text-anchor="middle" font-family="var(--body)" font-size="13" fill="var(--ink)">“this renews for X”</text>
-<text x="411.2" y="173" text-anchor="middle" font-family="var(--body)" font-size="13" fill="var(--ink)">one tap to change it</text>
-<text x="411.2" y="195" text-anchor="middle" font-family="var(--mono)" font-size="12" fill="var(--ink-3)">03</text>
-<path d="M485.5,131 L493.5,138 L485.5,145" fill="none" stroke="var(--ink-3)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
-<rect x="496.5" y="72" width="144.5" height="132" rx="12" fill="var(--warn-wash)" stroke="var(--warn-line)" stroke-width="2"/>
-<text x="568.8" y="104" text-anchor="middle" font-family="var(--mono)" font-size="14.5" font-weight="600" letter-spacing="1" fill="var(--warn)">WARN 2</text>
-<text x="568.8" y="128" text-anchor="middle" font-family="var(--mono)" font-size="12" fill="var(--ink-3)">3 days out</text>
-<text x="568.8" y="154" text-anchor="middle" font-family="var(--body)" font-size="13" fill="var(--ink)">balance short</text>
-<text x="568.8" y="173" text-anchor="middle" font-family="var(--body)" font-size="13" fill="var(--ink)">top up, trim, or sleep</text>
-<text x="568.8" y="195" text-anchor="middle" font-family="var(--mono)" font-size="12" fill="var(--ink-3)">04</text>
-<path d="M643.0,131 L651.0,138 L643.0,145" fill="none" stroke="var(--ink-3)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
-<rect x="654.0" y="72" width="144.5" height="132" rx="12" fill="var(--surface-2)" stroke="var(--line)" stroke-width="1.5"/>
-<text x="726.2" y="104" text-anchor="middle" font-family="var(--mono)" font-size="14.5" font-weight="600" letter-spacing="1" fill="var(--i3)">SLEEP</text>
-<text x="726.2" y="128" text-anchor="middle" font-family="var(--mono)" font-size="12" fill="var(--ink-3)">not deleted</text>
-<text x="726.2" y="154" text-anchor="middle" font-family="var(--body)" font-size="13" fill="var(--ink)">a wake page, data kept</text>
-<text x="726.2" y="173" text-anchor="middle" font-family="var(--body)" font-size="13" fill="var(--ink)">60 days</text>
-<text x="726.2" y="195" text-anchor="middle" font-family="var(--mono)" font-size="12" fill="var(--ink-3)">05</text>
-<path d="M800.5,131 L808.5,138 L800.5,145" fill="none" stroke="var(--ink-3)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
-<rect x="811.5" y="72" width="144.5" height="132" rx="12" fill="var(--good-wash)" stroke="var(--good-line)" stroke-width="2"/>
-<text x="883.8" y="104" text-anchor="middle" font-family="var(--mono)" font-size="14.5" font-weight="600" letter-spacing="1" fill="var(--i6)">WAKE</text>
-<text x="883.8" y="128" text-anchor="middle" font-family="var(--mono)" font-size="12" fill="var(--ink-3)">one tap</text>
-<text x="883.8" y="154" text-anchor="middle" font-family="var(--body)" font-size="13" fill="var(--ink)">back in seconds</text>
-<text x="883.8" y="173" text-anchor="middle" font-family="var(--body)" font-size="13" fill="var(--ink)">nothing was lost</text>
-<text x="883.8" y="195" text-anchor="middle" font-family="var(--mono)" font-size="12" fill="var(--ink-3)">06</text>
-<path d="M883.8,214 C883.8,246 240.8,246 253.8,214" fill="none" stroke="var(--i6)" stroke-width="2" stroke-dasharray="5 5"/>
-<text x="500" y="266" text-anchor="middle" font-family="var(--mono)" font-size="13" fill="var(--i6)">WAKING RESUMES THE SAME SURFACE — SAME URL, SAME DATA</text>
-<rect x="24" y="286" width="932" height="52" rx="10" fill="var(--risk-wash)" stroke="var(--risk-line)" stroke-width="1.5"/>
-<text x="44" y="309" font-family="var(--mono)" font-size="12.5" letter-spacing="1.4" fill="var(--risk)">THE RULE THAT OUTRANKS THE REVENUE</text>
-<text x="44" y="329" font-family="var(--body)" font-size="15" fill="var(--ink)">No surface ever goes dark without two warnings and a sleep state. We never delete someone’s live site to collect a debt.</text>
-</svg></div>
-      <figcaption>A one-time GO card is the wrong shape for a recurring charge. A standing meter gets a
-      <b>renewal GO</b>: a monthly cost preview, a budget cap and a stop condition, every cycle.</figcaption>
-    </figure>
-
-    <h3>The rules, now twelve</h3>
-    <div class="tbl">
-      <table>
-        <thead><tr><th class="n">#</th><th>Rule</th></tr></thead>
-        <tbody>
-          <tr><td class="n">01</td><td>Price the verb, not the token.</td></tr>
-          <tr><td class="n">02</td><td>Reading is free. Doing costs.</td></tr>
-          <tr><td class="n">03</td><td>Failure is free. The hold is voided, never &ldquo;refunded later.&rdquo;</td></tr>
-          <tr><td class="n">04</td><td>Nothing runs without a GO.</td></tr>
-          <tr><td class="n">05</td><td>Quote before, settle after &mdash; always the measured amount.</td></tr>
-          <tr><td class="n">06</td><td>One currency inside, many outside.</td></tr>
-          <tr><td class="n">07</td><td>The price is fixed. The cost is ours to manage.</td></tr>
-          <tr><td class="n"><span class="pill good">08</span></td><td><b>Publishing is free. Staying live is not</b> &mdash; and the publish button itself says the monthly figure, before the first deploy.</td></tr>
-          <tr><td class="n"><span class="pill good">09</span></td><td><b>A standing meter gets a renewal GO</b>, not a one-time GO: cost preview, budget cap, stop condition, every cycle.</td></tr>
-          <tr><td class="n"><span class="pill good">10</span></td><td><b>Sleep, never delete.</b> Out of credits &rarr; the surface sleeps behind a wake page. Data kept 60 days, mirroring the dunning ladder.</td></tr>
-          <tr><td class="n"><span class="pill good">11</span></td><td><b>Scale to zero by default.</b> Always-on is a deliberate upgrade the user chooses, exactly like Deep on the model picker.</td></tr>
-          <tr><td class="n"><span class="pill good">12</span></td><td><b>Publish the unit rates.</b> Replit publishes theirs and is trusted for it; Emergent hides a $10/app deployment fee and takes the reputational hit.</td></tr>
-        </tbody>
-      </table>
+    <div class="grid g3">
+      <div class="card"><span class="lbl">A working session</span><span class="big">78 cr</span><p>20 min capture + transcript + one Standard guardian run. <strong>$0.78</strong> — costs us $0.156.</p></div>
+      <div class="card"><span class="lbl">Building a guardian</span><span class="big">120 cr</span><p><strong>$1.20</strong>, costs us $0.24. Cheap enough that nobody hesitates — and guardians drive retention.</p></div>
+      <div class="card"><span class="lbl">A heavy Scircle week</span><span class="big">2,400 cr</span><p>40 turns, 6 runs, 90 min capture, 3 renders, 2 recomputes, 1 Cerebral pass. <strong>$24</strong> — inside one Prime allotment.</p></div>
     </div>
 
     <h3>Where credits live: four buckets, one order</h3>
-    <p>A wallet is not one number. It is four buckets that always spend in the same order &mdash;
+    <p class="lede">A wallet is not one number. It is four buckets that always spend in the same order —
     <b>whatever expires soonest goes first</b>. Show this order in NOW; it is the thing people most often
     accuse credit products of cheating on.</p>
     <div class="tbl">
       <table>
-        <thead><tr><th class="n">Order</th><th>Bucket</th><th>Where it came from</th><th>Expires</th></tr></thead>
+        <thead><tr><th class="n">Order</th><th>Bucket</th><th>Where it came from</th><th class="n">Expires</th></tr></thead>
         <tbody>
-          <tr><td class="n">1st</td><td>Promo</td><td>Onboarding grant, a campaign, an apology</td><td>7&ndash;30 days</td></tr>
-          <tr><td class="n">2nd</td><td>Plan</td><td>This month&rsquo;s allotment</td><td>End of cycle, +30 days grace</td></tr>
-          <tr><td class="n">3rd</td><td>Purchased</td><td>Top-ups they paid cash for</td><td>12 months</td></tr>
-          <tr><td class="n">4th</td><td>Overdraft</td><td>Studio and World only</td><td>Settles on the next invoice</td></tr>
+          <tr><td class="n">1st</td><td><strong>Promo</strong></td><td>Onboarding grant, a campaign, an apology</td><td class="n">7–30 days</td></tr>
+          <tr><td class="n">2nd</td><td><strong>Plan</strong></td><td>This month's allotment</td><td class="n">End of cycle, +30 days grace</td></tr>
+          <tr><td class="n">3rd</td><td><strong>Purchased</strong></td><td>Top-ups they paid cash for</td><td class="n">12 months</td></tr>
+          <tr><td class="n">4th</td><td><strong>Overdraft</strong></td><td>Studio and World only</td><td class="n">Settles on the next invoice</td></tr>
         </tbody>
       </table>
     </div>
-    <div class="note good">
-      <span class="t">One exception, new in v2</span>
-      <b>Hosting draws from Plan credits first, never Promo.</b> A seven-day welcome grant must never
-      silently buy a month of hosting the user did not know they had started &mdash; they would discover it
-      only when the grant expired and their site went quiet.
-    </div>
 
-    <h3>What this looks like in practice</h3>
-    <div class="grid g3">
-      <div class="card" style="--ic:var(--i4)"><span class="lbl">A working session</span><span class="big">92 cr</span>
-      <p>20 minutes of capture and transcription (60) + the transcript as a document (2) + one Standard
-      guardian run (30). <b>$0.92</b> &mdash; costs us $0.182.</p></div>
-      <div class="card" style="--ic:var(--i3)"><span class="lbl">Building a guardian</span><span class="big">120 cr</span>
-      <p><b>$1.20</b>, costs us $0.24. Cheap enough that nobody hesitates &mdash; and guardian-building drives
-      retention.</p></div>
-      <div class="card" style="--ic:var(--i2)"><span class="lbl">Shipping what it built</span><span class="big">$3.50<span style="font-size:18px">/mo</span></span>
-      <p>A live app on a custom domain: base 200 cr + domain 150 cr, then metered. Inside a Prime
-      envelope, the first one is <b>free</b>.</p></div>
-      <div class="card" style="--ic:var(--i0)"><span class="lbl">A heavy Scircle week</span><span class="big">2,400 cr</span>
-      <p>40 turns, 6 runs, 90 min capture, 3 renders, 2 recomputes, 1 Cerebral pass. <b>$24</b> &mdash; inside
-      one Prime allotment.</p></div>
-      <div class="card" style="--ic:var(--risk)"><span class="lbl">A serious production app</span><span class="big">$61<span style="font-size:18px">/mo</span></span>
-      <p>Always-on (3,000 cr) + managed Postgres (3,000 cr) + domain (150) + traffic. This is a Studio
-      customer, and the SKU pays for itself.</p></div>
-      <div class="card" style="--ic:var(--i6)"><span class="lbl">The hard floor</span><span class="big">$0.004</span>
-      <p>Never sell a credit below this &mdash; 2&times; cost, 50% margin. The lowest an enterprise negotiation may
-      reach. Write it down before the first big customer asks.</p></div>
+    <div class="note risk">
+      <span class="t">The hard floor</span>
+      <b>Never sell a credit below $0.004</b> — 2× cost, 50% margin. That is the lowest an enterprise
+      negotiation may reach. Write it down before your first big customer asks for a discount, because
+      in the room you will want to say yes.
     </div>
   </div>
 </section>
@@ -1127,7 +881,7 @@
     <header class="pg-hd">
       <span class="pg-n">04</span>
       <div>
-        <p class="kicker">Page four &mdash; billing and the fixed costs</p>
+        <p class="kicker">Page four — billing and the fixed cost</p>
         <h2>Money in, revenue later</h2>
       </div>
     </header>
@@ -1181,52 +935,60 @@
 <text x="24" y="386" font-family="var(--body)" font-size="16" fill="var(--ink-2)">Report the unburned balance monthly. It is service you still owe — and the first number an investor checks.</text>
 
 </svg></div>
-      <figcaption>Get steps 6&ndash;8 right from day one. Retrofitting deferred-revenue accounting later is a
-      painful audit, and it is the first thing an investor or acquirer checks.</figcaption>
+      <figcaption>Get steps 6–8 right from day one. Retrofitting them later is a painful audit, and it is the first thing an investor or acquirer checks.</figcaption>
     </figure>
-
-    <div class="note">
-      <span class="t">Where hosting sits in this lifecycle</span>
-      Standing charges settle <b>in arrears</b>, at the end of each cycle, against the wallet. If the wallet
-      is empty the app does <b>not</b> fail &mdash; it draws overdraft on Studio and World, and on Signal and
-      Prime it enters the warn-warn-sleep ladder from page three. A hosting charge is never the reason
-      someone&rsquo;s site disappears without warning.
-    </div>
 
     <h3>The three calls you own</h3>
     <div class="grid g3">
-      <div class="card" style="--ic:var(--i1)"><span class="lbl">Gateway</span><h4>Paddle now, Stripe later</h4>
-      <p><b>Paddle</b> (~5% + $0.50) becomes the legal seller and handles worldwide VAT, GST and US sales
-      tax. You cannot afford global tax compliance as a team of one.</p>
-      <p><b>Stripe Billing</b> (2.9% + $0.30 + ~0.5%) has native meters, credit grants and entitlements &mdash;
-      the closest off-the-shelf match to this model. Move there when someone owns finance.</p>
-      <p><b>Razorpay</b> if the billing entity is Indian &mdash; UPI AutoPay is the recurring rail that actually
-      works there.</p></div>
-      <div class="card" style="--ic:var(--i4)"><span class="lbl">Currency</span><h4>Credits inside, local prices outside</h4>
-      <p>One internal unit of account: <b>USD</b>, because every real cost &mdash; models, Cloud Run, egress &mdash;
-      is billed in USD.</p>
-      <p>The ledger holds <b>credits, never currency</b>. A euro customer and a rupee customer burn the
-      identical credit, so margin analysis needs no conversion at all.</p>
-      <p>Sell at fixed local price points &mdash; $39 / &euro;39 / &pound;33 / &#8377;2,999 &mdash; re-priced quarterly, with a
-      6&ndash;8% FX buffer. Live FX gives you prices like &euro;36.42, which reads as careless.</p></div>
-      <div class="card" style="--ic:var(--i3)"><span class="lbl">Legal shape</span><h4>Credits are not money</h4>
-      <p>Structure them as <b>non-refundable, non-transferable, expiring service usage rights</b>, stated
-      plainly on the buy screen and not only in the ToS.</p>
-      <p>Never allow cash-out, peer transfer, a published redemption guarantee, or credits with no
-      expiry. Each of those edges you toward being regulated as a payments business.</p>
-      <p>Have a lawyer in your billing jurisdiction read the credit terms before the first payment.</p></div>
+      <div class="card">
+        <span class="lbl">Gateway</span>
+        <h4>Paddle now, Stripe later</h4>
+        <p><strong>Paddle</strong> (~5% + $0.50) becomes the legal seller and handles worldwide VAT, GST
+        and US sales tax. You cannot afford global tax compliance as a team of one.</p>
+        <p><strong>Stripe Billing</strong> (2.9% + $0.30 + ~0.5%) has native meters, credit grants and
+        entitlements — the closest match to this model. Move there when someone owns finance.</p>
+        <p><strong>Razorpay</strong> if the entity is Indian — UPI AutoPay is the recurring rail that
+        actually works there.</p>
+      </div>
+      <div class="card">
+        <span class="lbl">Currency</span>
+        <h4>Credits inside, local prices outside</h4>
+        <p>One internal unit of account: <strong>USD</strong>, because your costs are in USD.</p>
+        <p>The ledger holds <strong>credits, never currency</strong>. A euro customer and a rupee customer
+        burn the identical credit, so your margin analysis needs no conversion at all.</p>
+        <p>Sell at <strong>fixed local price points</strong> — $39 / €39 / £33 / ₹2,999 — re-priced quarterly.
+        Live FX gives you prices like €36.42, which reads as careless.</p>
+      </div>
+      <div class="card">
+        <span class="lbl">Legal shape</span>
+        <h4>Credits are not money</h4>
+        <p>Structure them as <strong>non-refundable, non-transferable, expiring service usage rights</strong>.</p>
+        <p><strong>Never</strong> cash-out, peer transfer, a published redemption guarantee, or credits with
+        no expiry. Each of those edges you toward being regulated as a payments business.</p>
+        <p>Have a lawyer in your billing jurisdiction read the credit terms before the first payment.
+        It is a one-hour conversation that is very hard to have retroactively.</p>
+      </div>
     </div>
 
-    <div class="note">
-      <span class="t">Why the $10 minimum top-up isn&rsquo;t arbitrary</span>
-      At 2.9% + $0.30, a $5 top-up costs you $0.45 &mdash; <b>nine percent</b>. A $2 top-up costs 18% and is pure
-      loss. Floor it at $10, push auto-recharge in $25 and $50 blocks, and the processing line drops by
-      about a third.
+    <div class="note warn">
+      <span class="t">Why the $10 minimum top-up isn't arbitrary</span>
+      At 2.9% + $0.30, a <b>$5</b> top-up costs you <b>$0.45 — nine percent</b>. A $2 top-up costs 18% and is
+      pure loss. Floor it at $10, push auto-recharge in $25 and $50 blocks, and your processing line drops
+      by about a third.
     </div>
 
-    <h3>Fixed cost one &mdash; the $500 guardian</h3>
-    <p class="lede">$500 goes out whether that guardian did one job or ten thousand. One number manages
-    it: <b>accounts per guardian</b>.</p>
+    <h3>The $500 guardian — your one fixed cost</h3>
+    <p class="lede">Everything else in your cost base moves with usage. This does not: $500 goes out
+    whether that guardian did one job or ten thousand. That single fact set the whole model on page one.</p>
+
+    <div class="key" style="--ic:var(--i5)">
+      <span class="tag">One number to manage</span>
+      <p><strong>Accounts per Guardian.</strong> A Prime account contributes about <strong>$30</strong> a month
+      before guardian cost. So <strong>17 accounts</strong> on one guardian is break-even, <strong>50</strong>
+      is the alert floor, and <strong>80+</strong> is where the margin you actually want lives.</p>
+      <p>A dedicated guardian is not a feature you include — it is a <strong>SKU you sell at $899 a month</strong>.
+      Shared pools amortise the fixed cost; dedicated capacity gets charged for.</p>
+    </div>
 
     <figure>
       <div class="panel"><svg viewBox="0 0 800 450" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Contribution margin against accounts per guardian, crossing break-even at 17 accounts.">
@@ -1259,89 +1021,39 @@
 <text x="426" y="394" text-anchor="middle" font-family="var(--body)" font-size="17" fill="var(--ink-2)">accounts sharing one guardian</text>
 
 </svg></div>
-      <figcaption>Between 17 and 80 accounts, margin swings 61 points &mdash; then the curve flattens, so
-      chasing 140 buys almost nothing. This is why accounts-per-guardian is a North Star branch and not
-      a footnote.</figcaption>
+      <figcaption>Between 17 and 80 accounts, margin swings 61 points — then the curve flattens, so chasing 140 buys almost nothing. This is why accounts-per-guardian is a North Star branch and not a footnote.</figcaption>
     </figure>
 
     <div class="tbl">
       <table>
         <thead><tr><th>Tier</th><th class="n">Price</th><th class="n">Credits burned</th><th class="n">Contribution before guardian</th><th class="n">Break-even APG</th></tr></thead>
         <tbody>
-          <tr><td>Prime</td><td class="n">$39</td><td class="n">3,250 &middot; $6.50</td><td class="n">$29.97</td><td class="n">17</td></tr>
-          <tr><td>Studio</td><td class="n">$199</td><td class="n">19,500 &middot; $39.00</td><td class="n">$149.93</td><td class="n">3.4</td></tr>
-          <tr><td>World</td><td class="n">$999</td><td class="n">105,000 &middot; $210</td><td class="n">$744.73</td><td class="n">0.7</td></tr>
-          <tr class="total"><td>Dedicated Guardian add-on</td><td class="n">$899</td><td class="n">billed separately</td><td class="n">$399 &middot; 44%</td><td class="n">&mdash;</td></tr>
+          <tr><td><strong>Prime</strong></td><td class="n">$39</td><td class="n">3,250 · $6.50</td><td class="n">$29.97</td><td class="n">17</td></tr>
+          <tr><td><strong>Studio</strong></td><td class="n">$199</td><td class="n">19,500 · $39.00</td><td class="n">$149.93</td><td class="n">3.4</td></tr>
+          <tr><td><strong>World</strong></td><td class="n">$999</td><td class="n">105,000 · $210</td><td class="n">$744.73</td><td class="n">0.7</td></tr>
+          <tr class="total"><td>Dedicated Guardian <span class="pill">add-on</span></td><td class="n">$899</td><td class="n">billed separately</td><td class="n">$399 · 44%</td><td class="n">—</td></tr>
         </tbody>
       </table>
     </div>
 
+    <h3>Four rules for guardian capacity</h3>
     <ol>
-      <li><b>Never provision on hope.</b> Add a guardian only when $1,600/month of attributed revenue is
-      committed behind it &mdash; a 2.5&times; coverage ratio. Queue depth is not a reason; revenue is.</li>
-      <li><b>Measure coverage monthly.</b> Gross profit attributed to that guardian &divide; $500. Target
-      &ge;&nbsp;2.5&times;, warn &lt;&nbsp;1.5&times;, act &lt;&nbsp;1.0&times; twice &mdash; consolidate its accounts and retire it.</li>
-      <li><b>Hibernate idle dedicated guardians.</b> Under 10% utilisation for 14 days, sleep it and
-      prorate the next invoice. You stop paying for air.</li>
-      <li><b>Rebalance pools weekly.</b> Keep every pool inside 60&ndash;120 accounts. Below 60 you burn margin;
-      above 120 you buy queue latency that shows up as churn.</li>
-    </ol>
-
-    <h3>Fixed cost two &mdash; the live-surfaces fleet</h3>
-    <p class="lede">The guardian is a step cost: you buy it in $500 blocks and manage it by utilisation.
-    Hosting is the opposite shape &mdash; <b>small, continuous, and it only ever grows</b>. Three facts about
-    running it on Google Cloud change the model.</p>
-
-    <div class="grid g3">
-      <div class="card" style="--ic:var(--risk)">
-        <span class="lbl">Fact 1 &middot; the one that surprises people</span>
-        <h4>The free tier is per billing account</h4>
-        <p>180,000 vCPU-seconds, 2 million requests and one free Firestore database &mdash; consumed
-        <b>once</b>, across every customer app we host. Not once per app.</p>
-        <p>Lovable can give every workspace 20 free Cloud credits because someone absorbs that. On our
-        own GCP account, <b>we</b> are that someone. The free envelope is a real COGS line.</p>
-      </div>
-      <div class="card" style="--ic:var(--warn)">
-        <span class="lbl">Fact 2 &middot; a v1 number was wrong</span>
-        <h4>Egress is $0.12/GB, not $0.085</h4>
-        <p>Premium Tier internet egress is $0.12/GB for the first TB, $0.11 to 10 TB, $0.08 above.
-        That is <b>six times</b> Fly.io&rsquo;s $0.02.</p>
-        <p>So <b>Cloud CDN in front of every static surface is mandatory, not an optimisation</b>. Above a
-        ~70% cache-hit rate &mdash; which is most sites &mdash; CDN always wins on cost.</p>
-      </div>
-      <div class="card" style="--ic:var(--i3)">
-        <span class="lbl">Fact 3 &middot; an open question</span>
-        <h4>Custom domains may need a load balancer</h4>
-        <p>If every customer domain needs its own Global External Application Load Balancer forwarding
-        rule (~$18&ndash;25/month), the $1.50 SKU becomes a <b>$25 cost line</b>.</p>
-        <p>It only works at $1.50 if we host-route many customer domains through one shared LB with SNI.
-        <b>An architecture decision that sets a price</b> &mdash; needed before the SKU ships.</p>
-      </div>
-    </div>
-
-    <div class="note good">
-      <span class="t">A product default that is really a pricing decision</span>
-      Cloud SQL&rsquo;s smallest Postgres has a hard <b>$8&ndash;10/month floor per database</b> and no SLA. A $30/month
-      Postgres SKU on a $39 plan nearly doubles that customer&rsquo;s bill. So <b>default new guardian-built apps
-      to Firestore</b>, which scales from zero with no floor, and make managed Postgres a Studio-and-above
-      choice. The cheapest way to control a cost line is to not create it.
-    </div>
-
-    <h3>Four operating rules for surface capacity</h3>
-    <ol>
-      <li><b>Scale to zero unless someone paid not to.</b> Always-on is a $30 SKU, not a default.</li>
-      <li><b>Sleep idle surfaces.</b> Signal at 7 days, Prime at 30. Sleeping costs storage only.</li>
-      <li><b>Cache before you scale.</b> Every static surface sits behind Cloud CDN from day one.</li>
-      <li><b>Report cost per surface monthly</b>, the way you report cost per guardian. Two fixed costs,
-      two utilisation reviews, one meeting.</li>
+      <li><strong>Never provision on hope.</strong> Add a guardian only when <span class="mono">$1,600/month</span>
+      of attributed revenue is committed behind it — a 2.5× coverage ratio. Queue depth is not a reason; revenue is.</li>
+      <li><strong>Measure coverage monthly.</strong> Gross profit attributed to that guardian ÷ $500.
+      Target <span class="pill good">≥ 2.5×</span>, warn <span class="pill warn">&lt; 1.5×</span>,
+      act <span class="pill risk">&lt; 1.0× twice</span> — consolidate its accounts and retire it.</li>
+      <li><strong>Hibernate idle dedicated guardians.</strong> Under 10% utilisation for 14 days, sleep it and
+      prorate the next invoice. They will love you for it, and you stop paying for air.</li>
+      <li><strong>Rebalance pools weekly.</strong> Keep every pool inside 60–120 accounts. Below 60 you burn
+      margin; above 120 you buy queue latency that shows up as churn.</li>
     </ol>
 
     <div class="note risk">
-      <span class="t">This page still rests on one assumption</span>
-      Everything about guardians assumes <b>one guardian serves many accounts at once</b>, with a ceiling
-      near 120. If a guardian is one-to-one with a customer &mdash; or is a person with a real hour budget &mdash;
-      accounts-per-guardian collapses to 1 and <b>every price in this document roughly triples</b>. It is
-      still the first open question on page five, and it is still unanswered.
+      <span class="t">This whole page rests on one assumption</span>
+      I have assumed <b>one guardian serves many accounts at once</b>, with a ceiling near 120. If a guardian
+      is one-to-one with a customer — or is a person with a real hour budget — then accounts-per-guardian
+      collapses to 1 and <b>every price here has to roughly triple</b>. It is the first question on page five.
     </div>
   </div>
 </section>
@@ -1352,158 +1064,171 @@
     <header class="pg-hd">
       <span class="pg-n">05</span>
       <div>
-        <p class="kicker">Page five &mdash; the plans, and what happens next</p>
+        <p class="kicker">Page five — the plans, and what happens next</p>
         <h2>Two ways to sell it. One of them loses money.</h2>
       </div>
     </header>
 
-    <p class="lede">Same product, same rate card, same costs. The only difference is <b>the shape of what
-    you sell</b> &mdash; and with hosting in the model, that difference widens.</p>
+    <p class="lede">Same product, same rate card, same costs. The only difference is the <b>shape</b> of
+    what you sell — and that difference is 85 margin points.</p>
 
     <figure>
-      <div class="panel"><svg viewBox="0 0 900 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Gross margin by plan design with hosting: minus 32 percent, 18 percent, 60 percent, 71 percent.">
-<text x="24" y="30" font-family="var(--mono)" font-size="14" letter-spacing="1.6" fill="var(--ink-3)">GROSS MARGIN AT MONTH 12, WITH TIER 8 HOSTING IN THE MODEL</text>
+      <div class="panel"><svg viewBox="0 0 900 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Gross margin by plan design: minus 25 percent, 21 percent, 60 percent and 72 percent.">
+<text x="24" y="30" font-family="var(--mono)" font-size="14" letter-spacing="1.6" fill="var(--ink-3)">GROSS MARGIN AT MONTH 12, BY PLAN DESIGN</text>
 <line x1="300" y1="44" x2="300" y2="360" stroke="var(--ink-3)" stroke-width="2"/>
-<text x="24" y="54" font-family="var(--body)" font-size="17" font-weight="700" fill="var(--ink)">Plan A — Open Meter, with uncapped free hosting</text>
-<rect x="88.8" y="64" width="211.2" height="40" rx="5" fill="var(--risk)"/>
-<text x="76.8" y="91" text-anchor="end" font-family="var(--mono)" font-size="22" font-weight="600" fill="var(--risk)">−32%</text>
-<text x="24" y="138" font-family="var(--body)" font-size="17" font-weight="700" fill="var(--ink)">Plan A repaired — hosting gated behind a first purchase</text>
-<rect x="300" y="148" width="118.8" height="40" rx="5" fill="var(--warn)"/>
-<text x="430.8" y="175" text-anchor="start" font-family="var(--mono)" font-size="22" font-weight="600" fill="var(--warn)">+18%</text>
-<text x="24" y="222" font-family="var(--body)" font-size="17" font-weight="700" fill="var(--ink)">Plan B — Seat + Fuel, with hosting envelopes</text>
-<rect x="300" y="232" width="396.0" height="40" rx="5" fill="var(--good)"/>
-<text x="708.0" y="259" text-anchor="start" font-family="var(--mono)" font-size="22" font-weight="600" fill="var(--good)">+60%</text>
-<text x="24" y="306" font-family="var(--body)" font-size="17" font-weight="700" fill="var(--ink)">Plan B tuned — the margin levers, hosting included</text>
-<rect x="300" y="316" width="468.6" height="40" rx="5" fill="var(--good)" stroke="var(--ink)" stroke-width="2"/>
-<text x="780.6" y="343" text-anchor="start" font-family="var(--mono)" font-size="22" font-weight="600" fill="var(--good)">+71%</text>
-<text x="24" y="386" font-family="var(--body)" font-size="16" fill="var(--ink-2)">Hosting is roughly margin-neutral under Plan B and actively worse under Plan A — because a free tier with no hosting cap has no ceiling.</text>
+<text x="24" y="54" font-family="var(--body)" font-size="17" font-weight="700" fill="var(--ink)">Plan A — Open Meter, as designed</text>
+<rect x="135" y="64" width="165" height="40" rx="5" fill="var(--risk)"/>
+<text x="123" y="91" text-anchor="end" font-family="var(--mono)" font-size="22" font-weight="600" fill="var(--risk)">−25%</text>
+<text x="24" y="138" font-family="var(--body)" font-size="17" font-weight="700" fill="var(--ink)">Plan A repaired — smaller free tier, guardians gated</text>
+<rect x="300" y="148" width="138.6" height="40" rx="5" fill="var(--warn)"/>
+<text x="450.6" y="175" text-anchor="start" font-family="var(--mono)" font-size="22" font-weight="600" fill="var(--warn)">+21%</text>
+<text x="24" y="222" font-family="var(--body)" font-size="17" font-weight="700" fill="var(--ink)">Plan B — Seat + Fuel</text>
+<rect x="300" y="232" width="396" height="40" rx="5" fill="var(--good)"/>
+<text x="708" y="259" text-anchor="start" font-family="var(--mono)" font-size="22" font-weight="600" fill="var(--good)">+60%</text>
+<text x="24" y="306" font-family="var(--body)" font-size="17" font-weight="700" fill="var(--ink)">Plan B tuned — with the margin levers</text>
+<rect x="300" y="316" width="475.2" height="40" rx="5" fill="var(--good)" stroke="var(--ink)" stroke-width="2"/>
+<text x="787.2" y="343" text-anchor="start" font-family="var(--mono)" font-size="22" font-weight="600" fill="var(--good)">+72%</text>
+<text x="24" y="386" font-family="var(--body)" font-size="16" fill="var(--ink-2)">Same product, same rate card, same costs. The only variable is the shape of what you sell.</text>
+
 </svg></div>
-      <figcaption>Illustrative forecasts at month twelve, not measured data. Hosting is roughly
-      margin-neutral under Plan B, because it sells at 68% against a 60% blend. Under Plan A it is
-      actively worse, because a free tier with no hosting cap has no ceiling at all.</figcaption>
+      <figcaption>Plan A is not a worse product. It is the same product sold in a shape that cannot carry a fixed cost.</figcaption>
     </figure>
 
-    <h3>Plan B &mdash; Seat + Fuel <span class="pill good">recommended</span></h3>
-    <p>A two-part tariff. The subscription pays the fixed costs and buys credits below list.
-    Top-ups cost more than the allotment rate &mdash; so the upgrade sells itself.</p>
+    <div class="grid g2" style="margin-top:-12px">
+      <div class="card" style="--ic:var(--risk)"><span class="lbl">−25% · Plan A as designed</span><p>The free tier and the guardians eat the entire meter. A quiet month is a loss.</p></div>
+      <div class="card" style="--ic:var(--warn)"><span class="lbl">+21% · Plan A repaired</span><p>Smaller free tier, guardians gated behind a first purchase. Survivable — but it cannot fund a team.</p></div>
+      <div class="card" style="--ic:var(--good)"><span class="lbl">+60% · Plan B</span><p>Eight times the revenue of Plan A at month 12, and profitable from the gross-margin line down.</p></div>
+      <div class="card" style="--ic:var(--good)"><span class="lbl">+72% · Plan B tuned</span><p>The eight levers below. Not one price changes and not one feature is removed.</p></div>
+    </div>
+
+    <h3>Plan B — Seat + Fuel <span class="pill good">recommended</span></h3>
+    <p class="lede">A two-part tariff. The subscription pays the fixed costs and buys credits below list.
+    Top-ups cost <b>more</b> than the allotment rate — so the upgrade sells itself.</p>
 
     <div class="tbl">
       <table>
-        <thead><tr><th>Tier</th><th class="n">$ / month</th><th class="n">Credits</th><th class="n">Effective $/cr</th><th class="n">Scircles</th><th>Guardian</th><th>Hosting envelope</th><th class="n">Top-up</th></tr></thead>
+        <thead><tr><th>Tier</th><th class="n">$ / month</th><th class="n">Credits</th><th class="n">Effective $/cr</th><th class="n">Scircles</th><th>Guardian</th><th class="n">Top-up</th></tr></thead>
         <tbody>
-          <tr><td>Signal <span class="pill">free</span></td><td class="n">$0</td><td class="n">500</td><td class="n">&mdash;</td><td class="n">1</td><td>Shared, low priority</td><td>1 static</td><td class="n">upgrade only</td></tr>
-          <tr><td>Prime</td><td class="n">$39</td><td class="n">5,000</td><td class="n">$0.0078</td><td class="n">3</td><td>Shared pool</td><td>1 live app + 1 static</td><td class="n">$0.0095</td></tr>
-          <tr><td>Studio</td><td class="n">$199</td><td class="n">30,000</td><td class="n">$0.0066</td><td class="n">10</td><td>Shared, priority lane</td><td>3 live apps + Postgres</td><td class="n">$0.0085</td></tr>
-          <tr><td>World</td><td class="n">$999</td><td class="n">175,000</td><td class="n">$0.0057</td><td class="n">unlimited</td><td>Priority pool, JEM SSO</td><td>10 live apps</td><td class="n">$0.0075</td></tr>
-          <tr class="total"><td>Dedicated Guardian</td><td class="n">+$899</td><td class="n">&mdash;</td><td class="n">&mdash;</td><td class="n">&mdash;</td><td>One guardian, one account</td><td>&mdash;</td><td class="n">&mdash;</td></tr>
+          <tr><td><strong>Signal</strong> <span class="pill">free</span></td><td class="n">$0</td><td class="n">500</td><td class="n">—</td><td class="n">1</td><td>Shared, low priority</td><td class="n">upgrade only</td></tr>
+          <tr><td><strong>Prime</strong></td><td class="n">$39</td><td class="n">5,000</td><td class="n">$0.0078</td><td class="n">3</td><td>Shared pool</td><td class="n">$0.0095</td></tr>
+          <tr><td><strong>Studio</strong></td><td class="n">$199</td><td class="n">30,000</td><td class="n">$0.0066</td><td class="n">10</td><td>Shared, priority lane</td><td class="n">$0.0085</td></tr>
+          <tr><td><strong>World</strong></td><td class="n">$999</td><td class="n">175,000</td><td class="n">$0.0057</td><td class="n">unlimited</td><td>Priority pool, JEM SSO</td><td class="n">$0.0075</td></tr>
+          <tr class="total"><td>Dedicated Guardian</td><td class="n">+$899</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td>One guardian, one account</td><td class="n">—</td></tr>
+          <tr><td>Motion embed licence</td><td class="n">$2 / site</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td>—</td><td class="n">—</td></tr>
         </tbody>
       </table>
     </div>
 
-    <div class="key" style="--ic:var(--i6)">
-      <span class="tag">The mechanic that makes it work</span>
-      <p>Read the effective rate and the top-up rate together. Prime&rsquo;s included credits cost them
-      <b>$0.0078</b>; their top-ups cost <b>$0.0095</b>. The moment they top up regularly, Studio is visibly
-      cheaper <em>for them</em>. You are not upselling &mdash; you are showing arithmetic.</p>
-      <p>Hosting adds a second, quieter version of the same engine: the second live app a Prime customer
-      publishes is the moment Studio starts making sense, and they reach it without a sales call.</p>
+    <div class="note good">
+      <span class="t">The mechanic that makes it work</span>
+      Read the last two columns together. Prime's included credits cost them <b>$0.0078</b>; their top-ups
+      cost <b>$0.0095</b>. The moment they top up regularly, Studio is visibly cheaper <em>for them</em>.
+      You are not upselling — you are showing arithmetic. That is where NRR above 110% comes from, with no
+      sales team. Offer annual at <b>two months free</b>: cash forward, lower churn, fewer fees.
     </div>
 
     <h3>The same twelve months, run both ways</h3>
     <div class="tbl">
       <table>
-        <thead><tr><th>Month 12</th><th class="n">Plan A &mdash; Open Meter</th><th class="n">Plan B &mdash; Seat + Fuel</th></tr></thead>
+        <thead><tr><th>Month 12</th><th class="n">Plan A — Open Meter</th><th class="n">Plan B — Seat + Fuel</th></tr></thead>
         <tbody>
-          <tr><td>Signups &middot; conversion &middot; paying accounts</td><td class="n">25,000 &middot; 4% &middot; 620</td><td class="n">16,000 &middot; 7% &middot; 1,120</td></tr>
+          <tr><td>Signups · conversion · paying accounts</td><td class="n">25,000 · 4% · 620</td><td class="n">16,000 · 7% · 1,120</td></tr>
           <tr class="grp"><td colspan="3">Revenue</td></tr>
-          <tr><td>Subscriptions</td><td class="n">&mdash;</td><td class="n">$142,240</td></tr>
+          <tr><td>Subscriptions</td><td class="n">—</td><td class="n">$142,240</td></tr>
           <tr><td>Credit packs and top-ups</td><td class="n">$21,080</td><td class="n">$8,064</td></tr>
-          <tr><td>Dedicated guardians (22) &middot; Motion (3,000 sites)</td><td class="n">&mdash;</td><td class="n">$25,778</td></tr>
-          <tr><td><b>Tier 8 &mdash; live surfaces</b> <span style="font-size:14px;color:var(--ink-3)" class="mono">new</span></td><td class="n">$2,480</td><td class="n">$9,638</td></tr>
-          <tr class="total"><td>MRR</td><td class="n">$23,560</td><td class="n">$185,720</td></tr>
+          <tr><td>Dedicated guardians (22) · Motion (3,000 sites)</td><td class="n">—</td><td class="n">$25,778</td></tr>
+          <tr class="total"><td>MRR</td><td class="n">$21,080</td><td class="n">$176,082</td></tr>
           <tr class="grp"><td colspan="3">Cost of revenue</td></tr>
-          <tr><td>Credits burned &mdash; paying accounts</td><td class="n">$4,216</td><td class="n">$29,389</td></tr>
-          <tr><td>Credits burned &mdash; the free tier</td><td class="n">$9,120</td><td class="n">$4,800</td></tr>
-          <tr><td>Guardians</td><td class="n">$8,000 &middot; 16</td><td class="n">$20,500 &middot; 41</td></tr>
-          <tr><td><b>Hosting &mdash; paid surfaces</b> <span style="font-size:14px;color:var(--ink-3)" class="mono">new</span></td><td class="n">$790</td><td class="n">$3,084</td></tr>
-          <tr><td><b>Hosting &mdash; free and included envelopes</b> <span style="font-size:14px;color:var(--ink-3)" class="mono">new</span></td><td class="n">$4,050</td><td class="n">$1,146</td></tr>
-          <tr><td>Payment processing &middot; infrastructure</td><td class="n">$4,950</td><td class="n">$14,900</td></tr>
-          <tr class="total"><td>Total COGS</td><td class="n">$31,126</td><td class="n">$73,819</td></tr>
+          <tr><td>Credits burned — paying accounts</td><td class="n">$4,216</td><td class="n">$29,389</td></tr>
+          <tr><td>Credits burned — the free tier</td><td class="n">$9,120</td><td class="n">$4,800</td></tr>
+          <tr><td>Guardians</td><td class="n">$8,000 <span class="pill risk">16</span></td><td class="n">$20,500 <span class="pill">41</span></td></tr>
+          <tr><td>Payment processing · infrastructure</td><td class="n">$4,950</td><td class="n">$14,900</td></tr>
+          <tr class="total"><td>Total COGS</td><td class="n">$26,286</td><td class="n">$69,589</td></tr>
           <tr class="grp"><td colspan="3">Outcome</td></tr>
-          <tr class="total"><td>Gross profit &middot; margin</td><td class="n">&minus;$7,566 &middot; &minus;32%</td><td class="n">$111,901 &middot; 60%</td></tr>
+          <tr class="total"><td>Gross profit · margin</td><td class="n" style="color:var(--risk)">−$5,206 · −25%</td><td class="n" style="color:var(--good)">$106,493 · 60%</td></tr>
+          <tr><td>Year one — revenue · gross profit</td><td class="n" style="color:var(--risk)">~$126k · ~−$31k</td><td class="n" style="color:var(--good)">~$1.05M · ~$630k</td></tr>
         </tbody>
       </table>
     </div>
 
-    <div class="grid g2">
-      <div class="card" style="--ic:var(--risk)"><span class="lbl">Why A fails, reason 4 &middot; new</span>
-      <h4>Uncapped free hosting has no ceiling</h4>
-      <p>Plan A&rsquo;s free tier already cost more than its paying accounts. Add hosting with no envelope and
-      12,000 free accounts publishing sites costs <b>$4,050/month</b> against almost no matching revenue.
-      Plan A goes from &minus;25% to <b>&minus;32%</b>.</p>
-      <p>In a subscription model the envelope is a capped marketing expense. In a pure meter it is an
-      open tap.</p></div>
-      <div class="card" style="--ic:var(--i6)"><span class="lbl">What hosting is worth under Plan B</span>
-      <h4>+$9,638 MRR, and the stickiest line you have</h4>
-      <p>Gross profit up about <b>$5,400/month</b> &mdash; more than margin levers three through eight combined,
-      and it arrives at 68% margin against a 60% blend, so it lifts the average.</p>
-      <p>The retention effect is the bigger prize: <b>you cannot churn without taking your own site
-      down</b>. Expect hosted accounts to show materially higher NRR.</p></div>
+    <div class="grid g3">
+      <div class="card"><span class="lbl">Why A fails · 1</span><h4>Free costs real money</h4><p>12,000 free accounts burning 380 credits a month costs <strong>$9,120</strong> — more than double what the payers cost. In a subscription model the free tier is a capped marketing expense. In a pure meter it is uncapped.</p></div>
+      <div class="card"><span class="lbl">Why A fails · 2</span><h4>Fixed costs have nothing to attach to</h4><p>Sixteen guardians cost <strong>$8,000</strong> whether or not anyone bought credits that month. With no subscription floor, a quiet month is a loss — and quiet months are not rare.</p></div>
+      <div class="card"><span class="lbl">Why A fails · 3</span><h4>Pay-as-you-go decays</h4><p>Of 1,000 who ever bought a pack, ~620 are still active at month 12. No renewal moment, no reason to return. Subscription revenue compounds; pack revenue leaks.</p></div>
     </div>
 
     <div class="key" style="--ic:var(--i6)">
       <span class="tag">The call</span>
-      <p><b>Ship Plan B</b> &mdash; but steal Plan A&rsquo;s generosity at the very start. Give every new account a
-      one-time <b>2,000-credit grant that expires in 7 days</b>, separate from the monthly allotment, plus
-      the free hosting envelope so the first thing they publish costs nothing.</p>
-      <p>And take one line from Stan, the closest creator-platform comparable: <b>&ldquo;we take 0% of what you
-      sell.&rdquo;</b> It is true, it costs us nothing &mdash; we monetise runtime and compute, not our users&rsquo;
-      revenue &mdash; and it answers the only hard question a creator will ask about a credit product.</p>
+      <p><strong>Ship Plan B</strong> — but steal Plan A's generosity at the very start. Give every new
+      account a one-time <strong>2,000-credit grant that expires in 7 days</strong>, separate from the
+      monthly free allotment.</p>
+      <p>It costs about <strong>$4</strong> per signup at worst, it is capped and time-boxed so it can never
+      become the uncapped free tier that sinks Plan A, and it buys the one thing you most need:
+      <strong>Time to First GO under eight minutes</strong>.</p>
     </div>
 
-    <h3>Ten open questions &mdash; three of them blocking</h3>
+    <h3>Eight levers from 60% to 72% — without touching a price</h3>
     <div class="tbl">
       <table>
-        <thead><tr><th class="n">#</th><th>Question</th><th class="n">Status</th></tr></thead>
+        <thead><tr><th class="n">#</th><th>Lever</th><th class="n">Monthly</th><th class="n">Effort</th></tr></thead>
         <tbody>
-          <tr><td class="n">1</td><td><b>What exactly is the $500 guardian, and how many accounts can one serve?</b> If it is one-to-one, every price here roughly triples.</td><td class="n"><span class="pill risk">blocking</span></td></tr>
-          <tr><td class="n">2</td><td><b>Real cost per action, last month.</b> Every model price is set at 5&times; an estimated cost. One afternoon with the actual invoices resolves it.</td><td class="n"><span class="pill risk">blocking</span></td></tr>
-          <tr><td class="n">3</td><td><b>Growth or profit for the next 12 months</b>, and what runway is behind the answer.</td><td class="n"><span class="pill risk">blocking</span></td></tr>
-          <tr><td class="n">4</td><td>Who is the buyer &mdash; creators, small studios, or companies? The $39/$199/$999 ladder is priced prosumer-to-studio. Stan&rsquo;s creator ceiling is $99.</td><td class="n"><span class="pill warn">shapes it</span></td></tr>
-          <tr><td class="n">5</td><td>Which legal entity bills, from which country?</td><td class="n"><span class="pill warn">shapes it</span></td></tr>
-          <tr><td class="n">6</td><td>Current baseline &mdash; signups, weekly actives, actions per active.</td><td class="n"><span class="pill warn">shapes it</span></td></tr>
-          <tr><td class="n">7</td><td>Is Dialog escalation pass-through or absorbed? Assumed pass-through at &times;1.35.</td><td class="n"><span class="pill">confirm</span></td></tr>
-          <tr><td class="n"><span class="pill good">8</span></td><td><b>Can many customer domains share one load balancer?</b> If not, the custom-domain SKU is mispriced by 16&times;.</td><td class="n"><span class="pill risk">blocking</span></td></tr>
-          <tr><td class="n"><span class="pill good">9</span></td><td><b>Will guardian-built apps ever call a model at runtime?</b> Not today. Build the pass-through meter now, ship it dormant.</td><td class="n"><span class="pill warn">shapes it</span></td></tr>
-          <tr><td class="n"><span class="pill good">10</span></td><td><b>Does Motion run on our infrastructure?</b> <code>muse_runtime.py</code> serves <code>/embed/motion.js</code>, which suggests yes &mdash; in which case $2/site is ~85% margin, not the 95% claimed.</td><td class="n"><span class="pill">confirm</span></td></tr>
+          <tr><td class="n">1</td><td><strong>Default model Opus → Sonnet.</strong> A ×2.5 multiplier is not a default.</td><td class="n" style="color:var(--good)">+$5,700</td><td class="n"><span class="pill good">1 line</span></td></tr>
+          <tr><td class="n">2</td><td><strong>Cache Scircle context.</strong> Your most repeated payload, at a tenth the price.</td><td class="n" style="color:var(--good)">+$3,700</td><td class="n"><span class="pill good">small</span></td></tr>
+          <tr><td class="n">3</td><td><strong>Accounts per guardian 90 → 130.</strong> Six fewer guardians, same service.</td><td class="n" style="color:var(--good)">+$3,000</td><td class="n"><span class="pill">ops</span></td></tr>
+          <tr><td class="n">4</td><td><strong>Free allotment 500 → 300</strong>, expiring monthly. Keep the welcome grant.</td><td class="n" style="color:var(--good)">+$1,900</td><td class="n"><span class="pill good">config</span></td></tr>
+          <tr><td class="n">5</td><td><strong>Fewer, larger payments.</strong> $10 floor, auto-recharge in blocks.</td><td class="n" style="color:var(--good)">+$1,700</td><td class="n"><span class="pill good">config</span></td></tr>
+          <tr><td class="n">6</td><td><strong>Annual plans and breakage discipline.</strong></td><td class="n" style="color:var(--good)">+$1,700</td><td class="n"><span class="pill">medium</span></td></tr>
+          <tr><td class="n">7</td><td><strong>Render on interruptible compute.</strong> Retryable batch work, ~30% off.</td><td class="n" style="color:var(--good)">+$1,500</td><td class="n"><span class="pill">medium</span></td></tr>
+          <tr><td class="n">8</td><td><strong>Storage lifecycle.</strong> Cold storage after 90 days; retention is already a tier feature.</td><td class="n" style="color:var(--good)">+$1,200</td><td class="n"><span class="pill">medium</span></td></tr>
+          <tr class="total"><td class="n">—</td><td>No price changed. No feature removed.</td><td class="n" style="color:var(--good)">+$20,400</td><td class="n">60% → 72%</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="note">
+      <span class="t">Order</span>
+      <b>1, 4 and 5 first</b> — config, land this week, worth $9,300 a month at scale. Then 2 and 3.
+      Leave 6–8 until you have a real usage baseline. And the lever I have deliberately left out is
+      <b>raising credit prices</b>: it works arithmetically and it is poison early, because your rate card
+      is a promise about what things cost.
+    </div>
+
+    <h3>What I need from you</h3>
+    <div class="tbl">
+      <table>
+        <thead><tr><th class="n">#</th><th>Question</th><th>Why it matters</th><th class="n">Status</th></tr></thead>
+        <tbody>
+          <tr><td class="n">1</td><td><strong>What exactly is the $500/month guardian, and how many accounts can one serve at once?</strong></td><td>The entire model. One-to-one means every price here roughly triples. 100+ means Plan B works as written.</td><td class="n"><span class="pill risk">blocking</span></td></tr>
+          <tr><td class="n">2</td><td><strong>Your real cost per action, last month.</strong> Models, transcription, render, storage, egress.</td><td>Every price is 5× cost. If my estimates are off by 2×, the margins here are fiction. One afternoon with your invoices.</td><td class="n"><span class="pill risk">blocking</span></td></tr>
+          <tr><td class="n">3</td><td><strong>Growth or profit for the next twelve months</strong> — and what runway is behind that answer?</td><td>Funded land-grab makes Plan A's shape a defensible deliberate loss. Needing profitability makes Plan B the only option.</td><td class="n"><span class="pill risk">blocking</span></td></tr>
+          <tr><td class="n">4</td><td><strong>Who is the buyer?</strong> Creators, small studios, or companies?</td><td>This ladder is priced for prosumer-to-small-studio. A company buyer carries 3–5×; a pure consumer needs it to start near $9.</td><td class="n"><span class="pill warn">shapes it</span></td></tr>
+          <tr><td class="n">5</td><td><strong>Which legal entity bills, from which country?</strong></td><td>Decides gateway, tax treatment, whether Razorpay belongs in the stack, and how careful the stored-value wording must be.</td><td class="n"><span class="pill warn">shapes it</span></td></tr>
+          <tr><td class="n">6</td><td><strong>Your current baseline.</strong> Signups a month, weekly actives, actions per active per week.</td><td>Replaces the illustrative funnel on this page with a real forecast.</td><td class="n"><span class="pill warn">shapes it</span></td></tr>
+          <tr><td class="n">7</td><td><strong>Dialog — pass-through or absorbed?</strong></td><td>Modelled as pass-through at ×1.35, matching your own rule that Dialog carries separately authorised spend. If you absorb it, it becomes an uncapped line needing a hard budget.</td><td class="n"><span class="pill">confirm</span></td></tr>
         </tbody>
       </table>
     </div>
 
-    <h3>The 90-day rollout</h3>
-    <p class="lede">Do not launch a credit system live on day one. <b>Meter first, shadow-bill second,
-    charge third.</b> The cost of a wrong rate card in public is far higher than the cost of waiting six
-    weeks.</p>
+    <h3>First ninety days</h3>
     <div class="tbl">
       <table>
-        <thead><tr><th class="n">Days</th><th>What ships</th><th>The gate before moving on</th></tr></thead>
+        <thead><tr><th class="n">Days</th><th>What ships</th><th>Gate to the next phase</th></tr></thead>
         <tbody>
-          <tr><td class="n">1&ndash;15</td><td>Meter everything, charge nothing. Ledger rows on every billable surface, wallet UI built but hidden.</td><td>Rows reconcile against real invoices within 5%.</td></tr>
-          <tr><td class="n">16&ndash;30</td><td>Shadow billing. Compute what each account <em>would</em> have paid.</td><td>A median Prime-shaped account lands at 50&ndash;80% burn depth. If not, resize the allotment &mdash; never the prices.</td></tr>
-          <tr><td class="n">31&ndash;45</td><td>Signal and Prime go live. GO cards, holds, settle, receipts. Hard caps, no overage yet.</td><td>Zero charges on failed jobs; under 1 surprise report per 1,000 GOs.</td></tr>
-          <tr><td class="n">46&ndash;60</td><td>Top-ups and auto-recharge. $10 minimum, opt-in only.</td><td>Waste below 2% of credits burned.</td></tr>
-          <tr><td class="n">61&ndash;75</td><td>Studio, the Dedicated Guardian add-on, and <b>Tier 8 Live Surfaces</b>.</td><td>APG above 50 on every pool &mdash; and <b>no surface has gone dark without two warnings and a sleep state</b>.</td></tr>
-          <tr><td class="n">76&ndash;90</td><td>World, annual plans, expiry and breakage. First formal margin review.</td><td>Blended gross margin above 55% and climbing &mdash; <em>then</em> start on the margin levers.</td></tr>
+          <tr><td class="n">1–15</td><td><strong>Meter everything, charge nothing.</strong> A <code>meter</code> block on every tool. Ledger rows written. Wallet built but hidden.</td><td>Every billable surface writes a row, and the rows reconcile against your real invoices within 5%.</td></tr>
+          <tr><td class="n">16–30</td><td><strong>Shadow billing.</strong> Nobody is charged; internally compute what each account <em>would</em> have paid.</td><td>A median Prime-shaped account lands at 50–80% burn depth. If not, resize the allotment — not the prices.</td></tr>
+          <tr><td class="n">31–45</td><td><strong>Signal and Prime go live.</strong> GO cards, holds, settle, receipts. Hard caps, no overage yet.</td><td>Zero charges on failed jobs. Under 1 surprise report per 1,000 GOs.</td></tr>
+          <tr><td class="n">46–60</td><td><strong>Top-ups and auto-recharge.</strong> $10 minimum, auto-recharge strictly opt-in.</td><td>Waste below 2% of credits burned. Refund requests are about scope, not surprise.</td></tr>
+          <tr><td class="n">61–75</td><td><strong>Studio and the Dedicated Guardian add-on.</strong> Priority lane, coverage reporting, pool rebalancing.</td><td>Accounts per guardian above 50 on every pool, coverage above 1.5×.</td></tr>
+          <tr><td class="n">76–90</td><td><strong>World, annual, expiry and breakage.</strong> First formal margin review against the page-two tree.</td><td>Blended margin above 55% and climbing. Then start the levers.</td></tr>
         </tbody>
       </table>
     </div>
 
-    <div class="note risk">
-      <span class="t">The one rule that outranks every revenue target</span>
-      Nobody is ever charged for something they did not knowingly start, and nobody is ever charged for
-      something that failed. <b>In v2 that extends to time: nobody&rsquo;s published work goes dark without two
-      warnings and a way back.</b> Credits are a promise that the system is being honest about what work
-      costs. Every other number in this document is recoverable if it turns out wrong. That one is not.
+    <div class="key" style="--ic:var(--i6)">
+      <span class="tag">The one thing to protect</span>
+      <p>Through all ninety days, one rule outranks every revenue target: <strong>nobody is ever charged for
+      something they did not knowingly start, and nobody is ever charged for something that failed.</strong></p>
+      <p>Credits are a promise that the machine is being honest about what it costs to do work for you.
+      Every other number in these five pages is recoverable if you get it wrong. That one is not.</p>
     </div>
   </div>
 </section>

@@ -204,6 +204,56 @@ li::marker{color:var(--ink-3)}
   border:1px solid var(--line-2); padding:6px 14px; white-space:nowrap;
 }
 .pager a.jump:hover{background:var(--i0); border-color:var(--i0); color:var(--on-ic)}
+
+/* ---------- version switcher ---------- */
+.vsw{position:relative}
+.vsw summary{
+  list-style:none; cursor:pointer; user-select:none; display:flex; align-items:center; gap:7px;
+  font-family:var(--mono); font-size:12.5px; letter-spacing:.04em; color:var(--ink);
+  background:var(--surface-2); border:1px solid var(--line-2); border-radius:999px;
+  padding:6px 13px; white-space:nowrap; line-height:1;
+}
+.vsw summary::-webkit-details-marker{display:none}
+.vsw summary:hover{background:var(--i0); border-color:var(--i0); color:var(--on-ic)}
+.vsw summary:hover .cev{border-color:currentColor}
+.cev{
+  width:7px; height:7px; flex:none; margin-top:-3px;
+  border-right:1.8px solid var(--ink-3); border-bottom:1.8px solid var(--ink-3);
+  transform:rotate(-135deg); transition:transform .16s ease;
+}
+.vsw[open] summary{background:var(--i0); border-color:var(--i0); color:var(--on-ic)}
+.vsw[open] summary .cev{border-color:currentColor; transform:rotate(45deg); margin-top:1px}
+.vmenu{
+  position:absolute; right:0; bottom:calc(100% + 11px); z-index:70; width:296px;
+  background:var(--surface); border:1px solid var(--line-2); border-radius:14px;
+  padding:7px; box-shadow:var(--shadow); display:flex; flex-direction:column; gap:2px;
+}
+.vhd{
+  font-family:var(--mono); font-size:10.5px; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--ink-3); padding:8px 11px 6px;
+}
+.vmenu a{
+  display:flex; gap:11px; align-items:flex-start; text-decoration:none;
+  padding:10px 11px; border-radius:9px; color:var(--ink); font-size:15px; line-height:1.3;
+}
+.vmenu a:hover{background:var(--surface-2)}
+.vmenu a.cur{background:var(--i0-soft)}
+.vk{
+  font-family:var(--mono); font-size:10.5px; letter-spacing:.06em; text-transform:uppercase;
+  color:var(--ink-2); background:var(--sunk); border:1px solid var(--line);
+  border-radius:5px; padding:3px 6px; flex:none; margin-top:1px; line-height:1;
+}
+.vmenu a.cur .vk{background:var(--i0); border-color:var(--i0); color:var(--on-ic)}
+.vt{display:block; font-weight:500}
+.vt em{
+  display:block; font-style:normal; font-family:var(--mono); font-size:11.5px;
+  color:var(--ink-3); margin-top:3px; letter-spacing:.02em;
+}
+@media (max-width:520px){
+  .vsw summary{padding:6px 10px; font-size:11.5px}
+  .vmenu{width:min(274px,calc(100vw - 34px))}
+}
+@media print{ .vsw{display:none} }
 @media (max-width:520px){
   .pager a{padding:7px 10px; font-size:12px}
   .pager .of{display:none}

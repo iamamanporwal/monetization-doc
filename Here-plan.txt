@@ -1,0 +1,1141 @@
+================================================================================
+HERE — MONETIZATION PLAN HANDOFF
+Written by: Claude (Anthropic), working session with Aman (aman@aganastudios.com)
+Date: 20 September 2026 (v1) · 21 September 2026 (v2 — Tier 8 Live Surfaces)
+Companion file: HERE-PROJECT-CONTEXT.txt (read that first for product/repo
+background — this file assumes you already know what HERE, Guardians, NOW,
+Scircles, GO, etc. mean).
+
+This document is called a MONETIZATION PRD. That is the industry name for a
+document that decides pricing, packaging, metering and unit economics in one
+place. If you keep working on this, name the eventual file MONETIZATION.md
+and put it beside the repo's other handoff docs (BROADCAST.md, TEAMS.md,
+AGENT-BUILDER.md, MOTION.md).
+
+V2 CHANGE SUMMARY (21 Sep 2026): guardians are no longer the only fixed cost.
+Whatever a Guardian builds — a site, an app — runs on OUR Google Cloud account
+and was costed nowhere in v1. This revision adds PART 6a (Tier 8 — Live
+Surfaces), carves infrastructure out of the 5x pricing rule at 3x, adds credit
+rules 8–12, corrects the egress cost line, adds hosting rows to the Part 9
+month-12 model, makes Part 10 a two-pillar section, and adds three open
+questions (Q8–Q10). Answers received from the product owner on 21 Sep:
+hosting runs on GOOGLE CLOUD; user-shipped apps do NOT call models at runtime
+yet (Guardians build everything) but may later; whether Motion runs on our
+infra is still unknown.
+
+STATUS: this is a planning document / recommendation, not implemented code.
+Nothing described below exists in the HERE codebase yet. Two nav placeholders
+already exist ("Credits" → /credits, "Billing" → /billing in assets/shell.js)
+with no screens behind them — see HERE-PROJECT-CONTEXT.txt §4.
+================================================================================
+
+
+PART 0 — THE ORIGINAL ASK
+--------------------------------------------------------------------------------
+The user asked, as a product manager: what is this kind of document called;
+what should we measure (the North Star); what structure of things do we need
+to be maximally profitable; how do we manage the $500/month cost of a
+Guardian; how do we build a credit logic for every action; two plans with
+flowcharts for both credit and billing; think like a monetization PM.
+
+His own framing, verbatim and central to every decision below:
+  "Credits = user trust, control, and perceived value."
+  "Billing = unit economics, revenue, and profitability."
+These are treated as two separate systems with two separate jobs throughout.
+
+
+PART 1 — THE CORE DECISION
+--------------------------------------------------------------------------------
+[v2] There are now TWO fixed costs that do not scale with usage: the
+$500/month Guardian, and the Google Cloud bill for keeping users' published
+surfaces alive (Part 6a / Part 10b). Both run whether anyone is active or not,
+so the conclusion below is unchanged — it just has a higher floor to clear.
+
+There is one fixed cost that does not scale with usage: the $500/month
+Guardian. A pure pay-as-you-go credit model cannot carry a fixed cost — it
+only earns when someone is active, but the cost runs whether they are active
+or not.
+
+DECISION: a TWO-PART TARIFF.
+  - A subscription floor pays for fixed costs (guardians, storage, support,
+    always-on infrastructure).
+  - Metered credits pay for variable costs (model tokens, renders,
+    transcription, egress), priced with margin on top.
+  - Credits never carry the fixed cost. The subscription never carries the
+    variable cost. Each part covers what it is shaped like.
+
+The credit system's job: make people feel in control. Predictable prices, a
+visible balance, nothing charged for failure, "this will cost X" shown before
+anything runs. If someone is ever surprised by a charge, the credit system
+has failed — even if the accounting was correct.
+
+The billing system's job: make the company survive. Recurring revenue, gross
+margin, cash collection, deferred-revenue accounting, dunning, tax. Should be
+nearly invisible to the user — one clean invoice.
+
+THE TRAP TO AVOID: never let the credit PRICE float with the underlying COST
+("this run cost us more, so it costs you more"). It destroys trust and makes
+the product impossible to budget for. Fix the price users see; manage the
+cost internally (model routing, caching, or eating it).
+
+
+PART 2 — THE ANCHOR AND THE MARGIN TARGET
+--------------------------------------------------------------------------------
+  1 credit = $0.01 of list value. 100 credits = $1.
+  Target internal cost: $0.002 per credit.
+  Every price on the rate card = 5× our cost = 80% gross margin.
+  If a new action can't be priced at 5× its cost, it does not ship until it
+  can.
+
+  THE ONE EXCEPTION (added v2) — INFRASTRUCTURE IS PRICED AT 3×, NOT 5×:
+
+    Action class                          | Markup | Target GM | Why
+    --------------------------------------|--------|-----------|------------------
+    Model & media actions                 | 5×     | 80%       | nobody can price-
+      (room turns, guardian runs,         |        |           | check a Sonnet run
+       transcription, render, video)      |        |           |
+    Infrastructure                        | 3×     | 65-70%    | Cloud Run, Replit
+      (hosting, compute, requests,        |        |           | and Emergent all
+       egress, datastores) — Tier 8       |        |           | publish unit rates;
+                                          |        |           | 5× is checkable and
+                                          |        |           | it gets checked
+    Third-party pass-through (Tier 7)     | ×1.35  | 23-26%    | unchanged
+                                          | ×1.30  |           |
+
+  Market evidence for the 3×: Replit resells a ~$5 machine as a $15/mo Reserved
+  VM; Emergent charges 50 credits (~$10/mo) per deployed app on infra that
+  costs it a few dollars. Both land near 3×. Nobody in this category holds 5×
+  on commodity compute, because the buyer can read Google's price list.
+
+  HARD FLOOR is unchanged and applies to both classes: never sell a credit
+  below $0.004.
+  HARD FLOOR: never sell a credit below $0.004 (2× cost, 50% margin). This is
+  the lowest an enterprise negotiation may reach — write it down before the
+  first big customer asks for a discount, because in the room you'll want to
+  say yes anyway.
+
+
+PART 3 — NORTH STAR AND METRIC TREE
+--------------------------------------------------------------------------------
+NORTH STAR: Weekly Successful Credit Burn (WSCB) — credits settled on jobs
+that COMPLETED and were KEPT (not discarded, not refunded), summed every
+week.
+
+Why this number: it only rises when three things are true at once — people
+are active, they're doing work valuable enough to keep, and the company is
+getting paid. It cannot be gamed by breaking things (failed jobs are free by
+policy, see Part 5). It leads revenue by 2-4 weeks, so it doubles as an early
+warning.
+
+SIX BRANCHES (each with one number to move weekly):
+
+  1. ACQUISITION
+     Signups, cost to acquire, share reaching a first GO within 24 hours.
+     Target: 60% of signups reach a first GO on day one.
+
+  2. ACTIVATION
+     Time to First GO — minutes from sign-in to the first job that finishes.
+     Single best predictor of whether someone ever pays.
+     Target: median under 8 minutes.
+
+  3. ENGAGEMENT
+     Weekly active Prime members, live Scircles, GOs per active per week.
+     Target: 12 GOs per active per week. Below 4/week = visiting, not playing.
+
+  4. CONSUMPTION
+     Burn depth — % of the monthly allotment actually used.
+     Healthy band: 60-80%. Under 30% predicts churn. Over 95% means rationing
+     (people stop exploring, which is where expansion revenue comes from).
+
+  5. ECONOMICS
+     Cost per credit, margin per credit, accounts per guardian.
+     Target: $0.002 cost/credit, 80% margin, 80+ accounts per guardian.
+
+  6. RETENTION
+     Net revenue retention (NRR), logo churn, refund/waste rate.
+     Target: NRR above 110%, waste below 2% of credits burned.
+
+GUARDRAILS (never trade away, even while pushing the North Star up):
+  - Credits charged for jobs that failed on our side:      0%, no exceptions
+  - "I didn't expect that charge" reports:                 < 1 per 1,000 GOs
+  - Accounts burning over 95% of their allotment:           < 15%
+  - Breakage (credits sold, expired unused):                < 8% of sales
+  - Accounts per guardian:                                  ≥ 50
+
+Review cadence: one meeting a week, one screen — this week's burn vs last
+week's, then the six branch numbers, then the five guardrails. Burn up and
+nothing red = ship more of whatever you just shipped. Burn up and something
+red = you did not actually win, you borrowed from next quarter.
+
+
+PART 4 — THE MODEL-COST PROBLEM AND THE MULTIPLIER FIX
+--------------------------------------------------------------------------------
+Guardians offer four Claude models whose cost differs by 10× for the
+identical action (see HERE-PROJECT-CONTEXT.txt §5 for the price table). A
+flat credit price per action either overcharges Haiku users or loses money
+on every Fable run. Fix: give each model a multiplier tuned so margin stays
+at 80% regardless of which model is picked, computed from real per-run cost
+at a 20K-input / 2K-output run (Guardians' own stated typical run size):
+
+  Tier       | Model       | Cost (20K in/2K out) | Credits | Price | Margin | Multiplier
+  -----------|-------------|-----------------------|---------|-------|--------|------------
+  Swift      | Haiku 4.5   | $0.030                | 15      | $0.15 | 80%    | ×0.5
+  Standard   | Sonnet 5    | $0.060                | 30      | $0.30 | 80%    | ×1   (default)
+  Deep       | Opus 5      | $0.150                | 75      | $0.75 | 80%    | ×2.5
+  Cinematic  | Fable 5.1   | $0.300                | 150     | $1.50 | 80%    | ×5
+
+  (Formula: credits = round(cost_usd × 5 / 0.01). Verified by direct
+  computation, not eyeballed — all four land at exactly 80% margin.)
+
+TWO CHANGES THIS IMPLIES FOR THE PRODUCT:
+  (a) Guardians' current DEFAULT model is Opus 5 — a ×2.5 multiplier on the
+      most common action in the product. Recommendation: make Sonnet 5
+      ("Standard") the default and let Deep be a deliberate choice on the GO
+      card. Estimated worth ~$5,700/month at month-12 Plan-B scale (see
+      Part 10's margin-lever table), and it's a one-line config change.
+  (b) Turn on prompt caching for Scircle/room context — the most repeated
+      payload in the system, at roughly a tenth the price when cached.
+
+
+PART 5 — THE SEVEN CREDIT RULES
+--------------------------------------------------------------------------------
+  1. Price the verb, not the token. People can't reason about tokens,
+     seconds or gigabytes — the rate card lists things a person wanted to
+     happen ("transcribe this recording"), never raw compute units.
+  2. Reading is free. Doing costs. Browsing, replaying a recording you
+     already made, joining a Scircle, opening NOW — always $0. Charge only
+     for machine work we had to buy.
+  3. Failure is free. If a job fails on our side, the hold is VOIDED —
+     never charged in the first place, not "refunded afterward." This one
+     rule buys more goodwill than any amount of free credits.
+  4. Nothing runs without a GO. Opening a recording, reading a message,
+     selecting a card, or joining a group must never silently start a paid
+     job.
+  5. Quote before, settle after. Show an estimate with a band, reserve
+     (hold) it, then charge the MEASURED amount (always ≤ the quote). If it
+     came in cheaper, the user keeps the difference — people remember that.
+  6. One currency inside, many outside. The ledger only ever counts
+     credits. Currency conversion happens at the "shop window" (the buy
+     screen), never inside the meter — this keeps FX entirely out of unit
+     economics.
+  7. The price is fixed. The cost is ours to manage. A credit price never
+     moves because our COGS moved. If a model gets more expensive, route to
+     a cheaper one, cache harder, or eat it — the user's budget is a
+     promise. This holds for hosting too: if Google raises egress, we cache
+     harder or absorb it.
+
+  --- ADDED IN V2, FOR STANDING (RECURRING) CHARGES ---
+
+  8. Publishing is free. Staying live is not. The publish button itself
+     states the monthly figure BEFORE the first deploy. This is the exact
+     place Emergent lost user trust: a 50-credit/month (~$10) per-app
+     deployment fee that is not shown at plan-selection time and quietly
+     consumes half a Standard plan.
+  9. A standing meter gets a RENEWAL GO, not a one-time GO. Monthly cost
+     preview, budget cap and stop condition, every cycle — not once at
+     creation. Part 12 already requires this of the STANDING tool class;
+     hosting is the first real instance of it.
+ 10. Sleep, never delete. Out of credits → the surface SLEEPS behind a
+     "wake this up" page. Data retained 60 days, mirroring the dunning
+     ladder in Part 11. We never delete someone's live site to collect a
+     debt.
+ 11. Scale to zero by default. Always-on is a deliberate upgrade the user
+     chooses, the same interaction as picking Deep on the model picker.
+ 12. Publish the unit rates. Replit publishes its per-compute-unit and
+     per-request rates and is trusted for it. Emergent hides its deployment
+     fee and takes the reputational hit. Our whole credit doctrine says show
+     the price first — that must include infrastructure.
+
+
+PART 6 — THE RATE CARD (every billable action)
+--------------------------------------------------------------------------------
+TIER 0 — free forever (never metered, never shown on a GO card):
+  Sign in with JEM · browse Rooms/Scircles/Spaces · read a message · open or
+  replay a recording you own · re-read a transcript already paid for · join
+  a Scircle · open NOW · cancel before GO · the default guardian's local
+  guidance (no model call) · ANY RETRY after a failure on our side.
+
+TIER 1 — conversation in Rooms (3K input / 0.6K output tokens per turn):
+  Room turn — Swift      : costs us $0.006 → 3 credits  → $0.03  (80% GM)
+  Room turn — Standard   : costs us $0.012 → 6 credits  → $0.06  (80% GM)
+  Room turn — Deep       : costs us $0.030 → 15 credits → $0.15  (80% GM)
+  Room turn — Cinematic  : costs us $0.060 → 30 credits → $0.30  (80% GM)
+
+TIER 2 — guardian work (20K input / 2K output tokens per run):
+  Guardian run — Swift     : $0.030 → 15 credits  → $0.15
+  Guardian run — Standard  : $0.060 → 30 credits  → $0.30
+  Guardian run — Deep      : $0.150 → 75 credits  → $0.75
+  Guardian run — Cinematic : $0.300 → 150 credits → $1.50
+  Build a specialized guardian (3 steps, ~4 model runs) : $0.240 → 120
+     credits → $1.20
+  Scheduled/unattended-queue run: +10% premium over the interactive price
+  Publish a guardian version (deploy): free (~$0 cost)
+     [v2] PUBLISHING stays free. KEEPING THE RESULT LIVE does not — see
+     Part 6a. In v1 this line was the single most expensive sentence in the
+     document, because it implied the runtime was free too.
+
+TIER 3 — Capture & stream:
+  Transcription                : $0.006/audio-min → 3 credits  → $0.03
+  Full transcript, Word or PDF : $0.002/document   → 2 credits  → $0.02 (90% GM)
+  Edit render (FFmpeg)         : $0.040/output-min → 20 credits → $0.20
+  Live production              : $0.030/stream-min → 15 credits → $0.15
+  Clip / short cut              : $0.012/clip       → 6 credits  → $0.06
+
+TIER 4 — generated media:
+  Image / scene frame  : $0.040/image  → 20 credits  → $0.20
+  Video generation      : $0.400/5-sec → 200 credits → $2.00
+  Voice synthesis        : $0.030/min   → 15 credits  → $0.15
+
+TIER 5 — world, intelligence and data:
+  Scircle world recompute (the 4D-orb redraw)        : $0.090 → 45 credits
+     → $0.45
+  Cerebral deep analysis (100K in / 8K out, Deep tier): $0.700 → 350 credits
+     → $3.50
+  Web / source extraction (Firecrawl/Apify-class)     : $0.002/page →
+     1 credit → $0.01
+  Muse tool call through Sentinel                      : $0.004/call →
+     2 credits → $0.02
+
+TIER 6 — carry costs, billed MONTHLY, never charged per click:
+  Retained media   : $0.023/GB·month → 15 credits → $0.15 (85% GM)
+  Delivery/egress  : $0.120/GB       → 40 credits → $0.40 (70% GM)
+     [v2 CORRECTION] v1 stated a cost of $0.085/GB and a 79% margin. Google
+     Cloud Premium Tier internet egress is $0.12/GB for the first TB, $0.11
+     to 10 TB, $0.08 above. The price stays at 40 credits; the MARGIN was
+     overstated. Note this is 6× Fly.io's $0.02/GB — which is why Cloud CDN
+     in front of every static surface is mandatory, not an optimisation
+     (Cloud CDN cache egress is ~$0.02-0.20/GiB and wins above a ~70%
+     cache-hit rate).
+  Motion embed licence : ~$0.10/site·month → flat 200 credits → $2.00 (95% GM)
+     [v2] COST BASIS UNVERIFIED. HERE-PROJECT-CONTEXT.txt §4 says
+     muse_runtime.py serves /embed/motion.js, which suggests Motion runs on
+     OUR infrastructure. If so it is a static surface + CDN egress at roughly
+     $0.30/site·month, making this 85% GM, not 95%. Price unchanged; see
+     Part 14 Q10.
+
+TIER 7 — pass-through, ALWAYS separately authorised, NEVER bundled into a
+plan's included allotment:
+  Dialog matter intelligence          : actual cost × 1.35 (≈26% margin)
+  Any third-party vendor routed via NOW: actual cost × 1.30 (≈23% margin)
+  (This tier is deliberately consistent with the separate product-direction
+  memo's rule that Dialog carries its own, separately authorised
+  expenditure — see HERE-PROJECT-CONTEXT.txt §2.)
+
+PART 6a — TIER 8: LIVE SURFACES (added v2)
+--------------------------------------------------------------------------------
+Everything a Guardian builds that KEEPS RUNNING on our servers: a published
+site, an app, its datastore, its domain. This tier did not exist in v1 and is
+the largest single omission the plan had.
+
+PLATFORM: Google Cloud (confirmed by the product owner, 21 Sep 2026).
+MARGIN TARGET: 3× cost / 65-70% GM, per the Part 2 exception — NOT 5%/80%.
+BILLING CLASS: STANDING (Part 12). Settles monthly in arrears against the
+wallet, with a renewal GO each cycle.
+
+STANDING SKUs
+  SKU                    | Google service            | Our cost | Credits | $/mo  | GM
+  -----------------------|---------------------------|----------|---------|-------|-----
+  Static surface         | Cloud Storage + Cloud CDN | ~$0.30   | 100     | $1.00 | 70%
+  Live app base          | Cloud Run, request-billed | ~$0.60   | 200     | $2.00 | 70%
+    (scale-to-zero)      |                           |          |         |       |
+  Always-on app          | Cloud Run, min-instance 1 | ~$10.00  | 3,000   |$30.00 | 67%
+    (no cold start)      |                           |          |         |       |
+  Managed Postgres       | Cloud SQL db-f1-micro     | ~$10.00  | 3,000   |$30.00 | 67%
+  Serverless datastore   | Firestore                 | $0 base  | metered |metered| 67%
+    (DEFAULT for new apps)                           |          |         |       |
+  Custom domain + SSL    | shared LB + managed cert  | ~$0.50   | 150     | $1.50 | 67%
+
+METERED, above each surface's included envelope
+  Unit                        | Our cost          | Credits      | = $    | GM
+  ----------------------------|-------------------|--------------|--------|-----
+  App compute                 | $0.0864/vCPU-hr   | 25/vCPU-hr   | $0.25  | 65%
+  App memory                  | ~$0.009/GiB-hr    | 3/GiB-hr     | $0.03  | 70%
+  Requests                    | $0.40/M           | 12/100k      | $0.12  | 67%
+  Egress — CDN-cached         | ~$0.04/GiB        | 12/GB        | $0.12  | 67%
+  Egress — origin, Premium    | $0.12/GB          | 40/GB        | $0.40  | 70%
+  Datastore storage           | ~$0.20/GB·month   | 60/GB·month  | $0.60  | 67%
+  End-user AI inside their app| actual            | ×1.35        | pass-  | 26%
+    (DORMANT — see below)     |                   |              | through|
+
+  Source rates (us-central1, verified Sep 2026 — RE-CHECK BEFORE RELEASE,
+  these move as often as the model prices in §5 of the context file):
+    Cloud Run request-billed: $0.000024/vCPU-s, $0.0000025/GiB-s, $0.40/M req
+    Cloud Run min-instance 1 @ 1vCPU/512MiB warm 24/7: ~$9.72/month idle
+    Cloud SQL db-f1-micro: ~$8-10/month, no SLA, not eligible for CUDs
+    GCP Premium Tier egress: $0.12/GB first TB · $0.11 to 10TB · $0.08 above
+    Cloud CDN cache egress: ~$0.02-0.20/GiB by destination and volume
+
+FREE HOSTING ENVELOPE PER PLAN
+  Plan   | Included surfaces          | Hosting overage | Idle policy
+  -------|----------------------------|-----------------|----------------------
+  Signal | 1 static                   | —               | sleeps after 7d idle
+  Prime  | 1 live app + 1 static      | 500 cr/month    | sleeps after 30d idle
+  Studio | 3 live apps + static       | 3,000 cr/month  | manual sleep only
+  World  | 10 live apps + static      | 15,000 cr/month | manual sleep only
+
+  WHY AN ENVELOPE AT ALL: this is taken directly from Lovable, which grants
+  every workspace — free tier included — 20 Cloud credits and 4 AI credits a
+  month so that publishing never eats the build budget. Without it, people
+  build something, discover it costs money to show anyone, and never share
+  it. That kills the only organic growth loop a build product has.
+
+  *** THE ENVELOPE IS A REAL COGS LINE, NOT A FREE LUNCH ***
+  Google's free tier — 180,000 vCPU-seconds, 360,000 GiB-seconds, 2M requests,
+  one free Firestore database — is PER BILLING ACCOUNT, NOT PER APP. It is
+  consumed once across every customer app we host, not once each. Every
+  "hosting is basically free for small apps" intuition from the consumer
+  tools fails here, because in those tools somebody else is absorbing it. On
+  our own GCP account we are that somebody. Model the envelope as a capped
+  marketing expense in COGS (Part 9 does).
+
+THE THREE OPERATIONAL FACTS THAT SET THESE PRICES
+  1. Free tier is per billing account (above). The envelope costs us money.
+  2. Egress is $0.12/GB, not $0.085 (the Tier 6 correction). Cloud CDN in
+     front of every static surface is therefore mandatory.
+  3. Custom domains may require a Global External Application Load Balancer
+     forwarding rule at ~$18-25/month EACH. At that cost the $1.50 SKU is
+     mispriced by roughly 16×. It only works at $1.50 if many customer
+     domains host-route through ONE shared LB with SNI. This is an
+     architecture decision that sets a price — see Part 14 Q8. BLOCKING.
+
+TWO PRODUCT DEFAULTS THAT ARE REALLY PRICING DECISIONS
+  (a) New Guardian-built apps default to FIRESTORE, not Cloud SQL. Cloud SQL's
+      smallest Postgres has a hard $8-10/month floor per database and no SLA;
+      a $30/month Postgres SKU on a $39 Prime plan nearly doubles that
+      customer's bill. Firestore scales from zero. Make managed Postgres a
+      Studio-and-above choice. The cheapest way to control a cost line is to
+      not create it.
+  (b) Scale-to-zero is the default; always-on is the $30 upgrade.
+
+THE DORMANT METER — END-USER AI INSIDE A SHIPPED APP
+  Confirmed by the product owner (21 Sep): Guardians build everything today,
+  so nothing a user ships calls a model at runtime yet — but it may later.
+  RECOMMENDATION: declare the meter now and ship it DISABLED. Add a
+  `pass_through` class to tool_meter with the ×1.35 rate declared and the
+  meter switched off. Cost today is approximately zero. The cost of
+  retrofitting it the first time a Guardian ships an app with a chat box in
+  it is an uncapped token bill with SOMEONE ELSE'S users on the other end and
+  no budget gate. This is the one place worth spending effort ahead of need.
+  See Part 14 Q9.
+
+HOW TIER 8 INTERACTS WITH THE WALLET (amends Part 7)
+  Hosting draws from PLAN credits first, never from PROMO. A 7-day welcome
+  grant must never silently buy a month of hosting the user did not know they
+  had started — they would discover it only when the grant expired and their
+  site went quiet. This is a deliberate exception to the soonest-expiry-first
+  spend order, and it is the only one.
+
+WHAT THE COMPARABLES DO (researched 21 Sep 2026)
+  Lovable    : separate "Cloud credits" for hosting, distinct from build
+               credits and from end-user "AI credits" — three meters, one
+               currency. Free/Pro/Business all get a 20 Cloud-credit monthly
+               grant. Third-party estimates: ~$1/mo for a 500-visit
+               portfolio, ~$5 at 5k visits, ~$15 for a 20-user team tool,
+               ~$65 for a 10k-visit store.
+  Emergent   : 50 credits/month per deployed app (~$10 at $0.20/credit) for
+               managed infra, monitoring, SSL and env vars. Buried at plan-
+               selection time and the subject of a public transparency
+               complaint. DO NOT COPY THE DISCLOSURE, the structure is fine.
+  Replit     : the closest structural match. Publishes unit rates: Autoscale
+               $2/mo base + $0.60/M compute units + $0.40/M requests, scales
+               to zero; Reserved VM $15 (0.5vCPU/2GB) to $130 (4vCPU/16GB);
+               static free + $0.05/GB transfer. All drawn from the same
+               credit pool as AI usage.
+  Google AI  : AI Studio is free, deploys to Cloud Run, and Cloud Run is
+    Studio   : "billed separately" — a zero-margin pass-through. Google
+               monetises tokens, not runtime. Not a model we can copy, since
+               runtime is a cost we actually carry.
+
+  THE PATTERN: hosting is ALWAYS a separate meter; markup is 2.5-3.5×, never
+  5×; and the ones that include a free envelope convert better than the one
+  that surprises you with a fee.
+
+
+WORKED EXAMPLES (recomputed directly from the rate card above):
+  A working session: 20-min capture/transcription (20 x 3cr = 60cr) +
+    transcript as Word/PDF (2cr) + one Standard guardian run (30cr)
+    = 92 credits = $0.92. Costs us: (20 x $0.006) + $0.002 + $0.060 = $0.182
+    (80% margin).
+  Building a guardian: 120 credits = $1.20, costs us $0.24. Cheap enough
+    that nobody hesitates, and guardian-building drives retention.
+  A heavy Scircle week: 40 room turns + 6 guardian runs + 90-min capture +
+    3 renders + 2 world recomputes + 1 Cerebral pass ≈ 2,400 credits = $24 —
+    comfortably inside one Prime monthly allotment (5,000 credits, see
+    Part 9).
+  [v2] Shipping what it built: a live app on a custom domain = base 200 cr +
+    domain 150 cr = 350 credits = $3.50/month, then metered. Inside a Prime
+    hosting envelope the FIRST one is free.
+  [v2] A serious production app: always-on (3,000 cr) + managed Postgres
+    (3,000 cr) + domain (150 cr) + traffic ≈ $61/month. This is a Studio
+    customer, and at 67% GM the SKU pays for itself.
+
+
+PART 7 — THE WALLET: FOUR BUCKETS, ONE SPEND ORDER
+--------------------------------------------------------------------------------
+A wallet is not one number — it's four buckets that always spend in the same
+order (soonest-to-expire first). Show this order in NOW; it's the thing
+people most often accuse credit products of cheating on.
+
+  Order | Bucket      | Source                              | Expires
+  ------|-------------|--------------------------------------|------------------
+  1st   | Promo       | Onboarding grant, campaign, apology  | 7-30 days
+  2nd   | Plan        | This month's subscription allotment  | End of cycle,
+        |             |                                        +30 days grace
+  3rd   | Purchased   | Top-ups paid in cash                 | 12 months
+  4th   | Overdraft   | Studio and World tiers only           | Settles on next
+        |             |                                        invoice
+
+Plan credits deliberately do NOT roll over indefinitely (only one cycle of
+30-day grace) — rollover feels generous but quietly converts a subscription
+into a credit bank, encourages stockpiling, and grows unburned liability
+without matching revenue.
+
+
+PART 8 — THE CREDIT FLOW (the "GO gate")
+--------------------------------------------------------------------------------
+Every metered action walks this exact path, every time:
+
+  1. QUOTE   — units × rate, computed from the tool's manifest (see Part 12),
+               with a ± band.
+  2. GO CARD — the trust moment. Shows what runs, which model, the estimated
+               credits, a hard cap, and one tap to change any of it. NOTHING
+               RUNS BEFORE THIS.
+  3. Balance check: is balance ≥ estimate × 1.2 (a 20% buffer)?
+       - If NO: offer top-up / switch to a cheaper model / trim scope /
+         cancel. Never silently charge. Auto-recharge only fires if the user
+         explicitly opted into it beforehand.
+       - If YES: continue.
+  4. HOLD    — reserve the estimate. This is NOT a charge yet.
+  5. RUN     — meter the real units as the job actually executes.
+  6. Outcome:
+       - COMPLETED — settle the MEASURED amount, release the rest of the
+         hold. User keeps the difference between quote and actual.
+       - PARTIAL   — charge only the units actually measured, flag the job
+         for review.
+       - FAILED (our side) — void the hold entirely. Zero credits charged.
+         The retry is free.
+  7. LEDGER  — one immutable row: person, tool@version, model, units,
+               credits, job id, Scircle, who authorised it, what it actually
+               cost us.
+  8. A receipt appears in NOW; the wallet updates; the history is
+     exportable.
+  9. Every ledger row feeds back into the tool template — this is the
+     mechanism for the RSI (recursive self-improvement) loop the user asked
+     for (see Part 12): the "credits per successful outcome" per tool
+     version becomes an optimisation target.
+
+The estimate×1.2 hold buffer specifically prevents the worst support ticket
+in any credit product — a job that dies halfway because the balance ran out
+mid-run.
+
+
+PART 9 — TWO PLANS
+--------------------------------------------------------------------------------
+
+PLAN A — "OPEN METER" (modelled, NOT recommended)
+  No subscription. Generous free tier. Buy credits only when needed.
+  Maximum top-of-funnel, minimum friction, fully usage-aligned.
+
+  Package     | Price | Credits      | $/credit | Notes
+  ------------|-------|--------------|----------|------------------
+  Explore     | $0    | 1,000/month  | —        | 1 Scircle, shared guardian,
+              |       |              |          | 7-day retention (free tier)
+  Starter pack| $25   | 2,500        | $0.0100  | list price
+  Maker pack  | $99   | 12,000       | $0.0083  | -17%
+  Studio pack | $449  | 60,000       | $0.0075  | -25%
+
+PLAN B — "SEAT + FUEL" (RECOMMENDED)
+  Two-part tariff: subscription pays fixed costs and buys credits below
+  list; top-ups cost MORE than the allotment rate, so the plan is always the
+  better deal — this is the built-in upgrade engine, no sales pitch needed.
+
+  Tier    | $/mo | Credits  | Effective $/cr | Scircles  | Guardian access      | Top-up rate
+  --------|------|----------|-----------------|-----------|-----------------------|------------
+  Signal  | $0   | 500      | —               | 1         | Shared, low priority | upgrade only
+  Prime   | $39  | 5,000    | $0.0078         | 3         | Shared pool           | $0.0095/cr
+  Studio  | $199 | 30,000   | $0.0066         | 10        | Shared, priority lane | $0.0085/cr
+  World   | $999 | 175,000  | $0.0057         | unlimited | Priority pool+JEM SSO | $0.0075/cr
+  Dedicated Guardian add-on: +$899/month (see Part 10)
+  Motion embed licence: $2/site/month (matches the existing MOTION.md draft
+     price)
+
+  [v2] HOSTING ENVELOPE BY TIER (full table and rationale in Part 6a):
+  Signal: 1 static · Prime: 1 live app + 1 static + 500cr/mo overage ·
+  Studio: 3 live apps + 3,000cr/mo · World: 10 live apps + 15,000cr/mo.
+  Plan A has NO envelope discipline, which is why hosting makes it worse
+  rather than better — see the model below.
+
+  THE MECHANIC THAT MAKES IT WORK: read the last two columns of any row
+  together. Prime's included credits cost the user $0.0078/credit; their
+  top-ups cost $0.0095/credit. The moment someone regularly tops up, Studio
+  is visibly cheaper FOR THEM. This is arithmetic, not upselling — it's
+  where NRR above 110% comes from, with no sales team required.
+
+  Annual plans: offer 2 months free (-17%). Pulls cash forward, cuts churn
+  by roughly a third, lowers the payment-fee line. Book as deferred revenue,
+  release monthly (see Part 11).
+
+  THE ONE THING TO STEAL FROM PLAN A: give every new signup a ONE-TIME
+  2,000-credit grant expiring in 7 days, separate from the monthly free
+  allotment. Costs ~$4/signup at worst, but it's capped and time-boxed so it
+  can never become Plan A's uncapped free tier, and it buys the most
+  important thing: Time to First GO under 8 minutes.
+
+MONTH-12 MODEL COMPARISON (same product, same rate card, same costs — the
+only variable is the shape of what's sold; numbers are illustrative
+forecasts, not measured data — see Part 14, question 6):
+
+                                    | Plan A (Open Meter) | Plan B (Seat+Fuel)
+  ----------------------------------|----------------------|----------------------
+  Signups to date                   | 25,000               | 16,000
+  Conversion to paid                | 4%                    | 7%
+  Paying accounts, still active     | 620                   | 1,120
+  Free accounts, still active       | 12,000                | 6,000
+  Subscriptions (MRR)               | —                     | $142,240
+  Credit packs / top-ups            | $21,080               | $8,064
+  Dedicated guardians + Motion      | —                     | $25,778
+    (22 dedicated guardians, 3,000 embed sites)
+  Tier 8 — live surfaces      [v2]  | $2,480                | $9,638
+  TOTAL MRR                         | $23,560               | $185,720
+  Credits burned — paying accounts  | $4,216                | $29,389
+  Credits burned — free tier        | $9,120                | $4,800
+  Guardians (fixed cost)             | $8,000 (16 guardians) | $20,500 (41 guardians)
+  Hosting — paid surfaces     [v2]  | $790                  | $3,084
+  Hosting — free/included     [v2]  | $4,050                | $1,146
+    envelopes
+  Payment processing + infra         | $4,950                | $14,900
+  TOTAL COGS                         | $31,126               | $73,819
+  GROSS PROFIT                       | -$7,566               | $111,901
+  GROSS MARGIN                       | -32%                  | 60%
+  Year-1 revenue (ramped)            | ~$140,000             | ~$1,107,000
+  Year-1 gross profit                | ~-$45,000             | ~$662,000
+
+  HOW THE TIER 8 LINES WERE BUILT (Plan B, illustrative, same caveat as the
+  rest of this table — see Part 14 Q6):
+    448 accounts (40% of payers) run a live app past their envelope, averaging
+      $6/mo (base $2 + ~$4 metered)                              = $2,688
+    120 accounts run an always-on app at $30                      = $3,600
+     90 accounts run managed Postgres at $30                      = $2,700
+    300 custom domains at $1.50                                   =   $450
+    200 extra static surfaces at $1.00                            =   $200
+                                                          TOTAL   = $9,638
+    COGS at ~68% blended GM                                       = $3,084
+    Included/free envelopes: 1,500 free-tier static surfaces at $0.30 ($450)
+      + 1,120 included static ($336) + 600 included live-app bases ($360)
+                                                                  = $1,146
+
+  WHY PLAN A GETS WORSE, NOT BETTER: Plan A's free tier has no hosting
+  envelope and therefore no ceiling. At 50% of 12,000 free accounts
+  publishing a static surface plus 1,500 running live apps, that is $4,050/mo
+  of real Google Cloud cost against almost no matching revenue — and it drags
+  Plan A from -25% to -32%. Under Plan B, hosting sells at ~68% against a 60%
+  blend, so it is slightly accretive: gross profit up ~$5,400/month, which is
+  more than margin levers 3 through 8 in Part 13 combined.
+
+  THE RETENTION EFFECT IS THE BIGGER PRIZE, and it is not in this table:
+  YOU CANNOT CHURN WITHOUT TAKING YOUR OWN SITE DOWN. A hosted account is
+  structurally the stickiest account in the model. Expect materially higher
+  NRR from hosted accounts and track it as its own cohort (Part 3, branch 6).
+
+WHY PLAN A LOSES MONEY (three named mechanisms, each a trap that can recur
+inside Plan B too if not watched):
+  1. The free tier costs real money. 12,000 free accounts burning ~380
+     credits/month costs $9,120 — more than double what the paying accounts
+     cost. In a subscription model the free tier is a capped marketing
+     expense; in a pure meter it's uncapped.
+  2. Fixed costs have nothing to attach to. 16 guardians cost $8,000
+     regardless of whether anyone bought credits that month — a quiet month
+     is a straight loss, and quiet months aren't rare.
+  3. Pay-as-you-go decays. Of 1,000 people who ever bought a pack, only
+     ~620 are still active at month 12 — no renewal moment, no reason to
+     come back. Subscription revenue compounds; pack revenue leaks.
+
+THE CALL: ship Plan B.
+
+
+PART 10 — FIXED COST ONE: THE $500 GUARDIAN
+--------------------------------------------------------------------------------
+[v2] There are now two fixed costs. This part covers the guardian; Part 10b
+covers the live-surfaces fleet. They have different shapes and need different
+operating rules: a guardian is a STEP cost bought in $500 blocks and managed
+by utilisation; hosting is a CREEPING cost that arrives one published app at
+a time and is managed by defaults and sleep policy.
+
+This is the single most important derived number in the whole plan.
+
+A Prime account ($39/mo) contributes, BEFORE the guardian's fixed cost:
+  $39.00 (price)
+  - $6.50  (3,250 of its 5,000 credits burned, at $0.002/credit cost)
+  - $1.43  (payment processing, 2.9% + $0.30)
+  - $1.10  (storage/base infra)
+  = $29.97 contribution margin per account, before guardian cost.
+
+BREAK-EVEN accounts-per-guardian (APG) = 500 / 29.97 = 16.68 → 17 accounts.
+  (Formula: cm(APG) = (29.97 - 500/APG) / 39. Solved directly, not
+  eyeballed — verified: APG=20→12.7%, APG=50→51.2%, APG=80→60.8% margin.)
+
+  APG      | Contribution margin %
+  ---------|------------------------
+  17       | 0% (break-even)
+  50       | 51% (alert floor)
+  80       | 61% (TARGET — and the curve flattens sharply above this, so
+           |      pushing to 140 buys almost nothing more)
+
+A dedicated guardian is NOT a feature bundled into a plan — it is a SKU,
+sold separately at $899/month:
+  Tier                        | Price | Credits burned | Contribution before | Break-even
+                              |       |                 | guardian             | APG
+  -----------------------------|-------|-----------------|----------------------|------------
+  Prime                        | $39   | 3,250 ($6.50)   | $29.97               | 17
+  Studio                       | $199  | 19,500 ($39.00) | $149.93              | 3.4
+  World                        | $999  | 105,000 ($210)  | $744.73              | 0.7
+  Dedicated Guardian (add-on)  | $899  | billed separate | $399 (44% margin)    | n/a
+
+  DO NOT bundle a dedicated guardian into the $999 World plan — that single
+  line would consume half the plan price and drag it to ~25% margin,
+  turning best customers into worst customers. Sell it separately.
+  Absolute floor on the add-on price: $833/mo (40% margin). Never go below
+  $715/mo (30%) even for an anchor customer.
+
+FOUR OPERATING RULES FOR GUARDIAN CAPACITY:
+  1. Never provision a guardian on hope. Only add one when there's
+     $1,600/month of COMMITTED, attributed revenue behind it (a 2.5×
+     coverage ratio at ~78% margin). Queue depth is not a reason; revenue is.
+  2. Measure Guardian Coverage Ratio (GCR) monthly = gross profit
+     attributed to that guardian ÷ $500.
+       Target ≥ 2.5×.  Warn at < 1.5×.  Act (consolidate & retire) at
+       < 1.0× for two consecutive months.
+  3. Hibernate idle dedicated guardians: under 10% utilisation for 14 days
+     → sleep it, prorate the customer's next invoice. Stop paying for air.
+  4. Rebalance shared pools weekly (not reactively on incident) to keep
+     every pool inside 60-120 accounts. Below 60 = burning margin. Above
+     120 = buying queue latency that shows up as churn.
+
+THIS WHOLE SECTION RESTS ON ONE UNVERIFIED ASSUMPTION: that one guardian can
+serve many accounts concurrently (ceiling assumed ~120). If a "guardian" is
+actually one-to-one with a customer, or is a human operator with a real hour
+budget, APG collapses to 1 and EVERY PRICE IN THIS DOCUMENT roughly triples.
+This is the single most important open question — see Part 14, Q1.
+
+
+PART 10b — FIXED COST TWO: THE LIVE-SURFACES FLEET (added v2)
+--------------------------------------------------------------------------------
+A guardian is a step cost: $500 at a time, managed by accounts-per-guardian.
+Hosting is the opposite shape — small, continuous, and it only ever grows,
+one published app at a time. That is exactly why it is easy to leave out of a
+pricing model and expensive to leave out of a business.
+
+THE THREE GOOGLE CLOUD FACTS THAT DRIVE THIS SECTION are stated in full in
+Part 6a: the free tier is per billing account (so the envelope is real COGS),
+egress is $0.12/GB (so Cloud CDN is mandatory), and custom domains may need
+their own load balancer at ~$18-25/month (so Q8 is blocking).
+
+FOUR OPERATING RULES FOR SURFACE CAPACITY (the Part 10 guardian rules have a
+mirror here):
+  1. Scale to zero unless someone paid not to. Always-on is a $30 SKU, not a
+     default. This is the hosting equivalent of "never provision on hope."
+  2. Sleep idle surfaces. Signal at 7 days idle, Prime at 30. A sleeping
+     surface costs storage only. This is the equivalent of hibernating an
+     idle dedicated guardian.
+  3. Cache before you scale. Every static surface sits behind Cloud CDN from
+     day one — at GCP's $0.12/GB origin egress, the CDN is not optional.
+  4. Report COST PER SURFACE monthly, the way Part 10 reports cost per
+     guardian. Two fixed costs, two utilisation reviews, one meeting.
+
+A SURFACE COVERAGE NUMBER, analogous to the Guardian Coverage Ratio:
+  Surface margin = (credits billed for that surface × $0.01 − actual GCP
+  cost) ÷ credits billed. Target ≥ 65%. Warn < 50%. Act < 35% — either the
+  surface is undersized for its traffic (move it to a metered plan) or we
+  have mispriced its class.
+
+THE PART 15 GATE THIS IMPLIES: no surface ever goes dark without two warnings
+and a sleep state. This is guardrail #6 and it outranks the revenue.
+
+
+PART 11 — BILLING FLOW AND MONEY PLUMBING
+--------------------------------------------------------------------------------
+BILLING LIFECYCLE (a different rhythm than the credit flow — per cycle, in
+months, not per action, in seconds):
+
+  1. JEM identity — no HERE social profile required to hold a plan.
+  2. Choose a plan in NOW.
+  3. Gateway vaults the payment method — HERE never sees or stores card
+     data (PCI stays with the gateway). If declined → dunning ladder below.
+  4. Subscription + entitlement grant: credit allotment, Scircle seats,
+     guardian lane, spend cap, retention window, queue priority — all
+     granted together.
+  5. Every billing cycle, one of:
+       RENEW    — invoice, charge, reset the allotment. Unused plan credits
+                  get a 30-day grace then expire. Purchased credits: 12mo.
+       OVERAGE  — top-up, or auto-recharge only if the user opted in.
+                  Minimum top-up $10 (see fee-math note below).
+       CHANGE   — upgrade prorates immediately and credits land at once;
+                  downgrade waits until the end of the current paid period.
+       [v2] STANDING — Tier 8 hosting settles IN ARREARS at the end of each
+                  cycle against the wallet. If the wallet is empty the app
+                  does NOT fail: Studio and World draw overdraft; Signal and
+                  Prime enter the warn → warn → sleep ladder from Part 6a. A
+                  hosting charge is never the reason a site disappears
+                  without warning.
+  6. THE KEY ACCOUNTING RULE: cash in is NOT revenue. A credit purchase
+     books to DEFERRED REVENUE (a liability) — the company now owes service.
+  7. As credits BURN → recognise revenue, at the rate those specific
+     credits were sold for.
+  8. As credits EXPIRE unused → recognise BREAKAGE (free margin, but keep
+     it under 8% of credit sales — see the North Star guardrails; high
+     breakage looks like profit but is actually a sign of overselling).
+  9. Report the unburned credit liability every month — it's the size of
+     the service still owed, and it's the first number an investor or
+     acquirer checks to see whether reported ARR is real.
+
+Get steps 6-8 right from day one — retrofitting deferred-revenue accounting
+later is a painful audit.
+
+THE THREE MONEY-PLUMBING CALLS THE USER OWNS:
+
+  GATEWAY:
+    - Paddle (~5% + $0.50) — START HERE. Becomes the legal "merchant of
+      record," handles worldwide VAT/GST/US sales tax automatically. A
+      one- or few-person team cannot afford to self-manage global tax
+      compliance.
+    - Stripe Billing (2.9% + $0.30 + ~0.5-0.8%) — MOVE HERE once someone
+      owns finance. Native subscriptions, usage meters, credit grants and
+      entitlements — the closest off-the-shelf match to this exact
+      two-part-tariff model. Best developer experience. But HERE becomes
+      the seller of record and must register/remit tax itself (Stripe Tax
+      calculates, does not file everywhere).
+    - Razorpay (~2% domestic) — ADD if the billing entity is Indian. UPI
+      AutoPay is, in practice, the only recurring-payment rail that works
+      well there.
+    - Keep the credit LEDGER (the immutable rows from Part 8) as HERE's own
+      database, decoupled from whichever gateway is used via one adapter —
+      never build the ledger on top of the gateway's own records, or
+      switching gateways becomes a full data migration.
+
+  CURRENCY:
+    - Internal unit of account: USD (because all real costs — models,
+      storage, egress — are billed in USD).
+    - The ledger holds CREDITS ONLY, never currency. A euro customer and a
+      rupee customer burn the identical credit — margin analysis needs zero
+      FX conversion.
+    - Sell at FIXED LOCAL PRICE POINTS (e.g. Prime: $39 / €39 / £33 /
+      ₹2,999), re-priced quarterly — not live FX conversion, which produces
+      prices like "€36.42" that read as careless.
+    - Hold a 6-8% FX buffer in non-USD price points so a currency move gets
+      absorbed at the next quarterly re-price instead of eating margin
+      immediately.
+
+  LEGAL SHAPE OF A CREDIT (not legal advice — a product-design shape, have
+  a real lawyer confirm before the first payment):
+    - Structure credits as NON-REFUNDABLE, NON-TRANSFERABLE, EXPIRING
+      SERVICE USAGE RIGHTS. State this plainly on the buy screen, not just
+      buried in the ToS.
+    - NEVER: allow cash-out, peer-to-peer transfer, publish a "1 credit =
+      1 cent, redeemable" guarantee, sell credits with no expiry, or make
+      credits usable outside HERE. Each of these edges the product toward
+      being regulated as a payments/e-money business, and toward
+      unclaimed-property (escheatment) obligations in several US states.
+
+  TOP-UP MINIMUM ($10) — not arbitrary, it's fee math: at 2.9% + $0.30, a
+    $5 top-up costs $0.45 in fees (9%); a $2 top-up costs 18% (pure loss).
+    A $10 floor plus pushing auto-recharge in $25/$50 blocks cuts the
+    processing-fee line by roughly a third.
+
+DUNNING LADDER (degrade, never delete — expect to recover 55-70% of failed
+charges with this shape):
+  Day 0        : charge fails. Nothing changes for the user yet.
+  Days 1-7     : four retries (days 1, 3, 5, 7). One clear email each time
+                 with a one-tap fix link. Full access holds throughout.
+  Days 7-14    : GRACE — drops to the free lane. Reading/replay/export all
+                 still work; paid jobs pause; guardians hibernate.
+  Days 14-30   : SUSPENDED — read and export only. The Scircle stays intact
+                 for everyone else in it. Still nothing deleted.
+  Day 30       : cancelled. 60-day export window, then purge.
+
+
+PART 12 — "EVERY ACTION IS A TOOL": THE MANIFEST ARCHITECTURE
+--------------------------------------------------------------------------------
+This directly answers the user's stated architectural goal: wrap everything
+as a HERE tool so it can be reskinned/remapped fast per project, with
+premade templates letting search agents dynamically map UI ("a master DJ
+setting the mood," "an on-demand harness"), and to enable an RSI
+(recursive self-improvement) loop between a "prime guardian" and the HERE
+tool chain.
+
+THE KEY INSIGHT: if every billable thing is a tool, the rate card should not
+be a spreadsheet someone maintains by hand — it should be a `meter` field
+declared IN the tool template itself. A tool cannot ship without declaring
+its meter, and the moment it does, it is automatically priced, quoted,
+metered, held, settled, and reported. Zero incremental billing engineering
+per new feature.
+
+SHIP GATE (the rule that keeps this honest): a tool with NO `meter` block
+ships as free, PERMANENTLY — not "unpriced," genuinely and visibly free.
+This removes the temptation to ship something expensive now and price it
+"later."
+
+Example meter block (illustrative JSON shape for a tool template):
+  {
+    "tool": "capture.transcribe",
+    "version": "3",
+    "surface": "Main > Capture & stream",
+    "meter": {
+      "unit": "audio_minute",
+      "rate": 3,                 // credits per unit
+      "cogs": 0.006,              // USD per unit, our real cost
+      "estimate": "duration_seconds / 60",
+      "cap": 600,                 // refuse above this without a second GO
+      "model_tier": null,         // or a model multiplier from Part 4
+      "free_when": ["replay", "reread", "retry_after_our_failure"],
+      "settle": "measured"        // never "estimated"
+    },
+    "go_card": {
+      "headline": "Transcribe this recording",
+      "shows": ["duration", "estimated_credits", "cap", "what_you_get"]
+    }
+  }
+
+WHY THIS ENABLES THE RSI LOOP: every ledger row from Part 8 (person,
+tool@version, model, units, credits, actual cost) flows back into the tool
+template's own record. A "prime guardian" can then compare tool@version 3
+against tool@version 4 on a real business metric — CREDITS PER SUCCESSFUL
+OUTCOME — instead of only latency or a subjective rubric score. This is the
+literal mechanism for "improving the code in a loop between prime guardian
+and the HERE tool chain" that the user asked for.
+
+THREE TOOL-PRICING TEMPLATE FAMILIES (kept to three so people — and search
+agents mapping UI — can hold them in their head):
+
+  INSTANT  — one unit, one price, under 2 seconds. Examples: room turn,
+             Muse tool call, export, extraction page. No GO card shown —
+             deducted silently, visible in the running total. Interrupting
+             here would be worse than the charge itself.
+
+  JOB      — measurable units, seconds to minutes. Examples: transcribe,
+             render, guardian run, world recompute. Full GO card with an
+             estimate and a cap. Hold → run → settle.
+
+  STANDING — continuous or recurring. Examples: live production, scheduled
+             guardians, storage, residual marketing from a broadcast. GO
+             card must show a BUDGET AND A STOP CONDITION, metered per
+             interval, auto-stops at the cap. NEVER open-ended by default —
+             this directly enforces the separate product-direction memo's
+             rule that "residual marketing... is not permission for
+             indefinite unbounded activity" (see HERE-PROJECT-CONTEXT.txt
+             §2).
+
+
+PART 13 — EIGHT MARGIN LEVERS: 60% → 72%, WITHOUT TOUCHING A PRICE
+--------------------------------------------------------------------------------
+Raising prices is the lever most people reach for first, and it's usually
+the worst one — it costs trust and conversion. These eight cost nothing in
+customer goodwill; two are one-line config changes.
+
+  # | Lever                                              | Monthly impact | Effort
+  --|------------------------------------------------------|-----------------|--------
+  1 | Default model Opus 5 → Sonnet 5 (see Part 4)          | +$5,700         | 1 line
+  2 | Cache Scircle/room context (≈1/10th price cached)     | +$3,700         | small
+  3 | Accounts-per-guardian 90 → 130 (fewer guardians)      | +$3,000         | ops
+  4 | Free allotment 500 → 300cr/mo, expiring monthly       | +$1,900         | config
+    |   (keep the separate 2,000cr 7-day welcome grant)     |                 |
+  5 | Fewer, larger payments: $10 min top-up, push $25/$50  | +$1,700         | config
+    |   auto-recharge blocks                                |                 |
+  6 | Annual plans + strict breakage discipline (<8%)       | +$1,700         | medium
+  7 | Render on interruptible/spot compute (retryable batch)| +$1,500         | medium
+  8 | Storage lifecycle: cold storage after 90 days         | +$1,200         | medium
+  9 | [v2] Scale-to-zero by default on every new surface    | +$1,400         | config
+ 10 | [v2] Auto-sleep idle surfaces (7d Signal / 30d Prime) | +$900           | small
+ 11 | [v2] Cloud CDN on every static surface — origin       | +$700           | small
+    |      egress is $0.12/GB vs ~$0.04 cached              |                 |
+  --|------------------------------------------------------|-----------------|--------
+    | TOTAL — no price changed, no feature removed           | +$23,400        | 60%→71%
+    |   [v2] The blended target now lands at 71%, not 72%,   |                 |
+    |   because Tier 8 sells at 67-70% against the 80% the   |                 |
+    |   model/media card holds. A deliberate trade (Part 2). |                 |
+    |   (illustrative, at Plan-B month-12 scale)             |                 |
+
+ORDER TO DO THEM IN: 1, 4, and 5 first — pure config, land this week, worth
+~$9,300/month at scale on their own. Then 2 and 3. Leave 6-8 until there's a
+real usage baseline, since they trade engineering time for margin and
+engineering time is the scarcer resource early on.
+
+THE LEVER DELIBERATELY LEFT OFF THIS LIST: raising credit prices. It works
+arithmetically and is poison early, because the rate card is a promise
+about what things cost — the first time it's broken, every future estimate
+in the product becomes untrustworthy. If a price increase ever becomes
+necessary: grandfather existing accounts for a full year, announce 60 days
+ahead, and change the ALLOTMENT rather than the per-credit rate so nobody
+has to relearn what anything costs.
+
+
+PART 14 — TEN OPEN QUESTIONS FOR THE PRODUCT OWNER (get these before
+treating any dollar figure as final)
+--------------------------------------------------------------------------------
+BLOCKING (the model doesn't hold without these):
+  1. What exactly IS the $500/month guardian — one instance? A human
+     operator on retainer? Reserved model capacity? And how many accounts
+     can ONE serve concurrently before quality drops? If it's one-to-one
+     with a customer, accounts-per-guardian collapses to 1 and EVERY PRICE
+     in this document roughly triples. This is the single most important
+     unanswered question.
+  2. Real cost per action, last month — actual spend on models,
+     transcription, render compute, storage, egress (even rough numbers).
+     Every credit price here is set at 5× cost; if the cost estimates used
+     in this plan are off by 2×, the margins throughout are fiction. One
+     afternoon with the actual invoices would resolve this.
+  3. Growth or profit priority for the next 12 months, and what runway is
+     behind that answer. If funded and pursuing a deliberate land-grab,
+     Plan A's shape becomes a defensible strategic loss. If profitability
+     is required, Plan B is the only viable option of the two modelled.
+
+SHAPES THE NUMBERS (not blocking, but changes the ladder):
+  4. Who is the buyer — individual creators, small studios, or companies?
+     The current $39/$199/$999 ladder is priced for prosumer-to-small-
+     studio. A company buyer would likely carry 3-5× these numbers; a pure
+     consumer buyer would need the ladder to start closer to $9.
+  5. Which legal entity bills, from which country? Decides the gateway
+     choice, tax treatment, whether Razorpay/UPI belongs in the stack, and
+     how carefully the "credits are not money" wording needs to be drafted.
+  6. Current baseline — signups/month, weekly actives, actions per active
+     per week. The Part 9 month-12 funnel numbers are illustrative
+     forecasts; a real baseline would let them be replaced with an actual
+     projection.
+
+CONFIRM (an assumption already baked in, worth double-checking):
+  7. Is Dialog escalation pass-through or absorbed? This plan assumes
+     PASS-THROUGH at ×1.35 (Tier 7, Part 6), consistent with the separate
+     product-direction memo's rule that Dialog carries separately
+     authorised expenditure. If HERE absorbs that cost instead, it becomes
+     an uncapped cost line that needs its own hard budget.
+
+--- ADDED IN V2, FROM THE TIER 8 WORK ---
+
+BLOCKING:
+  8. CAN MANY CUSTOMER DOMAINS SHARE ONE LOAD BALANCER? If each custom
+     domain needs its own Global External Application Load Balancer
+     forwarding rule at ~$18-25/month, the $1.50 custom-domain SKU is
+     mispriced by roughly 16× and becomes a loss on every account that uses
+     it. It only works at $1.50 if many customer domains host-route through
+     ONE shared LB with SNI. This is an engineering answer that sets a
+     price, and it is needed before the SKU ships.
+
+SHAPES THE NUMBERS:
+  9. WILL GUARDIAN-BUILT APPS EVER CALL A MODEL AT RUNTIME? Answered 21 Sep:
+     not today — Guardians build everything — but possibly in future. The
+     recommendation stands: declare the pass-through meter now at ×1.35 and
+     ship it DORMANT. What still needs deciding is the hard monthly budget
+     per surface, because when it does ship, someone else's users are
+     spending our token budget.
+
+CONFIRM:
+ 10. DOES MOTION RUN ON OUR INFRASTRUCTURE? Answered 21 Sep: not sure yet.
+     HERE-PROJECT-CONTEXT.txt §4 says muse_runtime.py serves
+     /embed/motion.js, which reads like yes. If so, the Tier 6 Motion line's
+     ~$0.10/site·month cost basis is wrong — it is a static surface plus CDN
+     egress at roughly $0.30, making the $2/site price 85% GM rather than
+     95%. Price unchanged either way; the margin reporting is what is wrong.
+
+QUESTIONS ANSWERED SINCE V1 (21 Sep 2026, by the product owner):
+  - Where do hosted surfaces run? GOOGLE CLOUD. Every Tier 8 figure in
+    Part 6a is computed from published us-central1 rates on that basis.
+  - Do users' shipped apps call AI at runtime? Not currently; see Q9.
+  - Is Motion on our infra? Unknown; see Q10.
+
+
+PART 15 — SUGGESTED 90-DAY ROLLOUT (instrument → shadow-bill → charge)
+--------------------------------------------------------------------------------
+The recommendation is NOT to launch a credit system live on day one — meter
+first, shadow-bill second, charge third. The cost of a wrong rate card in
+public is far higher than the cost of waiting six weeks.
+
+  Days 1-15  : METER EVERYTHING, CHARGE NOTHING. Add the `meter` block
+               (Part 12) to every tool. Write ledger rows. Build the wallet
+               UI but keep it hidden.
+               GATE: every billable surface writes a row, and the rows
+               reconcile against real invoices within 5%.
+
+  Days 16-30 : SHADOW BILLING. Nobody is charged. Internally compute what
+               each account WOULD have paid under the Part 6 rate card.
+               GATE: a median Prime-shaped account lands at 50-80% burn
+               depth. If not, resize the allotment — never the prices.
+
+  Days 31-45 : Signal and Prime go live. GO cards, holds, settle, receipts.
+               Hard caps, NO overage yet — when the allotment runs out, it
+               stops.
+               GATE: zero charges on failed jobs; under 1 surprise report
+               per 1,000 GOs.
+
+  Days 46-60 : Top-ups and auto-recharge. $10 minimum. Auto-recharge
+               strictly opt-in, with its own separate confirmation.
+               GATE: waste below 2% of credits burned.
+
+  Days 61-75 : Studio, the Dedicated Guardian add-on, and TIER 8 LIVE
+               SURFACES go live. Priority lane, guardian-coverage
+               reporting, pool rebalancing. On the hosting side: standing
+               meters, renewal GO cards, the warn→warn→sleep ladder, the
+               free envelope per plan, scale-to-zero defaults.
+               GATE: accounts-per-guardian above 50 on every pool, GCR
+               above 1.5× on each — AND no surface has gone dark without
+               two warnings and a sleep state, and surface margin is above
+               65% on every class. Do not ship Tier 8 at all until Q8 (the
+               load-balancer question) is answered.
+
+  Days 76-90 : World, annual plans, expiry and breakage all live. First
+               formal margin review against the Part 3 metric tree.
+               GATE: blended gross margin above 55% and climbing — THEN
+               start on the Part 13 margin levers, not before.
+
+THE ONE RULE THAT OUTRANKS EVERY REVENUE TARGET, THROUGH ALL 90 DAYS:
+nobody is ever charged for something they did not knowingly start, and
+nobody is ever charged for something that failed. Credits are a promise
+that the system is being honest about what work costs. Every other number
+in this plan is recoverable if it turns out wrong. That one is not.
+
+
+PART 16 — WHERE THE FULL WRITE-UPS AND ILLUSTRATIONS LIVE
+
+[v2 — 21 Sep 2026] The Next.js site in this repo now serves three versions,
+switchable from a dropdown in the floating bottom pager on every page:
+  /                 v2 — the current five pages, with Tier 8 Live Surfaces
+                    costed against real Google Cloud rates (content/page.html)
+  /summary-update   the short read: what changed between v1 and v2
+                    (content/summary-update.html)
+  /v1               the original five pages exactly as published on
+                    20 Sep 2026, frozen (content/page-v1.html)
+v1 is preserved unedited on purpose, so the three numbers v2 corrects (the
+egress margin, the "publish is free" line, and the worked-example total) can
+still be checked against the original.
+
+The two Claude Artifact pages below are the v1 content and have NOT been
+updated to v2. Either republish them from content/page.html or treat them as
+archived alongside /v1.
+
+--------------------------------------------------------------------------------
+Two Claude Artifact web pages were published from this plan (private —
+visible to the owner and anyone they've explicitly shared them with):
+
+  1. Full 15-section version, with a live interactive credit/margin
+     calculator (drag accounts-per-guardian, burn depth, price, etc. and
+     watch contribution margin recompute):
+     https://claude.ai/artifact/KVFYPyjX6pYCubSUer7Zkv
+
+  2. Five-page illustrated summary (bigger type, 12 computed SVG
+     illustrations — a North-Star "burst" chart, an acquisition funnel, an
+     activation dial, engagement rings, a consumption gauge, an economics
+     donut, retention cohort ribbons, a model-tier bar chart, a GO-flow
+     stepper, a billing-flow stepper, a guardian break-even curve, and a
+     plan-margin comparison chart — every shape computed from the actual
+     formulas in this document, not hand-drawn):
+     https://claude.ai/artifact/9nvB8N4CrHKZNRGA4bqLWR
+
+  3. A standalone Next.js 15 project reproducing the five-page version,
+     verified to build and ready for Vercel deployment, delivered to the
+     user as a zip (here-money-model.zip). See HERE-PROJECT-CONTEXT.txt §7
+     for its file structure. NOT connected to the HERE product repo.
+
+If asked to regenerate or edit the illustrations, the exact formulas used
+are inline above (e.g. the break-even APG formula in Part 10, the model-
+multiplier formula in Part 4) — they can be reimplemented from this
+document alone even without the original generator scripts.
+================================================================================
+ß

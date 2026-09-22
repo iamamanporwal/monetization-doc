@@ -1,7 +1,13 @@
 <nav class="pager" aria-label="Pages">
   <a href="#p1" class="on">01</a><a href="#p2">02</a><a href="#p3">03</a><a href="#p4">04</a><a href="#p5">05</a>
   <span class="sep" aria-hidden="true"></span>
-  <a href="/" class="jump">&larr; Money Model</a>
+  <details class="vsw">
+    <summary aria-label="Switch document version">Update<span class="cev" aria-hidden="true"></span></summary>
+    <div class="vmenu">
+      <span class="vhd">Versions of this document</span>
+      <a href="/"><span class="vk">v2</span><span class="vt">Tier 8 &middot; Live Surfaces<em>21 Sep 2026 &middot; current</em></span></a><a href="/summary-update" class="cur" aria-current="page"><span class="vk">upd</span><span class="vt">What changed, in brief<em>the five-minute read</em></span></a><a href="/v1"><span class="vk">v1</span><span class="vt">The original five pages<em>20 Sep 2026 &middot; archived</em></span></a>
+    </div>
+  </details>
 </nav>
 
 <!-- ================= PAGE 1 ================= -->
@@ -157,21 +163,33 @@
 
     <h3>New — Tier 8 &ldquo;Live Surfaces&rdquo;</h3>
     <p class="lede">Anything a guardian builds that keeps running on our servers. Billed monthly as
-    <b>standing charges</b>.</p>
+    <b>standing charges</b>, priced at 3&times; our real Google Cloud bill.</p>
 
     <div class="tbl">
       <table>
-        <thead><tr><th>Standing SKU</th><th class="n">User pays / mo</th><th class="n">Margin</th></tr></thead>
+        <thead><tr><th>Standing SKU</th><th>Google service</th><th class="n">Costs us</th><th class="n">User pays / mo</th><th class="n">Margin</th></tr></thead>
         <tbody>
-          <tr><td>Static surface (CDN, scale-to-zero)</td><td class="n">$1.50 <span class="pill">150 cr</span></td><td class="n">73%</td></tr>
-          <tr><td>Live app (container, wakes on request)</td><td class="n">$12.00 <span class="pill">1,200 cr</span></td><td class="n">71%</td></tr>
-          <tr><td>Always-on app (no cold start)</td><td class="n">$30.00 <span class="pill">3,000 cr</span></td><td class="n">67%</td></tr>
-          <tr><td>Managed datastore (1GB Postgres)</td><td class="n">$12.00 <span class="pill">1,200 cr</span></td><td class="n">67%</td></tr>
-          <tr><td>Custom domain + SSL</td><td class="n">$1.00 <span class="pill">100 cr</span></td><td class="n">95%</td></tr>
+          <tr><td>Static surface</td><td>Cloud Storage + CDN</td><td class="n">~$0.30</td><td class="n">$1.00 <span class="pill">100 cr</span></td><td class="n">70%</td></tr>
+          <tr><td>Live app base <span class="mono" style="font-size:14px;color:var(--ink-3)">scale-to-zero</span></td><td>Cloud Run, request-billed</td><td class="n">~$0.60</td><td class="n">$2.00 <span class="pill">200 cr</span></td><td class="n">70%</td></tr>
+          <tr><td>Always-on app <span class="mono" style="font-size:14px;color:var(--ink-3)">no cold start</span></td><td>Cloud Run, min-instance 1</td><td class="n">~$10.00</td><td class="n">$30.00 <span class="pill">3,000 cr</span></td><td class="n">67%</td></tr>
+          <tr><td>Managed Postgres</td><td>Cloud SQL <code>db-f1-micro</code></td><td class="n">~$10.00</td><td class="n">$30.00 <span class="pill">3,000 cr</span></td><td class="n">67%</td></tr>
+          <tr><td>Serverless datastore <span class="mono" style="font-size:14px;color:var(--ink-3)">the new default</span></td><td>Firestore</td><td class="n">$0 base</td><td class="n">metered</td><td class="n">67%</td></tr>
+          <tr><td>Custom domain + SSL</td><td>shared LB, managed cert</td><td class="n">~$0.50</td><td class="n">$1.50 <span class="pill">150 cr</span></td><td class="n">67%</td></tr>
         </tbody>
       </table>
     </div>
-    <p>Plus metered overage (compute, requests, DB storage; egress reuses the existing 40 cr/GB).</p>
+    <p>Plus metered overage: compute 25 cr/vCPU-hr, requests 12 cr/100k, datastore storage
+    60 cr/GB&middot;mo, CDN-cached egress 12 cr/GB.</p>
+
+    <div class="note risk">
+      <span class="t">Three Google Cloud facts that changed these numbers</span>
+      <b>The free tier is per billing account, not per app</b> &mdash; 180,000 vCPU-seconds and 2 million
+      requests are consumed once across every customer we host, so our free hosting envelope is a real
+      COGS line, not something Google absorbs. <b>Egress is $0.12/GB, not the $0.085 v1 assumed</b>, which
+      makes Cloud CDN mandatory rather than optional. And <b>custom domains may need their own load
+      balancer</b> at ~$18&ndash;25/month, which would misprice that SKU by 16&times; &mdash; an open question before it
+      ships.
+    </div>
 
     <div class="key" style="--ic:var(--i0)">
       <span class="tag">The dangerous row</span>
@@ -297,7 +315,7 @@
         <thead><tr><th>Capability</th><th class="n">Gated at</th></tr></thead>
         <tbody>
           <tr><td>Custom domain</td><td class="n"><span class="pill">Prime+</span></td></tr>
-          <tr><td>Always-on · datastore · analytics</td><td class="n"><span class="pill">Studio+</span></td></tr>
+          <tr><td>Always-on · managed Postgres · analytics <span class="mono" style="font-size:14px;color:var(--ink-3)">Cloud SQL has an $8–10/mo floor; new apps default to Firestore</span></td><td class="n"><span class="pill">Studio+</span></td></tr>
           <tr><td>SSO</td><td class="n"><span class="pill">World</span></td></tr>
         </tbody>
       </table>

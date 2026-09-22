@@ -1,0 +1,393 @@
+================================================================================
+HERE — PROJECT CONTEXT HANDOFF
+Written by: Claude (Anthropic), working session with Aman (aman@aganastudios.com)
+Date: 20 September 2026 · revised 21 September 2026 (Tier 8 hosting work)
+Purpose: give another agent everything needed to keep working on this project
+without re-deriving it from scratch. Read this alongside
+HERE-MONETIZATION-PLAN.txt (the credits/billing plan, kept separate because
+it is long and dense on its own).
+================================================================================
+
+
+1. WHAT "HERE" IS
+--------------------------------------------------------------------------------
+HERE is a prototype/revamp of a live product at now.hereandmore.com — a social
+layer that sits on top of CRM-based platforms and services. It is being built
+"against the original rather than beside it": on 15 September 2026 the
+prototype was deliberately matched to the live app's latest update — same
+warm palette and rust brand, same card geometry, same shell, navigation,
+screen names and page descriptions. Desktop layout on desktop, the shipped
+mobile shell on phone, light and dark throughout.
+
+Local repo path: /Users/amanporwal/Desktop/Here/HERE
+Git remote: https://everything.hereandmore.com/garden/HERE.git
+  (moved from the older `beato/HERE` URL by 15 Sep 2026 — that old URL now
+  redirects, which silently breaks pushes if someone still has it as a remote.
+  Check `git remote -v` before pushing.)
+Intended application integration target: https://now.hereandmore.com
+IMPORTANT: a successful `git push` to the repo is NOT evidence the application
+was deployed. The repo and the live app are two different destinations.
+
+This is a static-frontend prototype: no build step, hash-routed single-page
+app (`index.html`), served by anything that hands back static files, or via
+a small local Python dev server (`server.py`, `--test` mode) for previewing
+Teams/Rooms without a real backend.
+
+
+2. THE PRODUCT / TERMINOLOGY MODEL (from a separate architecture memo)
+--------------------------------------------------------------------------------
+A companion product-direction document (not code, a decision memo dated
+12 September 2026) lays out how HERE relates to sibling services. This is
+useful background for anyone reasoning about identity, spending, or scope
+boundaries — it predates and is independent of the monetization plan below,
+but the monetization plan's Tier 7 (Dialog pass-through) and the "every
+action is a tool" framing both lean on it.
+
+Layers / services and their responsibility:
+  - JEM        — shared identity, sign-in, and authority/access relationships.
+                 A JEM identity does NOT require participating in every
+                 service (you can hold a JEM login and only ever use Dialog,
+                 or only ever use HERE, never both).
+  - HERE       — social relationships, SCircles, CRM context, and a shared
+                 map of understanding across Capture, Broadcast and
+                 Rooms/messages. Design/build collaboration happens here.
+  - IDS studio — the design and build harness: briefs, versions, chosen
+                 tools/LLMs, HERE mappings, reviews, deployment approvals,
+                 results.
+  - Dialog     — a SEPARATE, specialised service for serious legal/financial
+                 conversations, on-camera contracting, shared matter
+                 intelligence, each party's private analysis. Has its own,
+                 separately authorised expenditure. A HERE conversation can
+                 hand off into Dialog deliberately (with a purpose/context/
+                 audience/budget preview), but a paid HERE action does NOT by
+                 itself make something a Dialog matter, and Dialog does not
+                 require prior HERE membership.
+  - RTracer, The Garden, other services — their own communities/workflows,
+                 connected to HERE only through permitted, source-specific
+                 integrations.
+  - Everything — the continuing record of source material, versions,
+                 relationships and outcomes.
+
+Vocabulary used across product docs and the monetization plan:
+  - Scircles  — "worlds" / collections of rooms with shared perspectives;
+                visually represented as 4D orbs, with data shown as 2D
+                slices/layers ("frequencies"/sounds). A person's ego,
+                personality, wishes and destiny shape the Scircles they're in.
+  - Spaces    — within/across rooms; "angular temporal perspectives."
+  - Rooms     — chat/collaboration surfaces inside a Scircle (formerly
+                "Messages" in this codebase — see naming table below).
+  - Wellim / Prive — a concierge-agent concept ("well I am") that manages a
+                person's needs across their network of Scircles. Not yet
+                built in this repo; product-vision language only.
+  - US        — the publicly-facing social interface for managing Scircles.
+  - HERE (as a "game")  — the on-demand MMO/game framing: HERE can disappear
+                from view/thought and be "reinvoked into form" when a moment
+                becomes demanding/exciting enough; as "velocity rises," UI
+                "cockpits" take shape. JEM is the central authority/author of
+                this framing ("the Golden Film of Ascension").
+  - NOW       — the command-center / dashboard for people actively "playing"
+                (PRIME users): billing, credit assignment, vendor connections,
+                and whether "GO" scripting is authorised. NOW is where the
+                monetization plan's GO-card/authorisation gate lives.
+  - GO        — the authorisation/spend decision point. "Whether the GO
+                scripting is possible" = whether an action is allowed to
+                spend money. This term is reused literally in the credit
+                system's flow (QUOTE → GO CARD → HOLD → RUN → SETTLE →
+                LEDGER — see the monetization file).
+  - IGNI      — mentioned as the mechanism that "jumps into the mind of
+                Wellim/Prive" — a personalization/orchestration concept.
+                Not yet built; no code references found in this repo.
+
+
+3. RENAMED SURFACES IN THIS CODEBASE (vs. the live app / earlier docs)
+--------------------------------------------------------------------------------
+  Messages  → Rooms          (Main → Rooms)
+  Agents    → Guardians       (Workspace → Guardians)
+  Cerebro   → Cerebral
+  Broadcast → Capture & stream (now sits under Main, was under a "Broadcast"
+                                 top-level area)
+
+Code, storage keys and API endpoints intentionally KEPT their old names
+(e.g. `/api/agents/*`, `agents-data.js`, `agents-core.js`) even where the
+UI label changed to "Guardians" — don't rename those without checking
+AGENT-BUILDER.md first, they're deliberate.
+
+
+4. KEY DOCS IN THE REPO (read before touching the matching area)
+--------------------------------------------------------------------------------
+  CLAUDE.md              — instructions for AI agents working in this repo;
+                           collaboration workflow, doc-reading requirements,
+                           the production-boundary rule (server.py is
+                           loopback-only, not a production deployment).
+  README.md              — file map, how to run the local preview, screen-
+                           registration pattern for adding a new route.
+  PRODUCTION-SYNC.md      — exactly what was matched to now.hereandmore.com's
+                           live app on 15 Sep 2026, and what deliberately
+                           differs and why. Read before touching shared
+                           shell/tokens/nav or any matched screen.
+  BROADCAST-HANDOFF.md /
+  BROADCAST.md            — Capture & stream (recording, transcription,
+                           editing) implemented features, prior commits,
+                           validation history, remaining integration work.
+  TEAMS-HANDOFF.md /
+  TEAMS.md / CHAT.md       — Teams (default collaboration view + Prototype
+                           performance dashboard) and Rooms/JEM chat.
+  ROOMS-MEDIA.md           — the Sep-15 inline-video feature layered on top
+                           of the production sync; player-node preservation
+                           rules; TikTok short-share resolver notes.
+  AGENT-BUILDER.md         — Guardians: default guardian (local guidance from
+                           browser profile/checklist + optional model
+                           adapter on the loopback server) and the
+                           specialized-guardian 3-step builder (browser-
+                           stored, simulates deployment, no real backend yet).
+                           Contains the model price table the monetization
+                           plan is built on (see §5 below).
+  MOTION.md                — Tools → Motion: the Garden's "command center"
+                           (Feed, Today, Guardians, Muse, Get the code),
+                           sold under Tools below IDS Studio. Draft price
+                           $2/month/site (first drafted at $19, changed by
+                           the user on 18 Sep). No payment connected yet.
+                           Muse tool calls run through `muse_runtime.py`'s
+                           "Sentinel" on the loopback server.
+
+Server-side / Python:
+  server.py               — LOOPBACK-ONLY dev service: local transcription,
+                           PDF generation, FFmpeg media processing. NOT a
+                           production deployment. Transcription/PDF/exported-
+                           edits need real integration with an authenticated
+                           processing API before this is production-real.
+  agents_runtime.py        — optional server-configured model adapter for the
+                           default guardian.
+  muse_runtime.py           — Muse's tool-call "Sentinel" (~37KB), serves
+                           `/embed/motion.js`.
+  rooms_media.py, transcript_docx.py — supporting local processing.
+
+Frontend structure (relevant to future monetization UI work):
+  assets/tokens.css        — design tokens (the live app's warm palette,
+                           light + dark). Brand color --coral-500 #8a2d1c.
+  assets/shell.css/js       — chrome every screen shares: router, sidebar,
+                           app bar, drawer, command palette, theme.
+  assets/data.js            — Dashboard SAMPLE data. Already contains a
+                           placeholder "Credit Balance" stat (value 1240,
+                           route `/credits`) and sample activity-feed rows
+                           using the words "credit", "issued", "settled",
+                           "Ledger #8841" — i.e. the live app already has
+                           credit/ledger LANGUAGE in its sample UI, which
+                           the monetization plan's terminology (ledger rows,
+                           settle, issued) should stay consistent with.
+  assets/agents-data.js     — Guardians' model list + prices (see §5).
+  assets/agents-core.js,
+  assets/agents-builder.js,
+  assets/agents-assistant*.js — Guardians matching/validation/estimates,
+                           builder flow, default-guardian assistant.
+
+IMPORTANT — nothing for credits/billing is actually built yet:
+  `assets/shell.js` already has two NAV PLACEHOLDER entries (matched from
+  the live app, per PRODUCTION-SYNC.md):
+    { label: 'Credits', icon: 'coins', route: '/credits', description:
+      'Manage your credit balance and transactions' }
+    { label: 'Billing', icon: 'card', route: '/billing', description:
+      'Your plan and payment details.' }
+  Neither route is registered via `HERE.registerScreen(...)` anywhere in the
+  codebase — they are nav-menu entries only, with no screen behind them yet.
+  This is where the monetization plan (wallet, GO cards, rate-card UI,
+  billing/plan screen) would eventually be implemented as real screens,
+  following the same registerScreen pattern documented in README.md.
+
+
+5. GUARDIANS: THE MODEL LIST THE MONETIZATION PLAN IS BUILT ON
+--------------------------------------------------------------------------------
+From `assets/agents-data.js` (Anthropic API IDs + list prices per million
+input/output tokens, as published June 2026 — re-check before any release,
+production should pull from the Models API + workspace policy):
+
+  Model            | API id            | Context | $/M in | $/M out | Notes
+  -----------------|--------------------|---------|--------|---------|---------------
+  Claude Haiku 4.5 | claude-haiku-4-5   | 200K    | $1     | $5      |
+  Claude Sonnet 5  | claude-sonnet-5    | 1M      | $2     | $10     |
+  Claude Opus 5    | claude-opus-5      | 1M      | $5     | $25     | current default
+  Claude Fable 5.1 | claude-fable-5-1   | 1M      | $10    | $50     | 30-day data
+                                                                        retention
+                                                                        requirement
+
+The Guardians recommendation engine sums each model's fit (0–3) over chosen
+needs; ties go to the model with the higher weakest-fit, then Opus 5 >
+Sonnet 5 > Fable 5.1 > Haiku 4.5. A typical run is estimated at 20K input +
+2K output tokens (this exact run size is what the monetization plan's
+per-action credit pricing is computed from — see the other file).
+
+Each Guardian instance (however "instance" ends up being defined — see the
+OPEN QUESTIONS in the monetization file, this is blocking) costs the business
+$500/month, fixed, regardless of usage. This one fact is the reason the
+monetization plan rejects a pure pay-as-you-go credit model in favor of a
+subscription-plus-metered-credits ("two-part tariff") design.
+
+Guardians boundary facts (from AGENT-BUILDER.md, "Specialized-agent prototype
+boundary"):
+  - No model, MCP server, OAuth flow, webhook or scheduler is actually
+    contacted by the specialized-guardian builder yet — it's a prototype
+    that simulates deployment after save.
+  - No credentials are requested or stored; custom MCP URLs must be https://
+    and may not contain a username/password.
+  - Guardians belong to one browser profile (IndexedDB/localStorage) —
+    clearing site data removes them; other people on the same profile can
+    see them. There is no server-side guardian store yet.
+  - The "HERE workspace MCP servers" referenced in the vision don't exist
+    yet either. Broadcast recordings currently live in each browser's
+    IndexedDB (see BROADCAST-HANDOFF.md) — a guardian can't read them until
+    they're stored server-side.
+
+
+6. COLLABORATION / WORKFLOW RULES (from CLAUDE.md — still binding)
+--------------------------------------------------------------------------------
+  - Workflow set 14 Sep 2026: Codex focuses on implementing and testing local
+    changes; Claude Code handles commits and pushes at the user's direction.
+    A handoff update is NOT itself an instruction to deploy.
+  - Before changing the shared shell, tokens, navigation, or any screen
+    already matched to production, read PRODUCTION-SYNC.md first.
+  - Before working on Capture & stream (Broadcast), read BROADCAST-HANDOFF.md
+    and BROADCAST.md.
+  - Before working on Teams or Rooms, read TEAMS-HANDOFF.md, TEAMS.md,
+    CHAT.md, and (for the inline-video feature) ROOMS-MEDIA.md.
+  - Before working on Guardians, read AGENT-BUILDER.md.
+  - Before working on Motion / here-motion / Muse, read MOTION.md.
+  - Check `git status`, current diffs and recent commits before editing or
+    staging — this is a SHARED folder with concurrent Teams/Rooms/Guardians/
+    Dashboard work in flight. Don't overwrite, reset, discard, or
+    automatically include unrelated changes in a commit.
+  - `server.py` is a loopback-only dev service, never described as a
+    production deployment in any handoff or release description.
+  - Record test results against the version actually tested; historical
+    passing results do not validate later changes.
+
+If you (the receiving agent) are asked to implement any part of the
+monetization plan in this codebase, these rules still apply: read the
+relevant handoff doc first, don't touch matched production surfaces without
+checking PRODUCTION-SYNC.md, and don't claim something is "deployed" just
+because it's committed/pushed.
+
+
+7. WHAT WAS PRODUCED IN THIS SESSION (deliverables, not yet in git)
+--------------------------------------------------------------------------------
+None of the following is committed to the HERE git repo — they are planning
+documents and a standalone prototype, generated in a scratch workspace and
+handed to the user directly. If you're picking this up, ask the user whether/
+where they want any of it committed.
+
+[21 SEP 2026 UPDATE — READ THIS FIRST IF YOU ARE PICKING UP §7]
+The monetization work has a v2. The gap it closes: whatever a Guardian builds
+(a site, an app) RUNS ON OUR SERVERS and was costed nowhere in v1. v2 adds
+Tier 8 "Live Surfaces" priced against real Google Cloud rates, carves
+infrastructure out of the 5x pricing rule at 3x, and corrects three v1
+numbers. The product owner confirmed on 21 Sep that hosting runs on GOOGLE
+CLOUD; that user-shipped apps do not call models at runtime yet; and that
+whether Motion runs on our infra is still unknown.
+
+The Next.js site in this repo (see (b) below) now serves three versions,
+switchable from a dropdown in the floating bottom pager on every page:
+    /                 v2, current      — content/page.html
+    /summary-update   what changed     — content/summary-update.html
+    /v1               the original,    — content/page-v1.html
+                      frozen unedited
+v1 is deliberately preserved so the numbers v2 corrects can be checked
+against the original. Do not edit content/page-v1.html.
+
+(a) Two published Claude "Artifact" web pages (private, viewable at these
+    URLs by the owner and anyone they've shared them with). NOTE: both hold
+    the v1 content and have NOT been republished for v2 — either regenerate
+    them from content/page.html or treat them as archived beside /v1:
+    - Detailed monetization PRD (15 sections + an interactive credit/margin
+      calculator): https://claude.ai/artifact/KVFYPyjX6pYCubSUer7Zkv
+    - Five-page illustrated summary version (bigger type, 12 computed SVG
+      illustrations, meant to be read start to finish):
+      https://claude.ai/artifact/9nvB8N4CrHKZNRGA4bqLWR
+
+(b) A standalone Next.js 15 (App Router) project reproducing the five-page
+    illustrated version, verified to build clean with `npm run build`,
+    packaged as a zip and sent to the user for Vercel deployment. Structure:
+      app/layout.js            — <html>/<head> shell, Google Fonts, metadata
+      app/globals.css          — all page styles (light + dark), extracted
+                                  1:1 from the artifact's CSS
+      app/page.js               — server component, reads content/page.html
+      app/components/PagerScript.js — the one client component: scroll-spy
+                                  highlight for the floating page-number pager
+      content/page.html         — the five pages of markup with all 12 SVGs
+                                  inlined as static content (no chart library,
+                                  no client-side computation)
+    This project has NOT been connected to the HERE repo or to
+    now.hereandmore.com — it's a separate, standalone site for sharing/
+    presenting the monetization plan itself, not a feature of the product.
+
+    [21 Sep] The project has grown three routes (app/page.js, app/v1/page.js,
+    app/summary-update/page.js), a version-switcher dropdown in the shared
+    pager (markup lives in each content/*.html, styles under "version
+    switcher" in app/globals.css, dismissal handled in PagerScript.js), and
+    four new computed SVG figures in content/page.html: the two fixed-cost
+    pillars, the Tier 8 cost-vs-price bars, the surface lifecycle stepper,
+    and a plan-margin chart redrawn with hosting included. `npm run build`
+    is verified clean with all four routes prerendered static.
+
+(c) The full monetization plan content, in prose/table form, is captured in
+    the companion file HERE-MONETIZATION-PLAN.txt — read that for the actual
+    numbers, rules and open questions.
+
+(d) Generator scripts (in an ephemeral session scratchpad, NOT preserved
+    anywhere durable — if you need to regenerate or edit the illustrations,
+    ask the user to re-share here-money-model.zip, or rebuild the SVGs from
+    the formulas described in HERE-MONETIZATION-PLAN.txt §"Illustration
+    generation notes"):
+      illos.mjs   — generates the 7 North-Star-branch illustrations
+                    (North Star burst, acquisition funnel, activation dial,
+                    engagement rings, consumption gauge, economics donut,
+                    retention cohort ribbons) as computed SVG, seeded-random
+                    where randomness is used.
+      charts.mjs  — generates the 5 data figures (model-tier bar chart,
+                    GO-flow stepper, billing-flow stepper, guardian break-even
+                    curve, plan-margin comparison bars), each derived from
+                    the real formulas (e.g. break-even APG = 500 / 29.97,
+                    solved in code, not eyeballed).
+      build.mjs   — inlines all 12 SVGs into the page template and emits
+                    both the artifact fragment and a standalone printable
+                    HTML document.
+
+
+8. THINGS THAT WERE READ BUT ARE NOT PART OF THIS PROJECT'S SCOPE
+--------------------------------------------------------------------------------
+Two other files were supplied in the same session and read for context, but
+are UNRELATED to HERE / the monetization plan — flagging so you don't
+conflate them:
+  - "Czech - Driving School Data Collection.pdf" — a proposal for building a
+    comparison dataset of Czech driving schools (web scraping + AI-assisted
+    structuring into a Google Sheet, ~3-4 week timeline). Separate client
+    project, not part of HERE.
+  - "HERE-review.pdf" — could NOT be read (it's a screenshot-only PDF, no
+    extractable text layer). If it contains feedback, pricing decisions, or
+    usage data that should have shaped the monetization plan, that content
+    is NOT reflected anywhere in this handoff. Ask the user to re-share its
+    contents as text/images if it matters.
+
+
+9. WHO TO ASK / WHERE THE GAPS ARE
+--------------------------------------------------------------------------------
+The user (Aman, aman@aganastudios.com) is the product owner and is
+responsible for deciding all billing/credit logic, payment gateway and
+currency choices. He asked, verbatim, for this to be built as a
+"Monetization PM" would think about it, with two plans and flowcharts.
+
+Everything in the monetization plan is a recommendation built on:
+  (a) real numbers already in this codebase (the Guardians model-price table,
+      the $500/month guardian cost, the 20K-in/2K-out run-size estimate), and
+  (b) informed defaults where the user hadn't yet specified something
+      (gateway choice, currency handling, exact rate-card unit costs for
+      non-model actions like transcription/render/storage).
+
+There are now TEN explicit open questions, four of them blocking (what a
+"guardian" actually is operationally and how many accounts one can serve;
+real per-action costs from actual invoices; growth-vs-profit priority for the
+next 12 months; and [v2] whether many customer domains can share one Google
+Cloud load balancer — if not, the custom-domain SKU is mispriced by ~16x). These are listed in full,
+with why each one matters, at the end of HERE-MONETIZATION-PLAN.txt. Get
+those answered before treating any dollar figure in the plan as final —
+today they are a defensible model built on stated assumptions, not verified
+production economics.
+================================================================================

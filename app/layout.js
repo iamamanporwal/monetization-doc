@@ -3,7 +3,7 @@ import "./globals.css";
 export const metadata = {
   title: "The HERE Money Model",
   description:
-    "Five pages on how HERE makes money: the North Star metric tree, the credit rate card, the billing lifecycle, the $500 guardian maths, and two plans modelled to month twelve.",
+    "Five pages on how HERE makes money: the North Star metric tree, the credit rate card, Tier 8 Live Surfaces priced against real Google Cloud rates, the billing lifecycle, the two fixed costs, and two plans modelled to month twelve.",
 };
 
 export const viewport = {

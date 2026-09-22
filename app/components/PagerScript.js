@@ -26,7 +26,28 @@ export default function PagerScript() {
       { rootMargin: "-45% 0px -45% 0px", threshold: 0 }
     );
     pages.forEach((p) => p && io.observe(p));
-    return () => io.disconnect();
+
+    // The version switcher is a bare <details>, so it needs the two dismissals
+    // people expect from a menu: click anywhere else, or press Escape.
+    const sw = document.querySelector("details.vsw");
+    const onDown = (e) => {
+      if (sw && sw.open && !sw.contains(e.target)) sw.open = false;
+    };
+    const onKey = (e) => {
+      if (e.key === "Escape" && sw && sw.open) {
+        sw.open = false;
+        const s = sw.querySelector("summary");
+        if (s) s.focus();
+      }
+    };
+    document.addEventListener("pointerdown", onDown);
+    document.addEventListener("keydown", onKey);
+
+    return () => {
+      io.disconnect();
+      document.removeEventListener("pointerdown", onDown);
+      document.removeEventListener("keydown", onKey);
+    };
   }, []);
 
   return null;
