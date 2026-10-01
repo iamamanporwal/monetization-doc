@@ -1,0 +1,1555 @@
+<nav class="pager" aria-label="Parts">
+  <a href="#p0" class="on">00</a><a href="#pa">A</a><a href="#pb">B</a><a href="#pc">C</a><a href="#pd">D</a><a href="#pe">E</a>
+  <span class="sep" aria-hidden="true"></span>
+  <a href="/" class="jump">Money Model</a>
+</nav>
+
+<!-- ================= 00 · COVER + SUMMARY ================= -->
+<section class="pg" id="p0" style="--ic:var(--i4); --ic-soft:var(--i4-soft)">
+  <div class="in">
+    <header class="hero">
+      <p class="kicker">HERE &amp; More · Monetization PRD · Stablecoin payments</p>
+      <h1>Pay with digital dollars.</h1>
+      <p class="lede">This is a plan to accept <b>USDC</b>, a digital dollar that is always worth about $1,
+      next to Card and UPI. The customer pays in USDC. Stripe turns it into normal dollars within seconds,
+      and the customer gets exactly the credits a card payment would buy. <b>We never hold crypto.</b></p>
+      <div class="tags">
+        <span>v1.1 · reviewed draft</span>
+        <span>30 Sep 2026</span>
+        <span>Author · Aman Porwal</span>
+        <span>Reviewer · Leo</span>
+        <span>Companion to The HERE Money Model v2</span>
+        <span>1 credit = $0.01</span>
+      </div>
+      <div class="status">
+        <span class="pill risk">Blocked on 2 decisions: legal entity + billing platform</span>
+        <a class="pill warn" href="#s25">12 corrections to the v1.0 draft &rarr;</a>
+      </div>
+    </header>
+
+    <figure>
+      <div class="panel"><svg viewBox="0 0 1000 232" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A USDC payment: customer wallet to Stripe to HERE's bank in dollars to credits in the NOW app.">
+<defs><marker id="ah0" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--ink-3)"/></marker></defs>
+<rect x="20" y="20" width="190" height="130" rx="14" fill="var(--i3-soft)" stroke="var(--i3)" stroke-width="2"/>
+<text x="40" y="50" font-family="var(--mono)" font-size="13" letter-spacing="1.4" fill="var(--i3)">1 · CUSTOMER</text>
+<text x="40" y="90" font-family="var(--mono)" font-size="32" font-weight="600" fill="var(--ink)">USDC</text>
+<text x="40" y="115" font-family="var(--body)" font-size="15" fill="var(--ink-2)">digital dollars in</text>
+<text x="40" y="134" font-family="var(--body)" font-size="15" fill="var(--ink-2)">their wallet app</text>
+<line x1="212" y1="85" x2="271" y2="85" stroke="var(--ink-3)" stroke-width="2" marker-end="url(#ah0)"/>
+<text x="241" y="74" text-anchor="middle" font-family="var(--mono)" font-size="12" fill="var(--ink-3)">~1 sec</text>
+<rect x="275" y="20" width="190" height="130" rx="14" fill="var(--i1-soft)" stroke="var(--i1)" stroke-width="2"/>
+<text x="295" y="50" font-family="var(--mono)" font-size="13" letter-spacing="1.4" fill="var(--i1)">2 · STRIPE</text>
+<text x="295" y="90" font-family="var(--mono)" font-size="32" font-weight="600" fill="var(--ink)">1.5%</text>
+<text x="295" y="115" font-family="var(--body)" font-size="15" fill="var(--ink-2)">checks the payment,</text>
+<text x="295" y="134" font-family="var(--body)" font-size="15" fill="var(--ink-2)">swaps USDC → USD</text>
+<line x1="467" y1="85" x2="526" y2="85" stroke="var(--ink-3)" stroke-width="2" marker-end="url(#ah0)"/>
+<text x="496" y="74" text-anchor="middle" font-family="var(--mono)" font-size="12" fill="var(--ink-3)">seconds</text>
+<rect x="530" y="20" width="190" height="130" rx="14" fill="var(--i4-soft)" stroke="var(--i4)" stroke-width="2"/>
+<text x="550" y="50" font-family="var(--mono)" font-size="13" letter-spacing="1.4" fill="var(--i4)">3 · HERE'S BANK</text>
+<text x="550" y="90" font-family="var(--mono)" font-size="32" font-weight="600" fill="var(--ink)">USD</text>
+<text x="550" y="115" font-family="var(--body)" font-size="15" fill="var(--ink-2)">booked exactly like</text>
+<text x="550" y="134" font-family="var(--body)" font-size="15" fill="var(--ink-2)">a card payment</text>
+<line x1="722" y1="85" x2="781" y2="85" stroke="var(--ink-3)" stroke-width="2" marker-end="url(#ah0)"/>
+<text x="751" y="74" text-anchor="middle" font-family="var(--mono)" font-size="12" fill="var(--ink-3)">instant</text>
+<rect x="785" y="20" width="195" height="130" rx="14" fill="var(--i0-soft)" stroke="var(--i0)" stroke-width="2"/>
+<text x="805" y="50" font-family="var(--mono)" font-size="13" letter-spacing="1.4" fill="var(--i0)">4 · NOW APP</text>
+<text x="805" y="90" font-family="var(--mono)" font-size="32" font-weight="600" fill="var(--ink)">Credits</text>
+<text x="805" y="115" font-family="var(--body)" font-size="15" fill="var(--ink-2)">same as card, plus</text>
+<text x="805" y="134" font-family="var(--body)" font-size="15" fill="var(--ink-2)">a small USDC bonus</text>
+<path d="M20,172 v10 h445 v-10" fill="none" stroke="var(--i3)" stroke-width="2"/>
+<text x="242" y="208" text-anchor="middle" font-family="var(--mono)" font-size="13" letter-spacing="1.2" fill="var(--i3)">CRYPTO EXISTS ONLY HERE, FOR SECONDS</text>
+<path d="M530,172 v10 h450 v-10" fill="none" stroke="var(--i4)" stroke-width="2"/>
+<text x="755" y="208" text-anchor="middle" font-family="var(--mono)" font-size="13" letter-spacing="1.2" fill="var(--i4)">EVERYTHING HERE TOUCHES: DOLLARS + CREDITS</text>
+</svg></div>
+      <figcaption>The whole idea in one picture. The customer sees rupees or dollars and a "USDC" button. Stripe
+      handles everything crypto. HERE only ever sees dollars and credits.</figcaption>
+    </figure>
+
+    <div class="note">
+      <span class="t">How to read this document</span>
+      Every section opens with an <b>"In plain words"</b> box. Read only those boxes and you will understand the
+      whole plan. Money is in US dollars unless marked. <b>1 credit = $0.01</b> of list value, the same as in the Money Model.
+      Market facts are dated, and crypto moves fast, so re-check anything older than 3 months. This is product analysis,
+      not legal or tax advice. Items tagged <span class="pill">LEGAL</span> or <span class="pill">TAX</span> need a lawyer or chartered accountant (CA).
+    </div>
+
+    <div class="sec" id="s01">
+      <div class="sec-hd"><span class="sec-n">01</span><h3>One-page summary</h3></div>
+
+      <div class="key">
+        <span class="tag">In plain words</span>
+        <p>A stablecoin is a <strong>digital dollar</strong>. One USDC is always worth about one US dollar. People can send it
+        from a phone app to anyone in the world in seconds, for less than one cent.</p>
+        <p>We add <strong>"Pay with USDC"</strong> next to Card and UPI. The customer pays in digital dollars, Stripe instantly
+        turns them into normal dollars, and those dollars land in our bank. The customer gets credits, exactly as if they had paid by card.</p>
+      </div>
+
+      <h4 class="sub">Why bother? Three reasons</h4>
+      <div class="grid g3">
+        <div class="stat hl"><span class="lbl">1 · Cheaper</span><span class="big">1.5%</span>
+          <p>That is our fee on a $39 plan, compared with <b>3.7%</b> for cards and <b>6.3%</b> for Paddle. There is no fixed fee, so small payments stay cheap.</p></div>
+        <div class="stat"><span class="lbl">2 · More people can pay</span><span class="big" style="color:var(--i3)">No card</span>
+          <p>This works for creators and builders whose cards fail on foreign SaaS, or who are already paid in USDC.</p></div>
+        <div class="stat"><span class="lbl">3 · Ready for agents</span><span class="big" style="color:var(--i1)">24/7</span>
+          <p>Software can pay by itself, in tiny amounts. That is how Guardians and AI agents will buy work later.</p></div>
+      </div>
+
+      <h4 class="sub">The recommendation, answer by answer</h4>
+      <div class="grid g3">
+        <div class="ans"><span class="q">Should we do this?</span><b>Yes, as an extra option</b><p>USDC sits next to cards and UPI. It never replaces them.</p></div>
+        <div class="ans"><span class="q">Which coin?</span><b>USDC only</b><p>It is the regulated one that merchants trust. Maybe EURC later.</p></div>
+        <div class="ans"><span class="q">Which blockchains?</span><b>Solana + Base</b><p>Polygon is allowed too. Ethereum is allowed with a fee warning and hidden under $20.</p></div>
+        <div class="ans"><span class="q">Hold crypto?</span><b>No. Convert 100%</b><p>The gateway turns every payment into dollars automatically.</p></div>
+        <div class="ans"><span class="q">Build or buy?</span><b>Buy (Stripe first)</b><p>A payment gateway, not our own wallet.</p></div>
+        <div class="ans"><span class="q">Who is it for?</span><b>Builders &amp; creators</b><p>AI-native users, and people whose cards fail or cost extra.</p></div>
+        <div class="ans"><span class="q">How do we attract users?</span><b>Bonus credits</b><p>A 5% / 3% / 2% bonus depending on plan. The price itself never drops.</p></div>
+        <div class="ans"><span class="q">What does it earn?</span><b>+$0.35 to +$1.36</b><p>That is the extra margin per Prime payment, after paying the bonus, compared with card and with Paddle (Section 15).</p></div>
+        <div class="ans" style="--ic:var(--risk)"><span class="q">What blocks us?</span><b>Legal entity + platform</b><p>With a US entity this is simple. With an Indian entity it is complex (Section 10).</p></div>
+      </div>
+
+      <div class="key" style="--ic:var(--i0)">
+        <span class="tag">The one rule that outranks everything (from the Money Model)</span>
+        <p><strong>Nobody is ever charged for something they did not knowingly start, and nobody is ever charged for something that failed.</strong>
+        Paying in USDC must be exactly as safe and predictable as paying by card.</p>
+      </div>
+
+      <h4 class="sub">What's inside</h4>
+      <nav class="toc" aria-label="Contents">
+        <div style="--c:var(--i1)"><span class="l">A</span><h4>Understand it</h4><ol>
+          <li><span>02</span><a href="#s02">Plain-English glossary</a></li>
+          <li><span>03</span><a href="#s03">The problem</a></li>
+          <li><span>04</span><a href="#s04">The market in 2026</a></li>
+          <li><span>05</span><a href="#s05">How a payment moves</a></li></ol></div>
+        <div style="--c:var(--i2)"><span class="l">B</span><h4>Decide it</h4><ol>
+          <li><span>06</span><a href="#s06">Hold or convert?</a></li>
+          <li><span>07</span><a href="#s07">Which coin?</a></li>
+          <li><span>08</span><a href="#s08">Which blockchain?</a></li>
+          <li><span>09</span><a href="#s09">Build or buy?</a></li>
+          <li><span>10</span><a href="#s10">Which legal entity?</a></li></ol></div>
+        <div style="--c:var(--i3)"><span class="l">C</span><h4>Design it</h4><ol>
+          <li><span>11</span><a href="#s11">Users never see "crypto"</a></li>
+          <li><span>12</span><a href="#s12">User flows</a></li>
+          <li><span>13</span><a href="#s13">Personas</a></li>
+          <li><span>14</span><a href="#s14">Wallet &amp; ledger</a></li></ol></div>
+        <div style="--c:var(--i6)"><span class="l">D</span><h4>Make money</h4><ol>
+          <li><span>15</span><a href="#s15">Unit economics</a></li>
+          <li><span>16</span><a href="#s16">Failure states</a></li>
+          <li><span>17</span><a href="#s17">Treasury policy</a></li>
+          <li><span>18</span><a href="#s18">Tax, legal, compliance</a></li></ol></div>
+        <div style="--c:var(--i0)"><span class="l">E</span><h4>Ship it</h4><ol>
+          <li><span>19</span><a href="#s19">Metrics &amp; guardrails</a></li>
+          <li><span>20</span><a href="#s20">Rollout plan</a></li>
+          <li><span>21</span><a href="#s21">Risks</a></li>
+          <li><span>22</span><a href="#s22">New rails to watch</a></li>
+          <li><span>23</span><a href="#s23">Open questions</a></li>
+          <li><span>24</span><a href="#s24">Appendix</a></li>
+          <li><span>25</span><a href="#s25">Review log (v1.1)</a></li></ol></div>
+      </nav>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PART A ================= -->
+<section class="pg" id="pa" style="--ic:var(--i1); --ic-soft:var(--i1-soft)">
+  <div class="in">
+    <header class="pg-hd">
+      <span class="pg-n">A</span>
+      <div><p class="kicker">Part A · Sections 02–05</p><h2>Understand it</h2></div>
+    </header>
+
+    <!-- 02 -->
+    <div class="sec" id="s02">
+      <div class="sec-hd"><span class="sec-n">02</span><h3>Plain-English glossary</h3></div>
+      <div class="key"><span class="tag">In plain words</span>
+        <p>Crypto has a lot of jargon. Every word used in this document is explained here with an everyday comparison.
+        If you are new to crypto, read this first.</p></div>
+
+      <p class="gl-hd">The money itself</p>
+      <dl class="gloss">
+        <div class="term"><dt>Stablecoin</dt><dd>A digital token designed to always be worth one unit of a normal currency, usually $1.<span class="like">a dollar bill that lives on the internet instead of in your pocket.</span></dd></div>
+        <div class="term"><dt>USDC</dt><dd>The stablecoin issued by Circle, a US company. It is backed 1:1 by cash and short-term US government bonds, and is regulated in the US and EU. <b>This is the one we accept.</b><span class="like">the safe, boring, compliant digital dollar.</span></dd></div>
+        <div class="term"><dt>USDT (Tether)</dt><dd>The biggest stablecoin, issued offshore. It is popular in emerging markets but has regulatory problems in the EU and US.<span class="like">the popular dollar that many regulated shops won't take.</span></dd></div>
+        <div class="term"><dt>Fiat</dt><dd>Normal government money: US dollars, rupees, euros.<span class="like">the money in your bank account.</span></dd></div>
+        <div class="term"><dt>Depeg</dt><dd>When a stablecoin briefly stops being worth exactly $1, for example $0.97. This is rare for USDC, but it happened for a few days in March 2023.<span class="like">a dollar bill that trades at 97 cents for a weekend.</span></dd></div>
+        <div class="term"><dt>Tokenized deposit</dt><dd>A bank's own digital dollar, for example JPMorgan's JPMD. It works like a stablecoin but a bank issues it. Only institutions can use it for now.<span class="like">a stablecoin with a bank's name on it.</span></dd></div>
+      </dl>
+
+      <p class="gl-hd">Moving it</p>
+      <dl class="gloss">
+        <div class="term"><dt>Blockchain / chain / network</dt><dd>The public "road" the digital dollar travels on: Ethereum, Solana, Base, Polygon, Tron. The coin is the same on every road, but the tolls differ.<span class="like">motorways. Some have expensive tolls and some are almost free.</span></dd></div>
+        <div class="term"><dt>Wallet</dt><dd>The app where a person keeps digital dollars, such as MetaMask, Phantom or Coinbase Wallet.<span class="like">a banking app where you hold the keys yourself.</span></dd></div>
+        <div class="term"><dt>Self-custody</dt><dd>Holding your own wallet keys (passwords). If you lose them, the money is gone and no bank can reset it.<span class="like">cash in a safe that only you can open.</span></dd></div>
+        <div class="term"><dt>Gas / network fee</dt><dd>The toll paid to use the road. It is under one cent on Solana or Base. On Ethereum it is often under $1 but can spike above $20.<span class="like">a motorway toll that the sender pays.</span></dd></div>
+        <div class="term"><dt>Payment gateway</dt><dd>A company such as Stripe, Coinbase Commerce or CoinGate. It watches the chain, confirms that the payment arrived, screens it and converts it to normal money.<span class="like">a card terminal, but for digital dollars.</span></dd></div>
+        <div class="term"><dt>On-ramp / off-ramp</dt><dd>An on-ramp turns normal money into crypto. An off-ramp turns crypto back into normal money that can reach a bank.<span class="like">the currency exchange counter at an airport.</span></dd></div>
+        <div class="term"><dt>Settlement</dt><dd>The moment the money is final and belongs to us. Card payments take 2–3 days. Stablecoin payments take seconds.<span class="like">the cheque finally clearing.</span></dd></div>
+        <div class="term"><dt>Finality</dt><dd>The point after which a payment can't be reversed. On Solana that is about 1 second. On Base it is ~2 s "soft" and ~15 min "hard".<span class="like">the ink drying on a signature.</span></dd></div>
+        <div class="term"><dt>x402 / MPP</dt><dd>New protocols that let AI agents pay for things automatically over the internet using stablecoins. They are at an early stage.<span class="like">a tap-to-pay card for software.</span></dd></div>
+      </dl>
+
+      <p class="gl-hd">Selling and the rules</p>
+      <dl class="gloss">
+        <div class="term"><dt>Chargeback</dt><dd>A card customer asks their bank to take the money back, and the merchant loses the money plus a fee. <b>Blockchain payments have no chargebacks.</b><span class="like">the bank reaching into our till.</span></dd></div>
+        <div class="term"><dt>Merchant of Record (MoR)</dt><dd>The company legally making the sale. Paddle is an MoR and handles global sales tax for us. Standard Stripe payments are not, so with Stripe we handle tax ourselves.<span class="like">the shop whose name is on the receipt.</span></dd></div>
+        <div class="term"><dt>KYC / KYB</dt><dd>"Know Your Customer" and "Know Your Business": identity checks that the law requires.<span class="like">showing ID to open an account.</span></dd></div>
+        <div class="term"><dt>AML</dt><dd>Anti-money-laundering rules, including screening wallets against sanctions lists.<span class="like">a bouncer checking the banned list.</span></dd></div>
+        <div class="term"><dt>GENIUS Act (US)</dt><dd>The US stablecoin law signed in July 2025. It regulates who may <em>issue</em> stablecoins and takes effect by 18 Jan 2027 at the latest.<span class="like">the rulebook for printing digital dollars.</span></dd></div>
+        <div class="term"><dt>MiCA (EU)</dt><dd>The EU's crypto law. It is the reason USDT disappeared from many EU checkouts.<span class="like">the EU's licence to operate.</span></dd></div>
+        <div class="term"><dt>VDA (India)</dt><dd>"Virtual Digital Asset", India's legal name for crypto, stablecoins included. Gains are taxed at 30% and transfers carry 1% TDS.<span class="like">the tax box that crypto falls into.</span></dd></div>
+        <div class="term"><dt>TDS (India)</dt><dd>Tax Deducted at Source: 1% withheld on crypto transfers under Section 194S.<span class="like">tax taken out before the money reaches you.</span></dd></div>
+      </dl>
+
+      <p class="gl-hd">Accounting</p>
+      <dl class="gloss">
+        <div class="term"><dt>FX / FX spread</dt><dd>Foreign exchange. The spread is the hidden cost between the "real" exchange rate and the rate you actually get.<span class="like">the gap between the rate on the news and the airport counter's rate.</span></dd></div>
+        <div class="term"><dt>Basis point (bps)</dt><dd>One hundredth of a percent, so 100 bps = 1%. It is used to quote small fees.<span class="like">cents on a $100 bill.</span></dd></div>
+        <div class="term"><dt>Deferred revenue</dt><dd>Money paid for service we have not delivered yet. It is something we still owe, not profit. It becomes revenue when credits are used.<span class="like">a gift card sitting in someone's drawer.</span></dd></div>
+        <div class="term"><dt>Breakage</dt><dd>Credits that were bought but expired unused.<span class="like">gift cards that never get spent.</span></dd></div>
+      </dl>
+    </div>
+
+    <!-- 03 -->
+    <div class="sec" id="s03">
+      <div class="sec-hd"><span class="sec-n">03</span><h3>The problem we are solving</h3></div>
+      <div class="key"><span class="tag">In plain words</span>
+        <p>Today every payment into HERE loses a chunk to fees, some customers can't pay at all, and small top-ups lose
+        money. Stablecoins fix part of all three problems.</p></div>
+
+      <div class="grid g3">
+        <div class="card"><span class="lbl">Problem 1</span><h4>Fees eat margin, most of all on small payments</h4>
+          <p>Paddle charges ~5% + $0.50 and cards via Stripe ~2.9% + $0.30. <b>The fixed part is what hurts small payments</b>, and it is why the Money Model sets a $10 minimum top-up.</p></div>
+        <div class="card"><span class="lbl">Problem 2</span><h4>Some customers can't pay us easily</h4>
+          <p>Many creators and builders outside the US and EU have cards that fail on international SaaS or add 3%+ in foreign fees. A growing group is <b>paid in USDC</b> by Deel, Meta or freelance platforms and would rather spend it directly.</p></div>
+        <div class="card"><span class="lbl">Problem 3</span><h4>The next customer may be an AI agent</h4>
+          <p>Cards were built for humans typing numbers into forms. Stablecoins can be paid by software, 24/7, in tiny amounts. This is early, but it is where HERE's Guardians are heading.</p></div>
+      </div>
+
+      <figure>
+        <div class="panel"><svg viewBox="0 0 960 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Fee as a percent of payment size. Paddle and card fees explode on small payments because of the fixed part; USDC stays flat at 1.5 percent.">
+<text x="24" y="22" font-family="var(--mono)" font-size="13" letter-spacing="1.4" fill="var(--ink-3)">FEE AS % OF THE PAYMENT</text>
+<line x1="80" y1="340" x2="870" y2="340" stroke="var(--line-2)" stroke-width="1.5"/>
+<line x1="80" y1="240" x2="870" y2="240" stroke="var(--line)" stroke-dasharray="3 5"/>
+<line x1="80" y1="140" x2="870" y2="140" stroke="var(--line)" stroke-dasharray="3 5"/>
+<line x1="80" y1="40" x2="870" y2="40" stroke="var(--line)" stroke-dasharray="3 5"/>
+<text x="70" y="345" text-anchor="end" font-family="var(--mono)" font-size="13" fill="var(--ink-3)">0%</text>
+<text x="70" y="245" text-anchor="end" font-family="var(--mono)" font-size="13" fill="var(--ink-3)">10%</text>
+<text x="70" y="145" text-anchor="end" font-family="var(--mono)" font-size="13" fill="var(--ink-3)">20%</text>
+<text x="70" y="45" text-anchor="end" font-family="var(--mono)" font-size="13" fill="var(--ink-3)">30%</text>
+<line x1="282" y1="48" x2="282" y2="340" stroke="var(--ink-3)" stroke-width="1.5" stroke-dasharray="6 5"/>
+<text x="290" y="62" font-family="var(--mono)" font-size="12.5" fill="var(--ink-2)">$10 minimum top-up today</text>
+<text x="290" y="78" font-family="var(--mono)" font-size="12.5" fill="var(--ink-3)">(because of the fixed fees)</text>
+<polyline points="80,40 130.9,123.3 195,190 282,240 332.9,256.7 397,270 452.8,277.2 506.8,281.7 571,285 657.4,287.5 773,289 859.9,289.5" fill="none" stroke="var(--i0)" stroke-width="3.5" stroke-linejoin="round"/>
+<polyline points="80,161 130.9,211 195,251 282,281 332.9,291 397,299 452.8,303.3 506.8,306 571,308 657.4,309.5 773,310.4 859.9,310.7" fill="none" stroke="var(--i1)" stroke-width="3.5" stroke-linejoin="round"/>
+<line x1="80" y1="325" x2="860" y2="325" stroke="var(--i4)" stroke-width="4.5"/>
+<text x="870" y="289" font-family="var(--mono)" font-size="14" font-weight="600" fill="var(--i0)">Paddle</text>
+<text x="870" y="309" font-family="var(--mono)" font-size="14" font-weight="600" fill="var(--i1)">Card</text>
+<text x="870" y="333" font-family="var(--mono)" font-size="14" font-weight="600" fill="var(--i4)">USDC</text>
+<text x="520" y="120" font-family="var(--body)" font-size="16" font-weight="700" fill="var(--ink)">On a $2 top-up:</text>
+<text x="520" y="143" font-family="var(--mono)" font-size="14" fill="var(--i0)">Paddle  30%</text>
+<text x="520" y="163" font-family="var(--mono)" font-size="14" fill="var(--i1)">Card    18%</text>
+<text x="520" y="183" font-family="var(--mono)" font-size="14" fill="var(--i4)">USDC    1.5%  → keeps 98.5%</text>
+<g font-family="var(--mono)" font-size="13" fill="var(--ink-3)" text-anchor="middle">
+<text x="80" y="362">$2</text><text x="195" y="362">$5</text><text x="282" y="362">$10</text><text x="397" y="362">$25</text><text x="452.8" y="362">$39</text><text x="571" y="362">$100</text><text x="657.4" y="362">$199</text><text x="859.9" y="362">$999</text>
+</g>
+<text x="475" y="392" text-anchor="middle" font-family="var(--mono)" font-size="12.5" fill="var(--ink-3)">payment size (log scale)</text>
+</svg></div>
+        <figcaption>Paddle = 5% + $0.50. Card (Stripe, US domestic) = 2.9% + $0.30. USDC (Stripe) = 1.5% with no fixed part.
+        The fixed part makes small payments painful, and USDC removes it.</figcaption>
+      </figure>
+
+      <h4 class="sub">What we are <em>not</em> trying to do</h4>
+      <ul class="xl">
+        <li>We are not trying to become a crypto company.</li>
+        <li>We are not replacing cards or UPI.</li>
+        <li>We will not let anyone cash credits <b>out</b> as crypto, because that would turn us into a regulated money business (Section 18).</li>
+      </ul>
+    </div>
+
+    <!-- 04 -->
+    <div class="sec" id="s04">
+      <div class="sec-hd"><span class="sec-n">04</span><h3>The market in 2026: what is real and what is hype</h3></div>
+      <div class="key"><span class="tag">In plain words</span>
+        <p>Headlines say stablecoins move trillions, but almost all of that is traders moving money around.
+        <strong>Real payments are much smaller.</strong> They are growing fast, though, and most of them are businesses paying businesses across borders.</p></div>
+
+      <h4 class="sub"><span class="sn">4.1</span>The headline vs the reality</h4>
+      <div class="split w">
+        <svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="100 dots, one highlighted: about one in a hundred stablecoin dollars moved is a real payment.">
+<defs><pattern id="dots100" x="10" y="10" width="28" height="28" patternUnits="userSpaceOnUse"><circle cx="14" cy="14" r="10" fill="var(--line-2)"/></pattern></defs>
+<rect x="10" y="10" width="280" height="280" fill="url(#dots100)"/>
+<circle cx="24" cy="24" r="12" fill="var(--i4)"/>
+        </svg>
+        <div>
+          <div class="grid g2" style="margin:0 0 16px">
+            <div class="stat"><span class="lbl">Headline · 2025 transfers</span><span class="big" style="font-size:34px;color:var(--ink-3)">$28–62T</span><p>Gross stablecoin transfers</p></div>
+            <div class="stat hl"><span class="lbl">Reality · real payments</span><span class="big" style="font-size:34px">$350–550B</span><p>Genuine economic payments (BCG, McKinsey, BIS)</p></div>
+          </div>
+          <p>Imagine 100 people moving stablecoins. <b>About one of them is actually buying something</b>
+          (the green dot). The other 99 are traders, bots and exchanges shuffling funds.</p>
+        </div>
+      </div>
+
+      <h4 class="sub"><span class="sn">4.2</span>The latest hard numbers <span class="pill">Alvarez &amp; Marsal · 29 Sep 2026</span></h4>
+      <div class="grid g3">
+        <div class="stat"><span class="lbl">Supply, end Aug 2026</span><span class="big">$303B</span><p>+6% year over year</p></div>
+        <div class="stat hl"><span class="lbl">Payments, Jan–Aug 2026</span><span class="big">$401B+</span><p><b>+42%</b> year over year</p></div>
+        <div class="stat"><span class="lbl">Received by businesses</span><span class="big">58–64%</span><p>B2B settlement alone: $137–153B</p></div>
+      </div>
+      <div class="note good"><span class="t">What this means</span>
+        Usage is growing <b>7&times; faster than supply</b> (42% vs 6%). People are <em>using</em> digital dollars more, not just holding more of them.
+        The named drivers are remittances, service fees, payroll and supplier payments.</div>
+
+      <h4 class="sub"><span class="sn">4.3</span>Who creates the volume</h4>
+      <div class="panel">
+        <div class="legend">
+          <span><i style="--c:var(--i1)"></i>Businesses receiving ~60%</span>
+          <span><i style="--c:var(--i3)"></i>Remittances / P2P ~20%</span>
+          <span><i style="--c:var(--i2)"></i>Payroll &amp; contractors ~10%</span>
+          <span><i style="--c:var(--i0)"></i>Consumer checkout ~10%</span>
+        </div>
+        <div class="bars"><div class="bar" style="grid-template-columns:minmax(0,1fr)"><span class="t" style="height:38px">
+          <span class="f" style="width:60%;--c:var(--i1)"></span><span class="f" style="width:20%;--c:var(--i3)"></span><span class="f" style="width:10%;--c:var(--i2)"></span><span class="f" style="width:10%;--c:var(--i0)"></span>
+        </span></div></div>
+        <p style="font-family:var(--mono);font-size:13px;color:var(--ink-3);margin:12px 0 0">Illustrative split for intuition (A&amp;M / McKinsey). Exact splits vary by study.</p>
+      </div>
+
+      <div class="tbl"><table>
+        <thead><tr><th>Segment</th><th>Why stablecoins win</th><th>Proof point</th></tr></thead>
+        <tbody>
+          <tr><td><strong>B2B / suppliers</strong></td><td>Wires take 2–5 days and cost up to 7%. USDC takes minutes at ~0.5%.</td><td>~$226B/yr, +733% YoY (McKinsey)</td></tr>
+          <tr><td><strong>Payroll / contractors</strong></td><td>Global teams, weak local banking</td><td>Deel: $250M crypto payouts in 2025, 100 countries</td></tr>
+          <tr><td><strong>Creators / affiliates</strong></td><td>Small, frequent, international</td><td>Meta pays select creators in USDC (Colombia, Philippines)</td></tr>
+          <tr><td><strong>Remittances</strong></td><td>Emerging markets</td><td>Turkey–UAE, UAE–SE Asia, Mexico–US</td></tr>
+          <tr><td><strong>Infra / SaaS checkout</strong></td><td>Crypto-native buyers, small recurring bills</td><td>OpenRouter, Vast.ai, Venice AI, Vultr, Hostinger</td></tr>
+          <tr><td><strong>Everyday retail</strong></td><td><span class="pill risk">mostly doesn't</span></td><td>Menufy tried it 2020–2025, then dropped crypto</td></tr>
+        </tbody>
+      </table></div>
+
+      <h4 class="sub"><span class="sn">4.4</span>Where checkout actually works, and why HERE fits</h4>
+      <p>StablecoinSpend (Q3 2026) found that stablecoin checkout is concentrated in hosting, VPS, domains, VPNs, proxies and dev tools.
+      Physical retail is almost absent. Every reason they give applies to HERE:</p>
+      <div class="tbl"><table>
+        <thead><tr><th>Why it works there</th><th>&rarr; Is it true for HERE?</th></tr></thead>
+        <tbody>
+          <tr><td>Buyers are technical and already hold crypto</td><td><span class="pill good">yes</span> builders</td></tr>
+          <tr><td>Small recurring bills where card fees hurt</td><td><span class="pill good">yes</span> $39 plans, top-ups</td></tr>
+          <tr><td>Instant delivery, so disputes are rare</td><td><span class="pill good">yes</span> credits arrive instantly</td></tr>
+          <tr><td>Some buyers prefer not to use a card</td><td><span class="pill good">yes</span> global creators</td></tr>
+        </tbody>
+      </table></div>
+      <div class="note good"><span class="t">Conclusion</span>HERE is the kind of business where stablecoin checkout actually works. A supermarket is not.</div>
+
+      <h4 class="sub"><span class="sn">4.5</span>What payment processors see <span class="pill">CoinGate · H1 2026 · 782,403 payments</span></h4>
+      <div class="grid g2">
+        <div class="panel">
+          <span class="lbl">USDC share of all payments</span>
+          <div class="bars">
+            <div class="bar"><span class="k">H1 2025</span><span class="t"><span class="f" style="width:37%"></span></span><span class="v">9.3%</span></div>
+            <div class="bar"><span class="k">H2 2025</span><span class="t"><span class="f" style="width:66%"></span></span><span class="v">16.4%</span></div>
+            <div class="bar"><span class="k">H1 2026</span><span class="t"><span class="f" style="width:88%"></span></span><span class="v">22.1%</span></div>
+          </div>
+          <p style="margin:14px 0 0;font-size:15.5px;color:var(--ink-2)">USDC is now the <b>#1 payment asset</b>, ahead of Bitcoin at 21.0%.</p>
+        </div>
+        <div class="panel">
+          <span class="lbl">Merchants keeping crypto (not converting)</span>
+          <div class="bars">
+            <div class="bar" style="--c:var(--i2)"><span class="k">H1 2025</span><span class="t"><span class="f" style="width:98%"></span></span><span class="v">39.3%</span></div>
+            <div class="bar" style="--c:var(--i2)"><span class="k">H2 2025</span><span class="t"><span class="f" style="width:84%"></span></span><span class="v">33.4%</span></div>
+            <div class="bar" style="--c:var(--i2)"><span class="k">H1 2026</span><span class="t"><span class="f" style="width:62%"></span></span><span class="v">24.6%</span></div>
+          </div>
+          <p style="margin:14px 0 0;font-size:15.5px;color:var(--ink-2)"><b>75.4%</b> now convert straight to fiat, and that share rises every half.</p>
+        </div>
+      </div>
+      <p>Other signals: <b>88.1%</b> of payouts are in USDC, and <b>93.2%</b> of payouts are automated by API. The average order is ~€95 and falling while the order count rises, which points to more frequent, smaller, everyday use.</p>
+
+      <h4 class="sub"><span class="sn">4.6</span>The big players: who builds the roads</h4>
+      <div class="grid g3">
+        <div class="card"><span class="lbl">Stripe</span><h4>Bought Bridge (~$1.1B)</h4><p>Stablecoin checkout at 1.5%, settling to your Stripe balance in USD.</p></div>
+        <div class="card"><span class="lbl">Tempo</span><h4>Stripe + Paradigm chain</h4><p>Mainnet live since 18 Mar 2026. Fees are paid in stablecoins, so no gas token is needed.</p></div>
+        <div class="card"><span class="lbl">Visa</span><h4>~$7B/yr settlement</h4><p>Stablecoin settlement across 130+ card programs.</p></div>
+        <div class="card"><span class="lbl">Rain</span><h4>$1.95B valuation</h4><p>A stablecoin card issuer (Jan 2026).</p></div>
+        <div class="card"><span class="lbl">Coinbase</span><h4>x402 protocol</h4><p>Built for payments made by AI agents.</p></div>
+        <div class="card"><span class="lbl">JPMorgan</span><h4>JPMD on Base</h4><p>A tokenized deposit, live for institutions.</p></div>
+      </div>
+
+      <h4 class="sub"><span class="sn">4.7</span>The honest forecast <span class="pill">Deloitte · May 2026</span></h4>
+      <ul>
+        <li>Stablecoins could support <b>~2.5% of US non-cash transactions by 2030</b>, mostly <em>behind the scenes</em> (settlement and funding) rather than at checkout.</li>
+        <li>More than $200B of US retail payments could be "stablecoin-enabled" by 2030.</li>
+        <li>Adoption will be led first by <b>cards</b> (stablecoin-funded Visa/Mastercard), then by AI-agent commerce, then by merchant loyalty.</li>
+      </ul>
+      <div class="key" style="--ic:var(--i2)"><span class="tag">What this means for us</span>
+        <p>Stablecoin checkout will be a <strong>minority of our payments for years</strong>. We are building it for three things: margin on the payments that do come through, access for underserved users, and readiness for agent payments. We are not building it because it will replace cards.</p></div>
+    </div>
+
+    <!-- 05 -->
+    <div class="sec" id="s05">
+      <div class="sec-hd"><span class="sec-n">05</span><h3>How a stablecoin payment actually moves</h3></div>
+      <div class="key"><span class="tag">In plain words</span>
+        <p>Think of sending a parcel. The customer (the sender) hands the parcel to a <strong>road</strong> (the blockchain).
+        A <strong>courier</strong> (the gateway) watches the road, checks the parcel is right, and delivers it. A <strong>currency exchange</strong> (the off-ramp)
+        swaps digital dollars for normal dollars, and the <strong>bank</strong> receives them.</p></div>
+
+      <h4 class="sub"><span class="sn">5.1</span>The five layers</h4>
+      <figure>
+        <div class="panel"><svg viewBox="0 0 1070 340" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Five layers: wallet, blockchain, gateway, off-ramp, bank, grouped by who owns each.">
+<defs><marker id="ah1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--ink-2)"/></marker></defs>
+<rect x="10" y="40" width="190" height="290" rx="14" fill="var(--i3-soft)"/>
+<rect x="225" y="40" width="190" height="290" rx="14" fill="var(--surface-2)"/>
+<rect x="440" y="40" width="405" height="290" rx="14" fill="var(--i1-soft)"/>
+<rect x="870" y="40" width="190" height="290" rx="14" fill="var(--i4-soft)"/>
+<text x="105" y="28" text-anchor="middle" font-family="var(--mono)" font-size="12.5" letter-spacing="1.3" fill="var(--i3)">CUSTOMER'S SIDE</text>
+<text x="320" y="28" text-anchor="middle" font-family="var(--mono)" font-size="12.5" letter-spacing="1.3" fill="var(--ink-3)">PUBLIC ROAD</text>
+<text x="642" y="28" text-anchor="middle" font-family="var(--mono)" font-size="12.5" letter-spacing="1.3" fill="var(--i1)">STRIPE'S SIDE (THE GATEWAY)</text>
+<text x="965" y="28" text-anchor="middle" font-family="var(--mono)" font-size="12.5" letter-spacing="1.3" fill="var(--i4)">HERE'S SIDE</text>
+<g font-family="var(--body)">
+<rect x="20" y="60" width="170" height="160" rx="12" fill="var(--surface)" stroke="var(--i3)" stroke-width="2"/>
+<text x="36" y="88" font-family="var(--mono)" font-size="12" fill="var(--i3)">1</text>
+<text x="36" y="116" font-size="21" font-weight="700" fill="var(--ink)">Wallet</text>
+<text x="36" y="146" font-family="var(--mono)" font-size="13" fill="var(--ink-3)">MetaMask</text>
+<text x="36" y="166" font-family="var(--mono)" font-size="13" fill="var(--ink-3)">Phantom</text>
+<text x="36" y="186" font-family="var(--mono)" font-size="13" fill="var(--ink-3)">Coinbase Wallet</text>
+<text x="36" y="258" font-size="14.5" fill="var(--ink-2)">Customer signs once.</text>
+<text x="36" y="278" font-size="14.5" fill="var(--ink-2)">Pays gas: &lt;1¢ on</text>
+<text x="36" y="298" font-size="14.5" fill="var(--ink-2)">Solana or Base.</text>
+<line x1="192" y1="140" x2="231" y2="140" stroke="var(--ink-2)" stroke-width="2" marker-end="url(#ah1)"/>
+<rect x="235" y="60" width="170" height="160" rx="12" fill="var(--surface)" stroke="var(--ink-2)" stroke-width="2"/>
+<text x="251" y="88" font-family="var(--mono)" font-size="12" fill="var(--ink-3)">2</text>
+<text x="251" y="116" font-size="21" font-weight="700" fill="var(--ink)">Blockchain</text>
+<text x="251" y="146" font-family="var(--mono)" font-size="13" fill="var(--ink-3)">Solana · Base</text>
+<text x="251" y="166" font-family="var(--mono)" font-size="13" fill="var(--ink-3)">Polygon</text>
+<text x="251" y="186" font-family="var(--mono)" font-size="13" fill="var(--ink-3)">Ethereum</text>
+<text x="251" y="258" font-size="14.5" fill="var(--ink-2)">Moves the coin in</text>
+<text x="251" y="278" font-size="14.5" fill="var(--ink-2)">seconds.</text>
+<text x="251" y="298" font-size="14.5" font-weight="700" fill="var(--risk)">Irreversible.</text>
+<line x1="407" y1="140" x2="446" y2="140" stroke="var(--ink-2)" stroke-width="2" marker-end="url(#ah1)"/>
+<rect x="450" y="60" width="170" height="160" rx="12" fill="var(--surface)" stroke="var(--i1)" stroke-width="2"/>
+<text x="466" y="88" font-family="var(--mono)" font-size="12" fill="var(--i1)">3</text>
+<text x="466" y="116" font-size="21" font-weight="700" fill="var(--ink)">Gateway</text>
+<text x="466" y="146" font-family="var(--mono)" font-size="13" fill="var(--ink-3)">Stripe</text>
+<text x="466" y="166" font-family="var(--mono)" font-size="13" fill="var(--ink-3)">Coinbase Commerce</text>
+<text x="466" y="186" font-family="var(--mono)" font-size="13" fill="var(--ink-3)">CoinGate</text>
+<text x="466" y="258" font-size="14.5" fill="var(--ink-2)">Matches the invoice,</text>
+<text x="466" y="278" font-size="14.5" fill="var(--ink-2)">screens sanctions,</text>
+<text x="466" y="298" font-size="14.5" fill="var(--ink-2)">fires "paid" webhook.</text>
+<line x1="622" y1="140" x2="661" y2="140" stroke="var(--ink-2)" stroke-width="2" marker-end="url(#ah1)"/>
+<rect x="665" y="60" width="170" height="160" rx="12" fill="var(--surface)" stroke="var(--i1)" stroke-width="2"/>
+<text x="681" y="88" font-family="var(--mono)" font-size="12" fill="var(--i1)">4</text>
+<text x="681" y="116" font-size="21" font-weight="700" fill="var(--ink)">Off-ramp / FX</text>
+<text x="681" y="146" font-family="var(--mono)" font-size="13" fill="var(--ink-3)">USDC → USD</text>
+<text x="681" y="166" font-family="var(--mono)" font-size="13" fill="var(--ink-3)">USD → INR / EUR</text>
+<text x="681" y="186" font-family="var(--mono)" font-size="13" fill="var(--ink-3)">(only if needed)</text>
+<text x="681" y="258" font-size="14.5" fill="var(--ink-2)">Turns digital</text>
+<text x="681" y="278" font-size="14.5" fill="var(--ink-2)">dollars into</text>
+<text x="681" y="298" font-size="14.5" fill="var(--ink-2)">normal money.</text>
+<line x1="837" y1="140" x2="876" y2="140" stroke="var(--ink-2)" stroke-width="2" marker-end="url(#ah1)"/>
+<rect x="880" y="60" width="170" height="160" rx="12" fill="var(--surface)" stroke="var(--i4)" stroke-width="2"/>
+<text x="896" y="88" font-family="var(--mono)" font-size="12" fill="var(--i4)">5</text>
+<text x="896" y="116" font-size="21" font-weight="700" fill="var(--ink)">Bank</text>
+<text x="896" y="146" font-family="var(--mono)" font-size="13" fill="var(--ink-3)">HERE operating</text>
+<text x="896" y="166" font-family="var(--mono)" font-size="13" fill="var(--ink-3)">account</text>
+<text x="896" y="258" font-size="14.5" fill="var(--ink-2)">Booked as a</text>
+<text x="896" y="278" font-size="14.5" fill="var(--ink-2)">liability until</text>
+<text x="896" y="298" font-size="14.5" fill="var(--ink-2)">credits are used.</text>
+</g>
+</svg></div>
+        <figcaption>Layers 3 and 4 both belong to the gateway, which is why "buy, don't build" removes most of the work.</figcaption>
+      </figure>
+
+      <h4 class="sub"><span class="sn">5.2</span>What can go wrong at each layer</h4>
+      <div class="tbl"><table>
+        <thead><tr><th>Layer</th><th>Job</th><th>What can go wrong</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Wallet</strong></td><td>Hold coins, sign the payment</td><td>Wrong network chosen, not enough gas, keys lost</td></tr>
+          <tr><td><strong>Blockchain</strong></td><td>Move coins and make them final</td><td>Congestion (high fees), rare reorganisations</td></tr>
+          <tr><td><strong>Gateway</strong></td><td>Match, confirm, screen, notify, convert</td><td>Under/overpayment, late payment, outage, silent changes to supported coins</td></tr>
+          <tr><td><strong>Off-ramp / FX</strong></td><td>Swap to fiat</td><td>FX spread, conversion delays, country restrictions (India)</td></tr>
+          <tr><td><strong>Bank</strong></td><td>Receive and hold</td><td>Bank flags money that came from crypto</td></tr>
+        </tbody>
+      </table></div>
+
+      <h4 class="sub"><span class="sn">5.3</span>Where HERE's systems touch it</h4>
+      <figure>
+        <div class="panel"><svg viewBox="0 0 1000 500" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Sequence diagram of one USDC payment across customer, Stripe, NOW app, billing service and ledger. HERE never touches the blockchain.">
+<defs><marker id="ah2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--ink-2)"/></marker></defs>
+<rect x="400" y="6" width="580" height="488" rx="16" fill="var(--i0-soft)"/>
+<text x="690" y="484" text-anchor="middle" font-family="var(--mono)" font-size="12.5" letter-spacing="1.3" fill="var(--i0)">HERE'S SYSTEMS · NEVER TOUCH THE BLOCKCHAIN</text>
+<g font-family="var(--mono)" font-size="13.5" font-weight="600" text-anchor="middle">
+<rect x="30" y="20" width="140" height="40" rx="10" fill="var(--i3-soft)" stroke="var(--i3)" stroke-width="1.5"/><text x="100" y="45" fill="var(--i3)">Customer</text>
+<rect x="225" y="20" width="140" height="40" rx="10" fill="var(--i1-soft)" stroke="var(--i1)" stroke-width="1.5"/><text x="295" y="45" fill="var(--i1)">Stripe</text>
+<rect x="420" y="20" width="140" height="40" rx="10" fill="var(--surface)" stroke="var(--i0)" stroke-width="1.5"/><text x="490" y="45" fill="var(--i0)">NOW app</text>
+<rect x="615" y="20" width="140" height="40" rx="10" fill="var(--surface)" stroke="var(--i0)" stroke-width="1.5"/><text x="685" y="45" fill="var(--i0)">Billing svc</text>
+<rect x="810" y="20" width="140" height="40" rx="10" fill="var(--surface)" stroke="var(--i0)" stroke-width="1.5"/><text x="880" y="45" fill="var(--i0)">Ledger</text>
+</g>
+<g stroke="var(--line-2)" stroke-width="1.5" stroke-dasharray="4 5">
+<line x1="100" y1="62" x2="100" y2="455"/><line x1="295" y1="62" x2="295" y2="455"/><line x1="490" y1="62" x2="490" y2="455"/><line x1="685" y1="62" x2="685" y2="455"/><line x1="880" y1="62" x2="880" y2="455"/>
+</g>
+<g stroke="var(--ink-2)" stroke-width="2" marker-end="url(#ah2)">
+<line x1="100" y1="100" x2="486" y2="100"/>
+<line x1="490" y1="142" x2="681" y2="142"/>
+<line x1="685" y1="184" x2="299" y2="184"/>
+<line x1="295" y1="226" x2="104" y2="226" stroke="var(--i3)"/>
+<line x1="100" y1="268" x2="291" y2="268" stroke="var(--i3)"/>
+<line x1="295" y1="310" x2="681" y2="310"/>
+<line x1="685" y1="352" x2="876" y2="352"/>
+<line x1="880" y1="394" x2="494" y2="394"/>
+<line x1="490" y1="436" x2="104" y2="436"/>
+</g>
+<g font-family="var(--body)" font-size="14.5" fill="var(--ink)" text-anchor="middle">
+<text x="293" y="92">① taps "Pay with USDC"</text>
+<text x="587" y="134">② create invoice + quote</text>
+<text x="490" y="176">③ open hosted crypto checkout</text>
+<text x="197" y="218" fill="var(--i3)">④ connect wallet</text>
+<text x="197" y="260" fill="var(--i3)">⑤ sign · USDC ~1s</text>
+<text x="490" y="302">⑥ webhook "paid" (USD settled)</text>
+<text x="782" y="344">⑦ write 1 row</text>
+<text x="685" y="386">⑧ grant credits (Purchased bucket)</text>
+<text x="295" y="428">⑨ receipt + tx link</text>
+</g>
+</svg></div>
+        <figcaption>The only crypto steps (④ and ⑤, in purple) happen between the customer and Stripe.
+        HERE talks to Stripe's API exactly as it does for cards, which keeps our engineering and legal exposure small.</figcaption>
+      </figure>
+
+      <h4 class="sub"><span class="sn">5.4</span>Card vs USDC, side by side</h4>
+      <div class="tbl"><table>
+        <thead><tr><th></th><th>Card</th><th>USDC (via Stripe)</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Who approves?</strong></td><td>Customer's bank</td><td>Customer, by signing in their wallet</td></tr>
+          <tr><td><strong>Time to final money</strong></td><td>2–3 business days</td><td><span class="pill good">seconds</span></td></tr>
+          <tr><td><strong>Fee (US, standard)</strong></td><td>2.9% + $0.30</td><td><span class="pill good">1.5%, no fixed fee</span></td></tr>
+          <tr><td><strong>Can the customer reverse it?</strong></td><td>Yes (chargeback)</td><td>No. Only we can refund.</td></tr>
+          <tr><td><strong>Works on weekends?</strong></td><td>Authorised yes, paid out later</td><td>Yes, 24/7</td></tr>
+          <tr><td><strong>Needs a bank card?</strong></td><td>Yes</td><td>No, but needs a wallet</td></tr>
+          <tr><td><strong>Refund goes to</strong></td><td>The card</td><td>The sending wallet</td></tr>
+          <tr><td><strong>Max per payment</strong></td><td>Card limit</td><td>$10,000 (Stripe)</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PART B ================= -->
+<section class="pg" id="pb" style="--ic:var(--i2); --ic-soft:var(--i2-soft)">
+  <div class="in">
+    <header class="pg-hd">
+      <span class="pg-n">B</span>
+      <div><p class="kicker">Part B · Sections 06–10 · Five decisions</p><h2>Decide it</h2></div>
+    </header>
+
+    <div class="tbl"><table>
+      <thead><tr><th>#</th><th>Decision</th><th>Answer</th><th class="n">Status</th></tr></thead>
+      <tbody>
+        <tr><td class="mono">06</td><td>Hold crypto or convert to dollars?</td><td><strong>Convert 100%, automatically</strong></td><td class="n"><span class="pill good">decided</span></td></tr>
+        <tr><td class="mono">07</td><td>Which stablecoin?</td><td><strong>USDC only</strong></td><td class="n"><span class="pill good">decided</span></td></tr>
+        <tr><td class="mono">08</td><td>Which blockchain?</td><td><strong>Solana + Base</strong> (Polygon ok; Ethereum with warning)</td><td class="n"><span class="pill good">decided</span></td></tr>
+        <tr><td class="mono">09</td><td>Own wallet or payment gateway?</td><td><strong>Gateway</strong>, Stripe first</td><td class="n"><span class="pill warn">depends on 10</span></td></tr>
+        <tr><td class="mono">10</td><td>Which legal entity takes the money?</td><td>US entity makes this simple</td><td class="n"><span class="pill risk">blocking</span></td></tr>
+      </tbody>
+    </table></div>
+
+    <!-- 06 -->
+    <div class="sec" id="s06">
+      <div class="sec-hd"><span class="sec-n">06</span><h3>Decision 1: Hold crypto or convert to dollars?</h3></div>
+      <div class="key"><span class="tag">In plain words</span>
+        <p>When a customer pays in USDC, we can keep it as USDC or swap it into regular dollars straight away. Our bills (AI models, servers, Guardians) are all in dollars,
+        so keeping USDC adds risk and paperwork for no benefit. <strong>We convert everything, automatically, every time.</strong></p></div>
+
+      <div class="grid g3">
+        <div class="card opt" style="border:2px solid var(--good)"><span class="pill good">now</span><span class="lbl">Option A</span><h4>Convert 100% automatically</h4>
+          <p><b>Good:</b> no crypto on our books, the same accounting as cards, no depeg risk, and simple for auditors and investors.</p>
+          <p><b>Bad:</b> a small conversion cost, which Stripe already includes in its 1.5%.</p></div>
+        <div class="card opt"><span class="pill risk">no</span><span class="lbl">Option B</span><h4>Hold 100% USDC</h4>
+          <p><b>Good:</b> we could pay suppliers and creators in USDC without converting again.</p>
+          <p><b>Bad:</b> depeg risk, custody risk, crypto accounting, an Indian tax nightmare, and it scares banks and investors.</p></div>
+        <div class="card opt"><span class="pill warn">later</span><span class="lbl">Option C</span><h4>Convert by default + small USDC float</h4>
+          <p><b>Good:</b> the best of both.</p>
+          <p><b>Bad:</b> it needs a written treasury policy and the discipline to follow it.</p></div>
+      </div>
+      <div class="note"><span class="t">What the market does</span>75.4% of CoinGate merchant payments convert to fiat, and the share keeping crypto has fallen three halves in a row.</div>
+      <div class="key" style="--ic:var(--good)"><span class="tag">Decision</span>
+        <p><strong>Phases 0–5: Option A.</strong> Convert 100%.</p>
+        <p><strong>After Phase 5:</strong> move to Option C <em>only</em> if we start paying Guardians, creators or suppliers in USDC (a separate Payouts PRD). The float is capped at 30 days of expected USDC payouts (Section 17). <span class="pill warn">v1.1 fix</span></p></div>
+    </div>
+
+    <!-- 07 -->
+    <div class="sec" id="s07">
+      <div class="sec-hd"><span class="sec-n">07</span><h3>Decision 2: Which stablecoin?</h3></div>
+      <div class="key"><span class="tag">In plain words</span>
+        <p>There are two big digital dollars. USDT is bigger overall, but <strong>USDC is the one that regulators, payment companies and merchants trust.</strong>
+        Choosing USDC is like accepting the currency every bank recognises.</p></div>
+
+      <div class="panel">
+        <span class="lbl">Merchant acceptance · StablecoinSpend · 107 merchants · Sep 2026</span>
+        <div class="bars">
+          <div class="bar" style="--c:var(--i4)"><span class="k">USDC</span><span class="t"><span class="f" style="width:81.3%"></span></span><span class="v">81.3%</span></div>
+          <div class="bar" style="--c:var(--ink-3)"><span class="k">USDT</span><span class="t"><span class="f" style="width:57%"></span></span><span class="v">57.0%</span></div>
+          <div class="bar" style="--c:var(--ink-3)"><span class="k">DAI</span><span class="t"><span class="f" style="width:29%"></span></span><span class="v">29.0%</span></div>
+          <div class="bar" style="--c:var(--ink-3)"><span class="k">EURC</span><span class="t"><span class="f" style="width:19.6%"></span></span><span class="v">19.6%</span></div>
+          <div class="bar" style="--c:var(--ink-3)"><span class="k">PYUSD</span><span class="t"><span class="f" style="width:13.1%"></span></span><span class="v">13.1%</span></div>
+        </div>
+      </div>
+
+      <div class="tbl"><table>
+        <thead><tr><th></th><th>USDC (Circle)</th><th>USDT (Tether)</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Issuer</strong></td><td>US company, regulated</td><td>Offshore</td></tr>
+          <tr><td><strong>Merchant acceptance</strong></td><td><span class="pill good">81.3%</span></td><td>57%</td></tr>
+          <tr><td><strong>Share of payments</strong> (CoinGate H1 2026)</td><td><span class="pill good">#1 at 22.1%</span></td><td>Minor at checkouts</td></tr>
+          <tr><td><strong>Share of payouts</strong></td><td>88.1%</td><td>Minor</td></tr>
+          <tr><td><strong>EU (MiCA)</strong></td><td><span class="pill good">compliant</span></td><td><span class="pill risk">withdrawn by EU platforms 2024–25</span></td></tr>
+          <tr><td><strong>US (GENIUS)</strong></td><td>Positioned to comply</td><td>No comparability ruling yet</td></tr>
+          <tr><td><strong>Stripe supports?</strong></td><td><span class="pill good">yes · 5 networks</span></td><td><span class="pill risk">no</span></td></tr>
+          <tr><td><strong>Where it wins</strong></td><td>Merchants, B2B, regulated flows, payouts</td><td>Emerging-market remittances (Tron)</td></tr>
+        </tbody>
+      </table></div>
+      <div class="key" style="--ic:var(--good)"><span class="tag">Decision</span>
+        <p><strong>At launch, USDC only.</strong> Later, add EURC if EU customers ask. Add USDT only if Indian or SE Asian users ask, <em>and</em> only through a gateway that converts it instantly.</p></div>
+    </div>
+
+    <!-- 08 -->
+    <div class="sec" id="s08">
+      <div class="sec-hd"><span class="sec-n">08</span><h3>Decision 3: Which blockchain?</h3></div>
+      <div class="key"><span class="tag">In plain words</span>
+        <p>The same USDC can travel on different roads. Some roads charge a fraction of a cent (Solana, Base). Ethereum is usually under a dollar
+        but can spike to $20 on a busy day. <strong>On a $39 purchase a $5 toll is insulting</strong>, so we steer people to cheap, fast, well-supported roads.</p></div>
+
+      <div class="tbl"><table>
+        <thead><tr><th>Chain</th><th>Typical USDC fee</th><th>Speed</th><th>Wallets</th><th class="n">Verdict</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Solana</strong></td><td class="mono">~$0.0003–$0.01</td><td>~1 s</td><td>Phantom, Backpack, exchanges</td><td class="n"><span class="pill good">primary</span></td></tr>
+          <tr><td><strong>Base</strong></td><td class="mono">~$0.01</td><td>~2 s soft, ~15 min hard</td><td>Coinbase Wallet, MetaMask</td><td class="n"><span class="pill good">primary</span></td></tr>
+          <tr><td><strong>Polygon</strong></td><td class="mono">~$0.01</td><td>seconds</td><td>MetaMask</td><td class="n"><span class="pill">allowed</span></td></tr>
+          <tr><td><strong>Ethereum</strong></td><td class="mono">~$0.10–$5, spikes &gt;$20 <span class="pill warn">v1.1 fix</span></td><td>~13 min final</td><td>Everyone</td><td class="n"><span class="pill warn">allowed + warning</span></td></tr>
+          <tr><td><strong>Tempo</strong></td><td class="mono">sub-cent, paid in stablecoin</td><td>~0.6 s final</td><td>New</td><td class="n"><span class="pill">watch</span></td></tr>
+          <tr><td><strong>Tron</strong></td><td class="mono">$1–$3 (w/o staked TRX)</td><td>~3 s</td><td>USDT-heavy</td><td class="n"><span class="pill risk">skip</span></td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="split">
+        <div class="panel">
+          <span class="lbl">The toll as % of a $39 payment</span>
+          <div class="bars">
+            <div class="bar" style="--c:var(--good)"><span class="k">Solana</span><span class="t"><span class="f" style="width:0.1%"></span></span><span class="v">~0.001%</span></div>
+            <div class="bar" style="--c:var(--good)"><span class="k">Base</span><span class="t"><span class="f" style="width:0.2%"></span></span><span class="v">~0.03%</span></div>
+            <div class="bar" style="--c:var(--good)"><span class="k">Polygon</span><span class="t"><span class="f" style="width:0.2%"></span></span><span class="v">~0.03%</span></div>
+            <div class="bar" style="--c:var(--warn)"><span class="k">Ethereum<small>quiet day</small></span><span class="t"><span class="f" style="width:5%"></span></span><span class="v">0.3–3%</span></div>
+            <div class="bar" style="--c:var(--warn)"><span class="k">Ethereum<small>busy day</small></span><span class="t"><span class="f" style="width:25%"></span></span><span class="v">5–13%</span></div>
+            <div class="bar" style="--c:var(--risk)"><span class="k">Ethereum<small>spike ($20)</small></span><span class="t"><span class="f" style="width:98%"></span></span><span class="v">~51%</span></div>
+          </div>
+          <p style="margin:14px 0 0;font-size:15px;color:var(--ink-2)">High, unpredictable fees are one of the most common reasons people abandon crypto checkouts.</p>
+        </div>
+        <div class="mock" aria-label="Mock of the network picker">
+          <p class="mh">Pay with USDC</p>
+          <p class="ms">Choose network</p>
+          <div class="radio sel"><span class="d"></span><span><b>Solana</b> <span class="pill good" style="font-size:11px;padding:1px 7px">best</span></span><small>&lt;$0.01 · ~1 s</small></div>
+          <div class="radio"><span class="d"></span><span><b>Base</b></span><small>~$0.01 · ~2 s</small></div>
+          <div class="radio"><span class="d"></span><span><b>Polygon</b></span><small>~$0.01 · ~5 s</small></div>
+          <div class="radio bad"><span class="d"></span><span><b>Ethereum</b> <span aria-hidden="true">⚠</span></span><small>varies · 1–13 min</small></div>
+          <p class="warnline">Ethereum fees can be high for small payments. We recommend Solana or Base.</p>
+        </div>
+      </div>
+      <div class="key" style="--ic:var(--good)"><span class="tag">Decision</span>
+        <p>The default order is <strong>Solana, Base, Polygon, then Ethereum</strong> (with a warning). Ethereum is <strong>hidden for payments under $20</strong>. Re-evaluate Tempo in Q1 2027.</p></div>
+    </div>
+
+    <!-- 09 -->
+    <div class="sec" id="s09">
+      <div class="sec-hd"><span class="sec-n">09</span><h3>Decision 4: Build our own wallet, or use a payment gateway?</h3></div>
+      <div class="key"><span class="tag">In plain words</span>
+        <p>We could publish our own wallet address and ask people to send money there. That is like running a shop where customers throw cash
+        through a window with no receipt. <strong>A gateway gives every payment an invoice, checks it, and deposits normal money in the bank.</strong> 70% of merchants use one, and so will we.</p></div>
+
+      <div class="tbl"><table>
+        <thead><tr><th></th><th>Self-custody (own wallet)</th><th>Gateway</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Keys / passwords</strong></td><td>We guard them. If we lose them, the money is gone forever.</td><td><span class="pill good">gateway guards them</span></td></tr>
+          <tr><td><strong>Match payment to customer</strong></td><td>We build it</td><td><span class="pill good">built in</span></td></tr>
+          <tr><td><strong>Wrong amount / late / duplicate</strong></td><td>Support tickets</td><td><span class="pill good">rules built in</span></td></tr>
+          <tr><td><strong>Sanctions screening</strong></td><td>Our legal problem</td><td><span class="pill good">built in</span></td></tr>
+          <tr><td><strong>Convert to dollars</strong></td><td>Manually, via an exchange</td><td><span class="pill good">automatic</span></td></tr>
+          <tr><td><strong>Accounting export</strong></td><td>We build it</td><td><span class="pill good">built in</span></td></tr>
+          <tr><td><strong>Regulatory exposure</strong></td><td>We may look like a custodian or money transmitter</td><td>The gateway is the licensed party</td></tr>
+          <tr><td><strong>Cost</strong></td><td>Gas + engineering time + risk</td><td>1–1.5% per payment</td></tr>
+        </tbody>
+      </table></div>
+      <div class="note"><span class="t">Market evidence</span><b>70.1%</b> of documented stablecoin-accepting merchants use a third-party gateway. Almost none take direct wallet transfers.</div>
+
+      <h4 class="sub"><span class="sn">9.2</span>Gateway shortlist</h4>
+      <div class="grid g2">
+        <div class="card" style="border:2px solid var(--good)"><span class="lbl">1 · Recommended</span><h4>Stripe stablecoin payments · 1.5%</h4>
+          <p>The same dashboard and API as cards, and it settles to the Stripe balance in USD. It works in Checkout, Elements, Billing, Invoicing and Payment Links, and supports recurring payments.
+          Coins: USDC on Solana, Base, Polygon, Ethereum and Tempo (+ USDP/USDG in the US only).</p>
+          <p><b>Limits:</b> US-based businesses only · $10,000 per payment · refunds only to the sending wallet · priced in USD. (Link stablecoins is a separate product, at 0.8% promo until 1 Jan 2027.)</p></div>
+        <div class="card"><span class="lbl">2</span><h4>Coinbase Commerce · 1.0%</h4><p>A standalone hosted checkout on Base, Ethereum, Polygon and Solana. USD payout is available as an add-on.</p></div>
+        <div class="card"><span class="lbl">3</span><h4>CoinGate · varies</h4><p>MiCA-licensed (Bank of Lithuania), so it is a good fit if the billing entity is in the EU. It supports fiat settlement and API payouts.</p></div>
+        <div class="card"><span class="lbl">4</span><h4>Crypto-native MoR (e.g. Fungies) · varies</h4><p>Handles both tax <em>and</em> crypto, but is smaller and less proven.</p></div>
+        <div class="card" style="opacity:.8"><span class="lbl">&#x2715; Not possible</span><h4>Paddle</h4><p>Has no native stablecoin checkout, so this can't be done on Paddle alone.</p></div>
+      </div>
+
+      <h4 class="sub"><span class="sn">9.3</span>The Paddle problem</h4>
+      <p>The Money Model says "Paddle now, Stripe later", but Paddle has no crypto checkout. Stablecoins therefore force us onto one of three paths:</p>
+      <div class="grid g3">
+        <div class="card opt" style="border:2px solid var(--good)"><span class="pill good">if US entity</span><span class="lbl">Path 1</span><h4>Move billing to Stripe now</h4>
+          <p>Cards and USDC in one place, with native meters and credits (Money Model page 4).</p>
+          <p><b>But:</b> we take on global tax compliance (Stripe Tax), and it needs a US entity.</p></div>
+        <div class="card opt"><span class="pill warn">bridge</span><span class="lbl">Path 2</span><h4>Paddle for cards + Coinbase Commerce for USDC</h4>
+          <p>No migration needed.</p><p><b>But:</b> two systems to reconcile, and we own the tax on USDC sales.</p></div>
+        <div class="card opt"><span class="pill risk">no gain</span><span class="lbl">Path 3</span><h4>Keep Paddle, delay stablecoins</h4>
+          <p>Zero work.</p><p><b>But:</b> no margin gain and no access gain.</p></div>
+      </div>
+      <div class="note warn"><span class="t">Worth checking before Path 1 · v1.1 addition</span>Standard Stripe payments are not a Merchant of Record, but Stripe now also offers an MoR product (<b>Stripe Managed Payments</b>).
+      Ask Stripe whether it supports stablecoin payments. If it does, we could keep Paddle-style tax coverage <em>and</em> get USDC in one system.</div>
+
+      <h4 class="sub"><span class="sn">9.4</span>Checklist: ask every gateway vendor</h4>
+      <ul class="chk">
+        <li>All-in cost on a $1,000 payment, with the FX spread in bps</li>
+        <li>Underpayment tolerance: is it configurable, and who covers the shortfall?</li>
+        <li>Wrong-network recovery: is it possible, what does it cost, how long does it take?</li>
+        <li>Late payment after the quote expires: what happens?</li>
+        <li>Rolling reserve: what %, for how long? (Some hold 5–10% for 30–180 days.)</li>
+        <li>Payout schedule and fees to our bank</li>
+        <li>Refund method: to the wallet? Partial refunds?</li>
+        <li>Recurring / subscription support</li>
+        <li>Is AML and sanctions screening included?</li>
+        <li>Countries where <em>our</em> entity is allowed</li>
+        <li>Accounting export: per-payment tx hash, rate and fee</li>
+        <li>Webhook reliability, retries, idempotency</li>
+        <li>Uptime history and status page</li>
+        <li>Does the vendor change supported coins without notice?</li>
+      </ul>
+    </div>
+
+    <!-- 10 -->
+    <div class="sec" id="s10">
+      <div class="sec-hd"><span class="sec-n">10</span><h3>Decision 5: Which legal entity takes the money? <span class="pill risk" style="vertical-align:middle">blocking</span></h3></div>
+      <div class="key" style="--ic:var(--risk)"><span class="tag">In plain words</span>
+        <p>The country our billing company is registered in decides almost everything: which payment companies will work with us, how crypto is taxed,
+        and how much paperwork we face. <strong>A US company makes this easy. An Indian company makes it complicated and expensive.</strong></p></div>
+
+      <figure>
+        <div class="panel"><svg viewBox="0 0 900 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Decision tree: US entity leads to Stripe; else EU entity leads to CoinGate or Coinbase Commerce; else Indian entity path is complex.">
+<defs><marker id="ah3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--ink-2)"/></marker></defs>
+<g font-family="var(--body)">
+<rect x="30" y="30" width="240" height="80" rx="40" fill="var(--surface-2)" stroke="var(--ink-2)" stroke-width="2"/>
+<text x="150" y="64" text-anchor="middle" font-size="16" font-weight="700" fill="var(--ink)">Do we have (or will we</text>
+<text x="150" y="86" text-anchor="middle" font-size="16" font-weight="700" fill="var(--ink)">form) a US entity?</text>
+<line x1="272" y1="70" x2="326" y2="70" stroke="var(--ink-2)" stroke-width="2" marker-end="url(#ah3)"/>
+<text x="298" y="60" text-anchor="middle" font-family="var(--mono)" font-size="12.5" font-weight="600" fill="var(--good)">YES</text>
+<rect x="330" y="30" width="540" height="80" rx="14" fill="var(--good-wash)" stroke="var(--good)" stroke-width="2"/>
+<text x="352" y="62" font-size="18" font-weight="700" fill="var(--ink)">Stripe for cards + USDC</text>
+<text x="352" y="88" font-size="15" fill="var(--ink-2)">Proceed with this PRD as written · auto USD · Stripe Tax · complexity LOW</text>
+<line x1="150" y1="112" x2="150" y2="156" stroke="var(--ink-2)" stroke-width="2" marker-end="url(#ah3)"/>
+<text x="162" y="140" font-family="var(--mono)" font-size="12.5" font-weight="600" fill="var(--risk)">NO</text>
+<rect x="30" y="160" width="240" height="80" rx="40" fill="var(--surface-2)" stroke="var(--ink-2)" stroke-width="2"/>
+<text x="150" y="206" text-anchor="middle" font-size="16" font-weight="700" fill="var(--ink)">Is there an EU entity?</text>
+<line x1="272" y1="200" x2="326" y2="200" stroke="var(--ink-2)" stroke-width="2" marker-end="url(#ah3)"/>
+<text x="298" y="190" text-anchor="middle" font-family="var(--mono)" font-size="12.5" font-weight="600" fill="var(--good)">YES</text>
+<rect x="330" y="160" width="540" height="80" rx="14" fill="var(--warn-wash)" stroke="var(--warn)" stroke-width="2"/>
+<text x="352" y="192" font-size="18" font-weight="700" fill="var(--ink)">CoinGate (MiCA) or Coinbase Commerce</text>
+<text x="352" y="218" font-size="15" fill="var(--ink-2)">EUR settlement · USDC/EURC only, never USDT · VAT · complexity MEDIUM</text>
+<line x1="150" y1="242" x2="150" y2="286" stroke="var(--ink-2)" stroke-width="2" marker-end="url(#ah3)"/>
+<text x="162" y="270" font-family="var(--mono)" font-size="12.5" font-weight="600" fill="var(--risk)">NO</text>
+<rect x="30" y="290" width="840" height="96" rx="14" fill="var(--risk-wash)" stroke="var(--risk)" stroke-width="2"/>
+<text x="52" y="322" font-size="18" font-weight="700" fill="var(--ink)">Indian entity only · complexity HIGH</text>
+<text x="52" y="348" font-size="15" fill="var(--ink-2)">Do NOT receive USDC into our own wallets · use an offshore regulated converter → INR + eFIRA</text>
+<text x="52" y="370" font-size="15" fill="var(--ink-2)">Get CA sign-off BEFORE launch · seriously consider waiting until a US entity exists</text>
+</g>
+</svg></div>
+      </figure>
+
+      <div class="tbl"><table>
+        <thead><tr><th>Entity</th><th>Stablecoin path</th><th>Complexity</th></tr></thead>
+        <tbody>
+          <tr><td><strong>US</strong> (Delaware LLC / C-corp)</td><td>Stripe stablecoin payments, auto-converted to USD</td><td><span class="pill good">low</span> Sales tax via Stripe Tax. GENIUS regulates issuers, not us.</td></tr>
+          <tr><td><strong>EU</strong> (e.g. Czechia, Lithuania)</td><td>CoinGate (MiCA) or Coinbase Commerce, auto-converted to EUR</td><td><span class="pill warn">medium</span> MiCA-compliant coins only (USDC/EURC). VAT handling.</td></tr>
+          <tr><td><strong>India</strong></td><td>A regulated provider converts <em>offshore</em> and remits INR with eFIRA + a purpose code matched to the export invoice</td><td><span class="pill risk">high</span> <span class="pill">TAX</span> Stablecoins are VDAs: 30% tax on gains + 1% TDS. USDC in an Indian wallet counts as a VDA holding, not export proceeds. Providers must be FIU-IND registered, and CARF reporting applies from 2026.</td></tr>
+        </tbody>
+      </table></div>
+      <div class="note risk"><span class="t">Status · owner Leo · v1.1 fix</span>This must be decided <b>before Phase 1</b>, not Phase 3. The sandbox build in Phase 1 needs a chosen gateway, and the gateway depends on the entity (Stripe stablecoins are US-only). The Phase 0 gate in Section 20 already says the same.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PART C ================= -->
+<section class="pg" id="pc" style="--ic:var(--i3); --ic-soft:var(--i3-soft)">
+  <div class="in">
+    <header class="pg-hd">
+      <span class="pg-n">C</span>
+      <div><p class="kicker">Part C · Sections 11–14</p><h2>Design it</h2></div>
+    </header>
+
+    <!-- 11 -->
+    <div class="sec" id="s11">
+      <div class="sec-hd"><span class="sec-n">11</span><h3>Users see ₹ or $, never "crypto"</h3></div>
+      <div class="key"><span class="tag">In plain words</span>
+        <p>The customer thinks in rupees or dollars, and "USDC" is just a button like "UPI" or "Card". Behind the scenes we work out how many USDC equal the price,
+        lock that amount for a few minutes, and handle all the conversion and bookkeeping. <strong>The customer never sees exchange rates, blockchains or jargon</strong> unless they want to.</p></div>
+
+      <div class="split">
+        <div class="mock" aria-label="Mock of the plan card">
+          <p class="ms">PLAN</p>
+          <p class="mh">Prime</p>
+          <p style="font-family:var(--mono);font-size:26px;font-weight:600;margin:4px 0 0">₹2,999<span style="font-size:15px;color:var(--ink-3)"> / month</span></p>
+          <p style="font-size:14px;color:var(--ink-3);margin:0 0 10px">or $39 · €39 · £33</p>
+          <p style="margin:0 0 4px"><b>5,000 credits</b> every month</p>
+          <p class="ms" style="margin-top:16px">PAY WITH</p>
+          <div class="btns"><span class="btn">Card</span><span class="btn">UPI</span><span class="btn pri">USDC<em>+5% credits</em></span></div>
+        </div>
+        <ol class="steps" style="margin:0">
+          <li><span><b>PRICE</b>Look up the fixed local price from the quarterly price table ($39 / €39 / £33 / ₹2,999). Never use live FX.</span></li>
+          <li><span><b>QUOTE</b>Convert it to a USD amount for the USDC path, using our price table.</span></li>
+          <li><span><b>LOCK</b>Lock that USDC amount for 30 minutes.</span></li>
+          <li><span><b>PRESENT</b>Show the exact USDC amount, the network and the estimated gas.</span></li>
+          <li><span><b>DETECT</b>The gateway watches the chain and matches the payment to the invoice.</span></li>
+          <li><span><b>SETTLE</b>The gateway converts USDC → USD and sends a "paid" webhook.</span></li>
+          <li><span><b>GRANT</b>The entitlement service grants the credits.</span></li>
+          <li><span><b>RECORD</b>The ledger writes one immutable row (Section 14).</span></li>
+        </ol>
+      </div>
+
+      <h4 class="sub">Six rules</h4>
+      <div class="grid g3">
+        <div class="card"><span class="lbl">R1</span><p><b>Credits are the only unit inside HERE.</b> Card, UPI and USDC buyers get the same credits for the same plan.</p></div>
+        <div class="card"><span class="lbl">R2</span><p><b>The ledger never holds currency or crypto.</b> (Money Model rule.)</p></div>
+        <div class="card"><span class="lbl">R3</span><p><b>Never show a live rate</b> like "36.42 USDC". Quotes are whole cents from our price table.</p></div>
+        <div class="card"><span class="lbl">R4</span><p><b>Gas is shown before signing.</b> There are no surprise costs.</p></div>
+        <div class="card"><span class="lbl">R5</span><p><b>The word "crypto"</b> appears only on the USDC payment screen and its help page, nowhere else.</p></div>
+        <div class="card"><span class="lbl">R6</span><p><b>Stripe presents in USD</b> (other currencies are in private preview). Showing the local currency is our job, via step 2.</p></div>
+      </div>
+      <div class="note warn"><span class="t">New open question · v1.1</span>If a customer sees a regional price (₹2,999) and pays in USDC, the draft quotes <b>$36.00</b>, which is cheaper than the $39 US price.
+      That implies ~₹83/$, so check it against the current quarterly table. It also creates an arbitrage: anyone who can appear to be in India pays $3 less.
+      Decide whether USDC always quotes the <b>USD list price</b>, or honours regional prices only for verified regions.</div>
+    </div>
+
+    <!-- 12 -->
+    <div class="sec" id="s12">
+      <div class="sec-hd"><span class="sec-n">12</span><h3>User flows</h3></div>
+      <div class="key"><span class="tag">In plain words</span>
+        <p>These are the exact steps a customer goes through. We start with the simplest one, a one-off top-up, and add subscriptions once top-ups work.</p></div>
+
+      <h4 class="sub"><span class="sn">A</span>One-off top-up <span class="pill good">build first</span></h4>
+      <div class="split">
+        <ol class="steps" style="margin:0">
+          <li><span>In NOW, the user taps <b style="font-family:var(--body);letter-spacing:0;font-size:inherit">Add credits</b> and picks $10 / $25 / $50 / custom.</span></li>
+          <li><span>They choose <b style="font-family:var(--body);letter-spacing:0;font-size:inherit">USDC</b>. (Card and UPI keep their existing flows.)</span></li>
+          <li><span>The quote screen shows what they pay, what they get, the network and a 30-minute timer.</span></li>
+          <li><span>Stripe's hosted crypto page opens, and the user connects Phantom, Coinbase Wallet or MetaMask.</span></li>
+          <li><span>The user signs <b style="font-family:var(--body);letter-spacing:0;font-size:inherit">one</b> transaction, and the chain confirms in ~1–2 s.</span></li>
+          <li><span>Stripe's "paid" webhook fires, and HERE grants the credits to the Purchased bucket.</span></li>
+          <li><span>The receipt reads: "2,625 credits added. Tx: 5Xk…9aP".</span></li>
+        </ol>
+        <div class="mock" aria-label="Mock of the quote screen">
+          <p class="ms">ADD CREDITS · USDC</p>
+          <p class="mh">Quote</p>
+          <div class="row"><span>You pay</span><span>25.00 USDC</span></div>
+          <div class="row"><span>You get</span><span>2,625 credits</span></div>
+          <div class="row"><span style="color:var(--ink-3);padding-left:12px">↳ top-up</span><span style="color:var(--ink-3)">2,500</span></div>
+          <div class="row"><span style="color:var(--ink-3);padding-left:12px">↳ USDC bonus +5%</span><span style="color:var(--i4)">+125</span></div>
+          <div class="row"><span>Network</span><span>Solana · fee &lt;$0.01</span></div>
+          <div class="row"><span>Quote valid</span><span class="timer">29:59</span></div>
+          <div class="btns"><span class="btn pri" style="flex:1;text-align:center">Continue to wallet</span></div>
+        </div>
+      </div>
+      <div class="note good"><span class="t">Target</span>Under <b>60 seconds</b> from tapping "Add credits" to credits in the wallet.</div>
+
+      <h4 class="sub"><span class="sn">B</span>Subscription <span class="pill">build second</span></h4>
+      <p><b>Sign-up:</b> choose Prime &rarr; Pay with USDC &rarr; approve a recurring pull in the wallet &rarr; the first month is charged &rarr; 5,000 + bonus credits are granted.</p>
+      <figure>
+        <div class="panel"><svg viewBox="0 0 940 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Renewal timeline: reminder at T minus 3, charge at T0, retries at T plus 3 and T plus 7, downgrade to Signal at T plus 10.">
+<rect x="180" y="16" width="250" height="36" rx="18" fill="var(--good-wash)" stroke="var(--good)" stroke-width="1.5"/>
+<text x="305" y="39" text-anchor="middle" font-family="var(--body)" font-size="15" font-weight="700" fill="var(--good)">✓ Success → credits + receipt</text>
+<line x1="260" y1="54" x2="260" y2="110" stroke="var(--good)" stroke-width="2"/>
+<line x1="40" y1="120" x2="900" y2="120" stroke="var(--line-2)" stroke-width="3"/>
+<line x1="260" y1="120" x2="860" y2="120" stroke="var(--warn)" stroke-width="3" stroke-dasharray="8 6"/>
+<text x="560" y="112" text-anchor="middle" font-family="var(--mono)" font-size="12" letter-spacing="1.2" fill="var(--warn)">IF IT FAILS: GRACE PERIOD</text>
+<g font-family="var(--mono)" font-size="15" font-weight="600" text-anchor="middle">
+<circle cx="80" cy="120" r="10" fill="var(--i1)"/><text x="80" y="96" fill="var(--i1)">T−3</text>
+<circle cx="260" cy="120" r="10" fill="var(--ink)"/><text x="232" y="96" fill="var(--ink)">T0</text>
+<circle cx="460" cy="120" r="10" fill="var(--warn)"/><text x="460" y="96" fill="var(--warn)">T+3</text>
+<circle cx="660" cy="120" r="10" fill="var(--warn)"/><text x="660" y="96" fill="var(--warn)">T+7</text>
+<circle cx="860" cy="120" r="10" fill="var(--risk)"/><text x="860" y="96" fill="var(--risk)">T+10</text>
+</g>
+<g font-family="var(--body)" font-size="14.5" fill="var(--ink-2)" text-anchor="middle">
+<text x="80" y="154">Email + in-app:</text><text x="80" y="174">"Renewal in 3 days.</text><text x="80" y="194">Wallet needs 39 USDC."</text>
+<text x="260" y="154">Stripe tries the charge.</text><text x="260" y="174">If it fails: "Top up your</text><text x="260" y="194">wallet or switch to card"</text>
+<text x="460" y="154">Retry #1</text>
+<text x="660" y="154">Retry #2</text><text x="660" y="174">+ final notice</text>
+<text x="860" y="154">Downgrade to</text><text x="860" y="174">Signal (free).</text><text x="860" y="194" font-weight="700" fill="var(--ink)">Nothing deleted.</text>
+</g>
+</svg></div>
+        <figcaption>A card refills itself every month but a crypto wallet does not, so renewals fail more often and reminders matter more.
+        The reminder amount is the customer's own plan price. The draft said "36 USDC", which is the regional India figure; a standard Prime renewal is 39 USDC.</figcaption>
+      </figure>
+
+      <h4 class="sub"><span class="sn">C</span>Refunds</h4>
+      <div class="grid g3">
+        <div class="card" style="--ic:var(--good)"><span class="lbl">Job failed on our side</span><h4>Credits restored automatically</h4><p>Money Model rule: failed jobs are free.</p></div>
+        <div class="card"><span class="lbl">Unused credits / cancel</span><h4>Default: refund as credits</h4><p>Fast, and it costs no gas.</p></div>
+        <div class="card"><span class="lbl">Full cancellation within policy window</span><h4>USDC back to the original wallet</h4><p>Stripe can only refund to the sending wallet. The bonus is clawed back.</p></div>
+      </div>
+
+      <h4 class="sub"><span class="sn">D</span>When something goes wrong (what the user sees)</h4>
+      <div class="tbl"><table>
+        <thead><tr><th>Situation</th><th>What happens</th></tr></thead>
+        <tbody>
+          <tr><td>Plan payment short by 0.40 USDC</td><td>Within tolerance, so it is credited in full with no message.</td></tr>
+          <tr><td>Plan payment short by 5 USDC</td><td>Credit what arrived and show "Pay 5 USDC more to complete Prime".</td></tr>
+          <tr><td>Top-up short by any amount</td><td>Credit exactly what arrived. Nothing is missing, because a top-up has no fixed size. <span class="pill warn">v1.1 fix</span></td></tr>
+          <tr><td>Paid after the quote expired</td><td>USDC doesn't change in price, so accept it at the original quote within 24 h.</td></tr>
+          <tr><td>"I sent on the wrong network"</td><td>Wallet-connect checkout prevents this. If it still happens: a support ticket and a gateway recovery attempt, which is not guaranteed.</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+
+    <!-- 13 -->
+    <div class="sec" id="s13">
+      <div class="sec-hd"><span class="sec-n">13</span><h3>Who will use it and why</h3></div>
+      <div class="key"><span class="tag">In plain words</span>
+        <p>Most people will keep paying by card or UPI. A specific group will prefer USDC. We design for them, and give everyone else a small reason, bonus credits, to try it.</p></div>
+
+      <div class="branches">
+        <div class="br" style="--ic:var(--i3);--ic-soft:var(--i3-soft)"><div class="txt"><span class="n">Persona 1 · Manila / Bogotá / Lagos</span><h4>The paid-in-USDC creator</h4>
+          <p>Gets paid in USDC by Meta, Deel or a freelance platform. <b>Pain:</b> converting to local currency and then paying by card costs them twice.</p>
+          <div class="tgt"><b>Why us:</b> spend USDC directly and get bonus credits.</div></div></div>
+        <div class="br" style="--ic:var(--i2);--ic-soft:var(--i2-soft)"><div class="txt"><span class="n">Persona 2 · India / Africa / LatAm</span><h4>The card-declined builder</h4>
+          <p>Their card fails on international SaaS or adds 3%+ in foreign fees. <b>Pain:</b> they can't subscribe at all, or they pay extra.</p>
+          <div class="tgt"><b>Why us:</b> it works without a card. (Indian users can also just use UPI.)</div></div></div>
+        <div class="br" style="--ic:var(--i1);--ic-soft:var(--i1-soft)"><div class="txt"><span class="n">Persona 3 · anywhere</span><h4>The crypto-native developer</h4>
+          <p>Already pays OpenRouter, Vast.ai and Vultr in USDC. <b>Pain:</b> hates typing card details and wants one-click wallet pay.</p>
+          <div class="tgt"><b>Why us:</b> familiar, fast, fairly private.</div></div></div>
+        <div class="br" style="--ic:var(--i4);--ic-soft:var(--i4-soft)"><div class="txt"><span class="n">Persona 4 · future</span><h4>The agent operator</h4>
+          <p>Runs Guardians that should buy compute and credits by themselves. <b>Pain:</b> cards need a human and can't do $0.05 payments.</p>
+          <div class="tgt"><b>Why us, later:</b> programmatic top-ups via Tempo/MPP or x402.</div></div></div>
+      </div>
+
+      <div class="grid g2" style="margin-top:34px">
+        <div class="card"><span class="lbl">Why a user picks USDC · strongest first</span>
+          <ol style="margin:0;font-size:16.5px">
+            <li>Their card doesn't work or costs extra.</li>
+            <li>They already hold USDC.</li>
+            <li>Bonus credits (we share part of the fee saving).</li>
+            <li>Speed: credits arrive instantly, 24/7, weekends included.</li>
+            <li>Later, agents can pay for themselves.</li>
+          </ol></div>
+        <div class="card"><span class="lbl">Realistic adoption · share of payment volume, year one</span>
+          <div class="bars" style="margin-top:18px"><div class="bar" style="grid-template-columns:minmax(0,1fr)"><span class="t" style="height:30px">
+            <span class="f o" style="width:13.3%"></span><span class="f" style="width:40%;--c:var(--i4)"></span><span class="f o" style="width:13.3%"></span><span class="f" style="width:33.4%;--c:var(--good);opacity:.45"></span>
+          </span></div></div>
+          <div class="scale"><span>0%</span><span>2%</span><span>8%</span><span>10%</span><span>15%</span></div>
+          <p style="margin-top:14px"><b style="color:var(--i4)">2–8%</b> is the plan, and it will be higher in creator-heavy and non-US segments. <b style="color:var(--good)">Above 10%</b> is a signal to invest more.</p></div>
+      </div>
+    </div>
+
+    <!-- 14 -->
+    <div class="sec" id="s14">
+      <div class="sec-hd"><span class="sec-n">14</span><h3>How it plugs into the credit wallet and ledger</h3></div>
+      <div class="key"><span class="tag">In plain words</span>
+        <p><strong>Nothing about credits changes.</strong> A USDC payment is just another way to fill the same wallet. We record a few extra details (which blockchain
+        transaction paid for it) so our accountant can trace every dollar.</p></div>
+
+      <h4 class="sub"><span class="sn">14.1</span>Which bucket? (spend order from the Money Model)</h4>
+      <div class="bk">
+        <div style="--c:var(--i2)"><span class="o">1st</span><div><h4>Promo · grants, campaigns</h4><p><b>USDC bonus credits go here.</b> They expire in 30 days and are spent first.</p></div></div>
+        <div style="--c:var(--i1)"><span class="o">2nd</span><div><h4>Plan · monthly allotment</h4><p>A USDC subscription fills this, exactly as a card does.</p></div></div>
+        <div style="--c:var(--i4)"><span class="o">3rd</span><div><h4>Purchased · top-ups</h4><p><b>USDC top-ups go here</b> (valid 12 months), and so does any overpayment. <span class="pill warn">v1.1 fix</span></p></div></div>
+        <div style="--c:var(--line-2)" class="dim"><span class="o">4th</span><div><h4>Overdraft · Studio/World only</h4><p>Can't be paid in USDC at launch.</p></div></div>
+      </div>
+      <p>Bonus credits go in Promo because they expire sooner, are spent first, and never look like cash we owe, which keeps "credits are not money" intact.
+      <b>Money the customer actually paid</b> (including an overpayment) always goes to Purchased, so it never expires in 30 days.</p>
+
+      <h4 class="sub"><span class="sn">14.2</span>The ledger row for a USDC payment <span class="pill">immutable</span></h4>
+<pre class="code"><span class="k">ledger_id          </span> led_01J...
+<span class="k">account_id         </span> acc_...
+<span class="k">event              </span> topup | subscription_charge | refund
+<span class="k">method             </span> <span class="h">usdc</span>
+<span class="k">credits_plan       </span> 0
+<span class="k">credits_purchased  </span> <span class="h">2500</span>
+<span class="k">credits_promo      </span> <span class="h">125</span>
+<span class="k">list_value_usd     </span> 25.00
+<span class="k">local_price        </span> 2,099 INR        <span class="k"># what the user saw</span>
+<span class="k">quote_usdc         </span> 25.00
+<span class="k">received_usdc      </span> 25.00
+<span class="k">network            </span> solana
+<span class="k">tx_hash            </span> 5Xk...9aP
+<span class="k">gateway            </span> stripe
+<span class="k">gateway_payment_id </span> pi_...
+<span class="k">gateway_fee_usd    </span> 0.375
+<span class="k">settled_usd        </span> 24.625
+<span class="k">fx_rate_used       </span> 1.0000           <span class="k"># USDC -> USD</span>
+<span class="k">underpay_tolerance </span> applied | none
+<span class="k">created_at         </span> 2026-10-14T09:12:03Z</pre>
+
+      <h4 class="sub"><span class="sn">14.3</span>Accounting: the same as card (Money Model steps 6–8)</h4>
+      <div class="flow">
+        <span class="n c" style="--c:var(--i3)">USDC arrives<small>converted to USD</small></span><span class="a">&rarr;</span>
+        <span class="n c" style="--c:var(--i2)">Liability<small>deferred revenue</small></span><span class="a">&rarr;</span>
+        <span class="n c" style="--c:var(--good)">Revenue<small>when credits burn on successful jobs</small></span>
+        <span class="a">or</span>
+        <span class="n c" style="--c:var(--ink-3)">Breakage<small>credits expire unused · keep &lt;8%</small></span>
+      </div>
+      <p>The gateway fee (1.5%) is a payment processing cost in COGS, on the same line as card fees.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PART D ================= -->
+<section class="pg" id="pd" style="--ic:var(--i6); --ic-soft:var(--i6-soft)">
+  <div class="in">
+    <header class="pg-hd">
+      <span class="pg-n">D</span>
+      <div><p class="kicker">Part D · Sections 15–18</p><h2>Make money from it</h2></div>
+    </header>
+
+    <!-- 15 -->
+    <div class="sec" id="s15">
+      <div class="sec-hd"><span class="sec-n">15</span><h3>Unit economics</h3></div>
+      <div class="key"><span class="tag">In plain words</span>
+        <p>Every payment method charges us a fee, and USDC's fee is much smaller. We give part of that saving back to the customer as bonus credits,
+        so they have a reason to choose it, and keep the rest as extra profit. <strong>The rule: the bonus must always cost us less than the fee we save.</strong></p></div>
+
+      <h4 class="sub"><span class="sn">15.1</span>Fee per payment</h4>
+      <div class="tbl"><table>
+        <thead><tr><th>Payment</th><th class="n">Paddle (5% + $0.50)</th><th class="n">Stripe card (2.9% + $0.30)</th><th class="n">Stripe USDC (1.5%)</th></tr></thead>
+        <tbody>
+          <tr><td><strong>$10 top-up</strong></td><td class="n">$1.00 · 10.0%</td><td class="n">$0.59 · 5.9%</td><td class="n"><b>$0.15 · 1.5%</b></td></tr>
+          <tr><td><strong>$25 top-up</strong></td><td class="n">$1.75 · 7.0%</td><td class="n">$1.03 · 4.1%</td><td class="n"><b>$0.38 · 1.5%</b></td></tr>
+          <tr><td><strong>Prime $39</strong></td><td class="n">$2.45 · 6.3%</td><td class="n">$1.43 · 3.7%</td><td class="n"><b>$0.59 · 1.5%</b></td></tr>
+          <tr><td><strong>Studio $199</strong></td><td class="n">$10.45 · 5.3%</td><td class="n">$6.07 · 3.1%</td><td class="n"><b>$2.99 · 1.5%</b></td></tr>
+          <tr><td><strong>World $999</strong></td><td class="n">$50.45 · 5.1%</td><td class="n">$29.27 · 2.9%</td><td class="n"><b>$14.99 · 1.5%</b></td></tr>
+        </tbody>
+      </table></div>
+      <p style="font-size:16px;color:var(--ink-2)">Card figures are for US domestic cards. International cards cost more, which makes USDC relatively better for non-US buyers. Gas (~$0.01) is paid by the customer, not by us.</p>
+
+      <div class="panel">
+        <span class="lbl">What a $39 Prime payment costs us, including the USDC bonus</span>
+        <div class="legend"><span><i style="--c:var(--i0)"></i>processing fee</span><span><i style="--c:var(--i2)"></i>bonus credit cost (max)</span></div>
+        <div class="bars">
+          <div class="bar"><span class="k">Paddle</span><span class="t"><span class="f" style="width:100%;--c:var(--i0)"></span></span><span class="v">$2.45</span></div>
+          <div class="bar"><span class="k">Card</span><span class="t"><span class="f" style="width:58.4%;--c:var(--i0)"></span></span><span class="v">$1.43</span></div>
+          <div class="bar"><span class="k">USDC</span><span class="t"><span class="f" style="width:24.1%;--c:var(--i0)"></span><span class="f" style="width:20.4%;--c:var(--i2)"></span></span><span class="v">$1.09</span></div>
+        </div>
+        <p style="margin:14px 0 0;font-size:15.5px;color:var(--ink-2)">Even after paying for a 250-credit bonus, USDC costs less than a card: <b>+$0.35</b> vs card and <b>+$1.36</b> vs Paddle.</p>
+      </div>
+
+      <h4 class="sub"><span class="sn">15.2</span>Why bonus credits beat discounts</h4>
+      <p>Credits sell at $0.01 of list value but cost us ~$0.002 each to serve (the Money Model's 80% margin target).</p>
+      <div class="grid g2">
+        <div class="stat"><span class="lbl">A $2.50 price discount</span><span class="big" style="color:var(--risk)">$2.50</span><p>costs us the full $2.50, every time.</p></div>
+        <div class="stat hl"><span class="lbl">250 bonus credits ($2.50 list value)</span><span class="big">≤ $0.50</span><p>That is the real cost to us, and only if every bonus credit is actually used.</p></div>
+      </div>
+
+      <h4 class="sub"><span class="sn">15.3</span>The bonus schedule, tiered so it never loses money</h4>
+      <p>Rule: the bonus cost must be <b>less than the fee saving vs a normal card payment</b>. Card is the worst case because it is cheaper than Paddle.</p>
+      <div class="tbl"><table>
+        <thead><tr><th>Plan</th><th class="n">Bonus</th><th class="n">Bonus credits</th><th class="n">Max cost to us</th><th class="n">Saving vs card</th><th class="n">Net vs card</th><th class="n">Net vs Paddle</th></tr></thead>
+        <tbody>
+          <tr><td><strong>$10 top-up</strong></td><td class="n">5%</td><td class="n">50</td><td class="n">$0.10</td><td class="n">$0.44</td><td class="n"><span class="pill good">+$0.34</span></td><td class="n">+$0.75</td></tr>
+          <tr><td><strong>$25 top-up</strong></td><td class="n">5%</td><td class="n">125</td><td class="n">$0.25</td><td class="n">$0.65</td><td class="n"><span class="pill good">+$0.40</span></td><td class="n">+$1.13</td></tr>
+          <tr><td><strong>Prime $39</strong></td><td class="n">5%</td><td class="n">250</td><td class="n">$0.50</td><td class="n">$0.85</td><td class="n"><span class="pill good">+$0.35</span></td><td class="n">+$1.36</td></tr>
+          <tr><td><strong>Studio $199</strong></td><td class="n">3%</td><td class="n">900</td><td class="n">$1.80</td><td class="n">$3.09</td><td class="n"><span class="pill good">+$1.29</span></td><td class="n">+$5.67</td></tr>
+          <tr><td><strong>World $999</strong></td><td class="n">2%</td><td class="n">3,500</td><td class="n">$7.00</td><td class="n">$14.29</td><td class="n"><span class="pill good">+$7.29</span></td><td class="n">+$28.47</td></tr>
+        </tbody>
+      </table></div>
+      <p style="font-size:15.5px;color:var(--ink-3)">Bonus credits are computed on each plan's monthly credits (Prime 5,000 · Studio 30,000 · World 175,000) and on top-up credits (100 per $1).</p>
+
+      <div class="panel">
+        <span class="lbl">Why not 5% everywhere? The World plan</span>
+        <div class="bars">
+          <div class="bar" style="--c:var(--i4)"><span class="k">Fee saved<small>vs card</small></span><span class="t"><span class="f" style="width:81.7%"></span></span><span class="v">$14.29</span></div>
+          <div class="bar" style="--c:var(--risk)"><span class="k">5% bonus<small>8,750 credits</small></span><span class="t"><span class="f" style="width:100%"></span></span><span class="v">$17.50</span></div>
+          <div class="bar" style="--c:var(--good)"><span class="k">2% bonus<small>3,500 credits</small></span><span class="t"><span class="f" style="width:40%"></span></span><span class="v">$7.00</span></div>
+        </div>
+        <p style="margin:14px 0 0;font-size:15.5px;color:var(--ink-2)">A 5% bonus costs more than we save, so we would <b style="color:var(--risk)">lose $3.21</b> on every payment. At 2% we <b style="color:var(--good)">gain $7.29</b>. Tiering fixes it.</p>
+      </div>
+
+      <h4 class="sub"><span class="sn">15.4</span>Contribution per Prime account (monthly, before Guardian cost)</h4>
+      <div class="tbl"><table>
+        <thead><tr><th></th><th class="n">Paddle</th><th class="n">Card</th><th class="n">USDC (+5% bonus)</th></tr></thead>
+        <tbody>
+          <tr><td>Price</td><td class="n">$39.00</td><td class="n">$39.00</td><td class="n">$39.00</td></tr>
+          <tr><td>Processing fee</td><td class="n">−$2.45</td><td class="n">−$1.43</td><td class="n">−$0.59</td></tr>
+          <tr><td>Bonus credit cost</td><td class="n">—</td><td class="n">—</td><td class="n">−$0.50 (max)</td></tr>
+          <tr class="total"><td>Better than Paddle by</td><td class="n">baseline</td><td class="n">+$1.02</td><td class="n">+$1.36</td></tr>
+        </tbody>
+      </table></div>
+
+      <h4 class="sub"><span class="sn">15.5</span>What this is worth at scale (illustrative)</h4>
+      <p>Take the Money Model's month-12 Plan B, with <b>1,120 paying accounts</b>, and assume <b>5%</b> pay in USDC. That is 56 accounts.</p>
+      <div class="grid g2">
+        <div class="stat"><span class="lbl">If cards stay on Paddle (Path 2)</span><span class="big">~$76<span style="font-size:18px">/mo</span></span><p>56 × $1.36 saved vs Paddle</p></div>
+        <div class="stat hl"><span class="lbl">If all billing moves to Stripe (Path 1, recommended)</span><span class="big">~$20<span style="font-size:18px">/mo</span></span><p>56 × $0.35 saved vs a Stripe card. <span class="pill warn">v1.1 fix</span></p></div>
+      </div>
+      <div class="key" style="--ic:var(--i2)"><span class="tag">Honest reading</span>
+        <p>At 5% adoption, the fee saving is <strong>small money</strong>. Under Path 1 most of the gain comes from moving cards off Paddle, not from USDC.
+        The real prize is <strong>customers who otherwise could not pay at all</strong>. That revenue is 100% incremental, so we measure it directly (Section 19).</p></div>
+
+      <h4 class="sub"><span class="sn">15.6</span>Something new it unlocks: small top-ups</h4>
+      <div class="tbl"><table>
+        <thead><tr><th>Top-up</th><th class="n">Card fee</th><th class="n">USDC fee</th></tr></thead>
+        <tbody>
+          <tr><td><strong>$2</strong></td><td class="n"><span class="pill risk">$0.36 · 18%</span></td><td class="n"><span class="pill good">$0.03 · 1.5%</span></td></tr>
+          <tr><td><strong>$5</strong></td><td class="n"><span class="pill warn">$0.45 · 9%</span></td><td class="n"><span class="pill good">$0.08 · 1.5%</span></td></tr>
+        </tbody>
+      </table></div>
+      <p><b>Proposal:</b> the USDC minimum top-up is <b>$2</b>. The card minimum stays at $10.</p>
+
+      <h4 class="sub"><span class="sn">15.7</span>Hidden costs to model</h4>
+      <ul class="chk">
+        <li>FX spread when USD is paid out to an INR or EUR bank account</li>
+        <li>Tax compliance: Paddle's 5% includes global VAT/GST as MoR, but Stripe's 1.5% does not. Add Stripe Tax fees and filing costs.</li>
+        <li>Rolling reserves that some gateways hold (5–10% for 30–180 days)</li>
+        <li>Support cost per USDC ticket (expect it to be higher at first)</li>
+        <li>For an Indian entity: 1% TDS + 30% VDA tax on any gain <span class="pill">TAX</span></li>
+        <li>Engineering: ~2–4 weeks for Phases 3–4 if we are already on Stripe</li>
+      </ul>
+    </div>
+
+    <!-- 16 -->
+    <div class="sec" id="s16">
+      <div class="sec-hd"><span class="sec-n">16</span><h3>Failure states and the policy for each</h3></div>
+      <div class="key"><span class="tag">In plain words</span>
+        <p>Crypto payments fail in different ways from cards. Most failures are <strong>human mistakes</strong> (wrong amount, wrong network), not technical ones.
+        We decide the rule for each one in advance, so no customer is confused and no support person has to guess.</p></div>
+
+      <figure>
+        <div class="panel"><svg viewBox="0 0 1100 390" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Payment state machine: created, awaiting payment, confirming, then paid, underpaid or overpaid; expired and late payment branch.">
+<defs><marker id="ah4" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--ink-2)"/></marker></defs>
+<g font-family="var(--mono)" font-size="13" font-weight="600" text-anchor="middle">
+<rect x="20" y="40" width="160" height="48" rx="10" fill="var(--surface-2)" stroke="var(--ink-3)" stroke-width="2"/><text x="100" y="69" fill="var(--ink-2)">CREATED</text>
+<rect x="225" y="40" width="170" height="48" rx="10" fill="var(--i1-soft)" stroke="var(--i1)" stroke-width="2"/><text x="310" y="69" fill="var(--i1)">AWAITING PAYMENT</text>
+<rect x="450" y="40" width="170" height="48" rx="10" fill="var(--i1-soft)" stroke="var(--i1)" stroke-width="2"/><text x="535" y="69" fill="var(--i1)">CONFIRMING</text>
+<rect x="690" y="40" width="170" height="48" rx="10" fill="var(--good-wash)" stroke="var(--good)" stroke-width="2"/><text x="775" y="69" fill="var(--good)">PAID</text>
+<rect x="690" y="150" width="170" height="48" rx="10" fill="var(--warn-wash)" stroke="var(--warn)" stroke-width="2"/><text x="775" y="179" fill="var(--warn)">UNDERPAID</text>
+<rect x="690" y="260" width="170" height="48" rx="10" fill="var(--i5-soft)" stroke="var(--i5)" stroke-width="2"/><text x="775" y="289" fill="var(--i5)">OVERPAID</text>
+<rect x="225" y="170" width="170" height="48" rx="10" fill="var(--surface-2)" stroke="var(--ink-3)" stroke-width="2"/><text x="310" y="199" fill="var(--ink-2)">EXPIRED</text>
+<rect x="225" y="300" width="170" height="48" rx="10" fill="var(--warn-wash)" stroke="var(--warn)" stroke-width="2"/><text x="310" y="329" fill="var(--warn)">LATE PAYMENT</text>
+</g>
+<g stroke="var(--ink-2)" stroke-width="2" fill="none" marker-end="url(#ah4)">
+<line x1="180" y1="64" x2="221" y2="64"/>
+<line x1="395" y1="64" x2="446" y2="64"/>
+<line x1="620" y1="64" x2="686" y2="64"/>
+<path d="M620,78 C655,78 655,174 686,174"/>
+<path d="M620,84 C665,84 650,284 686,284"/>
+<line x1="310" y1="88" x2="310" y2="166"/>
+<line x1="310" y1="218" x2="310" y2="296"/>
+<path d="M395,324 C520,324 535,210 535,92"/>
+</g>
+<g font-family="var(--body)" font-size="13.5" fill="var(--ink-3)">
+<text x="421" y="52" text-anchor="middle" font-family="var(--mono)" font-size="11">tx seen</text>
+<text x="320" y="134">30 min, no tx</text>
+<text x="320" y="262">tx arrives late</text>
+<text x="408" y="360">accepted within 24 h</text>
+<text x="408" y="378">at the original quote</text>
+</g>
+<g font-family="var(--body)" font-size="14.5" fill="var(--ink-2)">
+<text x="876" y="60" font-weight="700" fill="var(--ink)">Credits granted</text>
+<text x="876" y="80">&gt;$100: wait for hard finality</text>
+<text x="876" y="162" font-weight="700" fill="var(--ink)">Plan: tolerance → PAID</text>
+<text x="876" y="182">Top-up: credit what arrived</text>
+<text x="876" y="202">Else: ask for the rest</text>
+<text x="876" y="280" font-weight="700" fill="var(--ink)">Extra → Purchased</text>
+<text x="876" y="300">credits (12 months)</text>
+</g>
+</svg></div>
+        <figcaption>Every payment lives in exactly one state. The coloured states (underpaid, overpaid, late) each need a rule, and the table below gives it.</figcaption>
+      </figure>
+
+      <div class="tbl"><table>
+        <thead><tr><th>#</th><th>Failure</th><th>What happens</th><th>HERE policy</th></tr></thead>
+        <tbody>
+          <tr><td class="mono">F1</td><td><strong>Underpayment</strong></td><td>The customer paid slightly less, often because an exchange deducted a withdrawal fee.</td><td><b>Plans:</b> auto-accept a shortfall up to 1% or $0.50, whichever is larger. Beyond that, credit what came and ask for the difference.<br><b>Top-ups:</b> credit exactly what arrived, with no tolerance. <span class="pill warn">v1.1 fix</span></td></tr>
+          <tr><td class="mono">F2</td><td><strong>Overpayment</strong></td><td>The customer paid too much.</td><td>Credit the excess as <b>Purchased</b> credits (12 months). No small USDC refunds, because gas and support cost more than the refund. <span class="pill warn">v1.1 fix</span></td></tr>
+          <tr><td class="mono">F3</td><td><strong>Wrong network / token</strong></td><td>Coins were sent where the gateway isn't listening and may be lost.</td><td><b>Prevent it:</b> wallet-connect only, no copy-paste addresses, and a network picker limited to supported chains. If it happens anyway, attempt a gateway recovery (no guarantee) and point to a clear FAQ.</td></tr>
+          <tr><td class="mono">F4</td><td><strong>Late payment</strong></td><td>Paid after the 30-minute quote.</td><td>USDC doesn't change in price, so accept at the original quote within 24 h.</td></tr>
+          <tr><td class="mono">F5</td><td><strong>Not final yet</strong></td><td>Base soft-confirms in 2 s and is hard-final in ~15 min.</td><td>Grant credits on the gateway's "paid" status. For payments over $100, wait for hard finality.</td></tr>
+          <tr><td class="mono">F6</td><td><strong>Dispute</strong></td><td>There is no network reversal, but the customer can still complain.</td><td>Apply the same refund policy as cards. "Failed jobs are free" prevents most disputes.</td></tr>
+          <tr><td class="mono">F7</td><td><strong>Refund</strong></td><td>Stripe refunds only to the sending wallet.</td><td>By default, refund as credits. Refund USDC only for a full cancellation.</td></tr>
+          <tr><td class="mono">F8</td><td><strong>Sanctioned wallet</strong></td><td>AML liability.</td><td>The gateway screens and we never bypass it. Auto-block, and grant no credits.</td></tr>
+          <tr><td class="mono">F9</td><td><strong>Renewal fails</strong></td><td>The wallet is empty or not approved.</td><td>Reminder at T−3, retries at T+3 and T+7, grace until T+10, and offer a switch to card.</td></tr>
+          <tr><td class="mono">F10</td><td><strong>Depeg</strong></td><td>USDC briefly trades below $1.</td><td>Zero exposure because we convert instantly. The kill switch pauses USDC if it trades <b>below $0.98 for more than 1 hour</b> (same rule as T5). <span class="pill warn">v1.1 fix</span></td></tr>
+          <tr><td class="mono">F11</td><td><strong>Gateway outage</strong></td><td>The USDC button fails.</td><td>Hide the USDC option. Card and UPI are always available.</td></tr>
+          <tr><td class="mono">F12</td><td><strong>Duplicate webhook</strong></td><td>"Paid" arrives twice.</td><td>Idempotent, with a unique key on (network, tx_hash). Credits are never granted twice.</td></tr>
+          <tr><td class="mono">F13</td><td><strong>Payment &gt; $10,000</strong></td><td>Stripe's per-payment cap.</td><td>World annual (~$9,990) just fits. Anything above that is invoiced or split.</td></tr>
+        </tbody>
+      </table></div>
+
+      <h4 class="sub"><span class="sn">16.3</span>Chargebacks: card vs USDC</h4>
+      <div class="grid g2">
+        <div class="card" style="--ic:var(--risk)"><span class="lbl">Card</span><h4>The bank decides</h4><p>The customer complains to their bank, and the bank pulls the money back. We lose the money plus a dispute fee, and have to send evidence.</p></div>
+        <div class="card"><span class="lbl">USDC</span><h4>We decide, using our policy</h4><p>The customer complains to <b>us</b>. Nobody can pull money back without us. The risk shifts from "fraud reversal" to "our refund policy".</p></div>
+      </div>
+    </div>
+
+    <!-- 17 -->
+    <div class="sec" id="s17">
+      <div class="sec-hd"><span class="sec-n">17</span><h3>Treasury policy: what we do with the money</h3></div>
+      <div class="key"><span class="tag">In plain words</span>
+        <p>Treasury means how a company manages its cash. Our policy is simple: <strong>turn every digital dollar into a real dollar immediately.</strong>
+        The only exception is a small, capped pot of USDC, kept later for paying people abroad in USDC.</p></div>
+      <div class="grid g3">
+        <div class="card"><span class="lbl">T1 · Default</span><p><b>100% auto-conversion</b> to USD at the gateway.</p></div>
+        <div class="card"><span class="lbl">T2 · Exposure</span><p>Seconds to minutes between payment and conversion, which is <b>effectively zero</b>.</p></div>
+        <div class="card"><span class="lbl">T3 · Float (only once USDC payouts exist)</span><p>Max <b>30 days</b> of expected payouts, USDC only, held at a regulated custodian (never self-custody), and reviewed monthly.</p></div>
+        <div class="card"><span class="lbl">T4 · No yield chasing</span><p>No lending, staking or "earn" products. (GENIUS bans <em>issuers</em> from paying interest. Third-party "rewards" exist, but we don't use them.)</p></div>
+        <div class="card" style="--ic:var(--risk)"><span class="lbl">T5 · Kill switch</span><p>If USDC trades <b>below $0.98 for more than 1 hour</b>, pause USDC checkout and payouts until it recovers.</p></div>
+        <div class="card"><span class="lbl">T6 · Reporting</span><p>A monthly report of USDC received, converted, fees, float balance and incidents.</p></div>
+      </div>
+      <p class="gl-hd">Money flow with a float (later phase)</p>
+      <div class="flow">
+        <span class="n c" style="--c:var(--i3)">Customers pay USDC</span><span class="a">&rarr;</span>
+        <span class="n c" style="--c:var(--i1)">Gateway<small>100% converted</small></span><span class="a">&rarr;</span>
+        <span class="n c" style="--c:var(--i4)">USD bank</span><span class="a">&rarr;</span>
+        <span class="n c" style="--c:var(--i2)">USDC float<small>≤ 30 days · payouts only</small></span><span class="a">&rarr;</span>
+        <span class="n c" style="--c:var(--i6)">Guardians / creators</span>
+      </div>
+    </div>
+
+    <!-- 18 -->
+    <div class="sec" id="s18">
+      <div class="sec-hd"><span class="sec-n">18</span><h3>Tax, legal and compliance</h3></div>
+      <div class="key"><span class="tag">In plain words</span>
+        <p>Accepting digital dollars is legal in most places, but each country has its own rules. There are two big risks: (1) accidentally becoming a
+        <strong>"money business"</strong> that needs licences, and (2) <strong>tax treatment in India</strong>. A one-hour lawyer and accountant review before launch avoids both.</p></div>
+
+      <h4 class="sub"><span class="sn">18.1</span>Credits are still not money</h4>
+      <div class="io">
+        <div class="y"><span class="lbl" style="color:var(--good)">Allowed</span><span class="big">USDC &rarr; credits</span><p>The customer pays <b>in</b> with USDC and receives credits.</p></div>
+        <div class="n2"><span class="lbl" style="color:var(--risk)">Forbidden</span><span class="big">credits &#x2715;&rarr; USDC</span><p>Cashing credits out, sending credits between users for value, or promising credits can be redeemed for USDC. <b>Each one pushes us toward money-transmitter regulation.</b></p></div>
+      </div>
+
+      <div class="grid g3">
+        <div class="card"><span class="lbl">18.2 · United States</span><h4>Simple</h4>
+          <p>The GENIUS Act (July 2025) regulates stablecoin <b>issuers</b>, not merchants. It takes effect on 18 Jan 2027 or 120 days after final rules, whichever is earlier. The Federal Reserve published its proposed rule on 29 Sep 2026.</p>
+          <p>Our duties are normal sales tax (Stripe Tax) and income tax. Stripe screens wallets. <span class="pill">LEGAL</span> Confirm the credit terms and USDC acceptance with a US lawyer.</p></div>
+        <div class="card"><span class="lbl">18.3 · European Union</span><h4>Medium</h4>
+          <p>MiCA is in force, so use only MiCA-compliant coins (USDC, EURC). VAT on digital services still applies by customer country.</p>
+          <p>Leo is in Prague. If an EU entity bills, use a MiCA-licensed gateway.</p></div>
+        <div class="card" style="--ic:var(--risk)"><span class="lbl">18.4 · India <span class="pill">TAX</span> <span class="pill">LEGAL</span></span><h4>Complex</h4>
+          <p>Stablecoins are VDAs (s. 2(47A)): a 30% flat tax on gains (115BBH) and 1% TDS on transfers (194S). Converting USDC to INR is a taxable transfer. Providers must be FIU-IND registered, and CARF reporting starts in 2026.</p>
+          <p>The compliant route is to convert <b>offshore</b> and remit INR with an eFIRA. Indian <em>customers</em> who pay in USDC take on their own TDS, so <b>UPI is the default for Indian users.</b></p></div>
+      </div>
+
+      <h4 class="sub"><span class="sn">18.5</span>Compliance checklist before launch</h4>
+      <ul class="chk">
+        <li>Lawyer review of the credit terms and USDC acceptance (in the billing country)</li>
+        <li>CA review if any Indian entity touches crypto</li>
+        <li>Gateway contract: AML and sanctions screening confirmed</li>
+        <li>Terms of service: USDC refunds go only to the sending wallet</li>
+        <li>Privacy policy: wallet addresses are personal data</li>
+        <li>Tax engine configured for USDC sales (Stripe Tax)</li>
+        <li>Accounting: USDC receipts booked as deferred revenue</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PART E ================= -->
+<section class="pg" id="pe" style="--ic:var(--i0); --ic-soft:var(--i0-soft)">
+  <div class="in">
+    <header class="pg-hd">
+      <span class="pg-n">E</span>
+      <div><p class="kicker">Part E · Sections 19–25</p><h2>Ship it</h2></div>
+    </header>
+
+    <!-- 19 -->
+    <div class="sec" id="s19">
+      <div class="sec-hd"><span class="sec-n">19</span><h3>Metrics, targets and guardrails</h3></div>
+      <div class="key"><span class="tag">In plain words</span>
+        <p>We measure whether USDC payments get used, whether they work smoothly, and whether they make or lose money. We also set <strong>red lines we never cross</strong>, even when the numbers look good.</p></div>
+      <div class="note"><span class="t">Tie to the North Star</span>The Money Model's North Star is <b>Weekly Successful Credit Burn</b>. USDC's job is to add <b>paying</b> accounts who would otherwise not pay, and to lower processing cost.</div>
+
+      <div class="tbl"><table>
+        <thead><tr><th>KPI</th><th>Definition</th><th class="n">Target (Y1)</th></tr></thead>
+        <tbody>
+          <tr><td><strong>USDC share of payment volume</strong></td><td>USDC $ / all $</td><td class="n">2–8%</td></tr>
+          <tr><td><strong>USDC checkout conversion</strong></td><td>paid / started</td><td class="n">≥ 70%</td></tr>
+          <tr><td><strong>Time to credits</strong></td><td>click → credits</td><td class="n">median &lt; 60 s</td></tr>
+          <tr><td><strong>Incremental payers</strong></td><td>USDC payers with a failed card attempt or no card on file</td><td class="n">&gt; 30% of USDC payers</td></tr>
+          <tr><td><strong>Effective processing cost</strong></td><td>fees / revenue on USDC payments</td><td class="n">≤ 1.6%</td></tr>
+          <tr><td><strong>Net margin gain after bonus</strong></td><td>Section 15.3</td><td class="n">&gt; $0 on every plan</td></tr>
+          <tr><td><strong>Underpayment rate</strong></td><td>underpaid / paid</td><td class="n">&lt; 3%</td></tr>
+          <tr><td><strong>USDC renewal success</strong></td><td>renewals ok / due</td><td class="n">≥ 85%</td></tr>
+          <tr><td><strong>Support tickets</strong></td><td>per 100 USDC payments</td><td class="n">&lt; 3</td></tr>
+        </tbody>
+      </table></div>
+
+      <h4 class="sub">Guardrails: never trade these away</h4>
+      <div class="grid g3">
+        <div class="stat" style="border-color:var(--risk-line)"><span class="lbl">Credits granted twice for one tx</span><span class="big" style="color:var(--risk)">0</span><p>An idempotency failure is a direct loss.</p></div>
+        <div class="stat" style="border-color:var(--risk-line)"><span class="lbl">Funds lost to wrong network</span><span class="big" style="color:var(--risk)">0</span><p>Prevented by design in the UI.</p></div>
+        <div class="stat" style="border-color:var(--risk-line)"><span class="lbl">"I didn't expect that" reports</span><span class="big" style="color:var(--risk)">&lt;1/1k</span><p>The same bar as the Money Model.</p></div>
+        <div class="stat" style="border-color:var(--risk-line)"><span class="lbl">Crypto held outside policy</span><span class="big" style="color:var(--risk)">$0</span><p>Treasury discipline (T3).</p></div>
+        <div class="stat" style="border-color:var(--risk-line)"><span class="lbl">Bonus cost &gt; fee saving</span><span class="big" style="color:var(--risk)">never</span><p>Otherwise we lose money on every sale.</p></div>
+        <div class="stat" style="border-color:var(--risk-line)"><span class="lbl">Credits cashed out as USDC</span><span class="big" style="color:var(--risk)">never</span><p>This is the legal line.</p></div>
+      </div>
+      <p><b>Weekly review</b> (add it to the Money Model weekly screen): USDC volume vs last week · conversion and time-to-credits · count of failure states F1–F13 · <b>any red guardrail means we stop and fix it before growing.</b></p>
+    </div>
+
+    <!-- 20 -->
+    <div class="sec" id="s20">
+      <div class="sec-hd"><span class="sec-n">20</span><h3>Rollout plan: phases and gates</h3></div>
+      <div class="key"><span class="tag">In plain words</span>
+        <p>We start small and safe, prove each step works, and then open it up. Each phase has a <strong>gate</strong>, a test that must pass before the next phase starts.</p></div>
+
+      <figure>
+        <div class="panel"><svg viewBox="0 0 1000 350" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Rollout Gantt: P0 decide before day 0, P1 sandbox days 1-15, P2 internal 16-30, P3 top-ups live 31-45, P4 subscriptions 46-75, P5 review 76-90.">
+<text x="980" y="26" text-anchor="end" font-family="var(--mono)" font-size="13" fill="var(--ink-3)">◆ = gate that must pass</text>
+<g stroke="var(--line)" stroke-dasharray="3 5">
+<line x1="276" y1="44" x2="276" y2="312"/><line x1="390" y1="44" x2="390" y2="312"/><line x1="504" y1="44" x2="504" y2="312"/><line x1="618" y1="44" x2="618" y2="312"/><line x1="732" y1="44" x2="732" y2="312"/><line x1="846" y1="44" x2="846" y2="312"/><line x1="960" y1="44" x2="960" y2="312"/>
+</g>
+<g font-family="var(--body)" font-size="15" fill="var(--ink)">
+<text x="20" y="75">P0 · Decide</text><text x="20" y="119">P1 · Sandbox</text><text x="20" y="163">P2 · Internal</text><text x="20" y="207">P3 · Top-ups live</text><text x="20" y="251">P4 · Subscriptions</text><text x="20" y="295">P5 · Review</text>
+</g>
+<g>
+<rect x="200" y="55" width="76" height="30" rx="7" fill="var(--i0)"/>
+<rect x="276" y="99" width="114" height="30" rx="7" fill="var(--i1)"/>
+<rect x="390" y="143" width="114" height="30" rx="7" fill="var(--i3)"/>
+<rect x="504" y="187" width="114" height="30" rx="7" fill="var(--i4)"/>
+<rect x="618" y="231" width="228" height="30" rx="7" fill="var(--i2)"/>
+<rect x="846" y="275" width="114" height="30" rx="7" fill="var(--i6)"/>
+</g>
+<g font-family="var(--mono)" font-size="12" font-weight="600" fill="var(--on-ic)" text-anchor="middle">
+<text x="238" y="75">DECIDE</text><text x="333" y="119">SANDBOX</text><text x="447" y="163">INTERNAL</text><text x="561" y="207">TOP-UPS</text><text x="732" y="251">SUBSCRIPTIONS</text><text x="903" y="295">REVIEW</text>
+</g>
+<g fill="var(--ink)">
+<path d="M276,62 l8,8 -8,8 -8,-8z"/><path d="M390,106 l8,8 -8,8 -8,-8z"/><path d="M504,150 l8,8 -8,8 -8,-8z"/><path d="M618,194 l8,8 -8,8 -8,-8z"/><path d="M846,238 l8,8 -8,8 -8,-8z"/><path d="M960,282 l8,8 -8,8 -8,-8z"/>
+</g>
+<g font-family="var(--mono)" font-size="12.5" fill="var(--ink-3)" text-anchor="middle">
+<text x="238" y="334">before</text><text x="276" y="334" dx="10">0</text><text x="390" y="334">15</text><text x="504" y="334">30</text><text x="618" y="334">45</text><text x="732" y="334">60</text><text x="846" y="334">75</text><text x="960" y="334">day 90</text>
+</g>
+</svg></div>
+        <figcaption>Six phases over ~90 days. The entity and gateway decisions are made in P0, before any code is written.</figcaption>
+      </figure>
+
+      <div class="tbl"><table>
+        <thead><tr><th>Phase</th><th>Days</th><th>What ships</th><th>Gate to the next phase</th></tr></thead>
+        <tbody>
+          <tr><td><strong>P0</strong></td><td class="mono">before 0</td><td>Entity decision, gateway chosen, lawyer + CA review</td><td>Entity chosen · lawyer/CA sign-off · contract signed</td></tr>
+          <tr><td><strong>P1</strong></td><td class="mono">1–15</td><td>Sandbox integration: invoice, webhook, ledger row, credit grant. Hidden in the product.</td><td>All states F1–F13 tested in sandbox · idempotency proven</td></tr>
+          <tr><td><strong>P2</strong></td><td class="mono">16–30</td><td>The internal team pays real USDC (small amounts) on all networks</td><td>20 real payments reconcile to the bank within $0.01</td></tr>
+          <tr><td><strong>P3</strong></td><td class="mono">31–45</td><td>Public USDC <b>top-ups</b> on Solana + Base, $2 minimum, 5% bonus, and a "How to pay" help page</td><td>Conversion ≥ 70% · 0 duplicate grants · &lt; 3 tickets / 100 payments</td></tr>
+          <tr><td><strong>P4</strong></td><td class="mono">46–75</td><td>USDC <b>subscriptions</b> (Prime first, then Studio/World), tiered bonus, renewal flow</td><td>Renewal success ≥ 85% · net margin &gt; 0 on every plan</td></tr>
+          <tr><td><strong>P5</strong></td><td class="mono">76–90</td><td>First review against Section 19, and payout research kicks off</td><td>Decide: expand (EURC, USDT, payouts) / hold / stop</td></tr>
+        </tbody>
+      </table></div>
+      <div class="note risk"><span class="t">Stop conditions (any phase)</span>Any guardrail breached twice · a lawyer or CA flags an issue · USDC conversion below 40% after 30 days live (the UX is broken).</div>
+    </div>
+
+    <!-- 21 -->
+    <div class="sec" id="s21">
+      <div class="sec-hd"><span class="sec-n">21</span><h3>Risks and mitigations</h3></div>
+      <div class="mxw"><div class="mx" role="img" aria-label="Risk matrix of chance versus impact">
+        <span></span><span class="ax">Low impact</span><span class="ax">Medium impact</span><span class="ax">High impact</span>
+        <span class="ax v">High chance</span>
+        <div class="cell md"><span class="chip">Low adoption (&lt;2%)</span></div>
+        <div class="cell hi"></div>
+        <div class="cell hi"></div>
+        <span class="ax v">Medium</span>
+        <div class="cell lo"></div>
+        <div class="cell md"><span class="chip">Losing Paddle's MoR tax coverage</span><span class="chip">Gateway changes terms / coins silently</span></div>
+        <div class="cell hi"><span class="chip">Entity can't use Stripe stablecoins</span><span class="chip">India tax complications</span></div>
+        <span class="ax v">Low chance</span>
+        <div class="cell lo"><span class="chip">USDC depeg</span><span class="chip">Bonus abuse</span></div>
+        <div class="cell lo"><span class="chip">Reputation ("crypto")</span></div>
+        <div class="cell md"><span class="chip">Customer loses funds (wrong network)</span><span class="chip">Becoming a money business by accident</span></div>
+      </div></div>
+      <div class="tbl"><table>
+        <thead><tr><th>Risk</th><th>Mitigation</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Low adoption</strong></td><td>It is cheap to run, and we keep it for access and agent readiness. Measure incremental payers.</td></tr>
+          <tr><td><strong>Entity can't use Stripe stablecoins</strong></td><td>Coinbase Commerce or CoinGate, or form a US entity.</td></tr>
+          <tr><td><strong>India tax complications</strong></td><td>No USDC into Indian wallets, CA sign-off, and UPI for Indian users.</td></tr>
+          <tr><td><strong>Losing Paddle's MoR tax coverage</strong></td><td>Stripe Tax and an accountant, or Stripe Managed Payments if it supports stablecoins.</td></tr>
+          <tr><td><strong>Customer loses funds</strong></td><td>Wallet-connect only, a network picker, and clear warnings.</td></tr>
+          <tr><td><strong>USDC depeg</strong></td><td>Instant conversion and the kill switch.</td></tr>
+          <tr><td><strong>Gateway changes terms silently</strong></td><td>Keep a second gateway integrated or ready, and publish our own supported list.</td></tr>
+          <tr><td><strong>Reputation</strong></td><td>USDC only, framed as "digital dollars", with no speculation.</td></tr>
+          <tr><td><strong>Becoming a money business</strong></td><td>Pay-in only, never cash-out (18.1).</td></tr>
+          <tr><td><strong>Bonus abuse</strong> (pay, refund, keep bonus)</td><td>The bonus sits in Promo and expires in 30 days, and a refund claws it back.</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+
+    <!-- 22 -->
+    <div class="sec" id="s22">
+      <div class="sec-hd"><span class="sec-n">22</span><h3>New rails to watch: the 12–24 month view</h3></div>
+      <div class="key"><span class="tag">In plain words</span>
+        <p>Crypto payments are slowly merging with normal payments. Cards funded by stablecoins, bank-issued digital dollars, and AI agents that pay by themselves are all arriving.
+        We don't need to build for them yet, but we should know when to.</p></div>
+      <div class="conv">
+        <div class="r hdr"><span class="sd hd">Traditional world</span><span class="sd hd" style="text-align:center">Bridge</span><span class="sd hd" style="text-align:right">Crypto world</span></div>
+        <div class="r"><span class="sd">Card networks<small>Visa, Mastercard</small></span><span class="md2">stablecoin cards<br>Rain, Bridge</span><span class="sd">USDC balances</span></div>
+        <div class="r"><span class="sd">Banks<small>JPM, Citi</small></span><span class="md2">tokenized deposits<br>JPMD, TCH network</span><span class="sd">Public chains<small>Base, Canton</small></span></div>
+        <div class="r"><span class="sd">Payment APIs<small>Stripe</small></span><span class="md2">agent protocols<br>MPP/Tempo, x402</span><span class="sd">AI agents</span></div>
+        <div class="r"><span class="sd">UPI / A2A</span><span class="md2">future bridges</span><span class="sd">Stablecoins</span></div>
+      </div>
+      <div class="tbl"><table>
+        <thead><tr><th>Rail</th><th>Status (2026)</th><th>HERE action</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Stablecoin cards</strong></td><td>Visa settlement ~$7B/yr, 130+ programs. Rain valued at $1.95B. Bridge + Visa in 100+ countries.</td><td><span class="pill good">none needed</span> These users already pay through our card checkout.</td></tr>
+          <tr><td><strong>AI-agent payments</strong> (MPP, x402)</td><td>Tempo mainnet (Mar 2026) + MPP. Real x402 commerce is small (~$28K/day, about half of it gamified).</td><td><span class="pill warn">2027</span> Prototype pay-per-GO for Guardians. Don't depend on it yet.</td></tr>
+          <tr><td><strong>Tokenized deposits</strong></td><td>JPMD live on Base (Nov 2025). 17+ US banks plan a shared network via The Clearing House for H1 2027.</td><td><span class="pill">watch H1 2027</span> Institutions only for now.</td></tr>
+          <tr><td><strong>Programmable payouts</strong></td><td>93% of CoinGate payouts go via API, 88% in USDC.</td><td><span class="pill risk">high priority</span> Next research: pay Guardians and creators in USDC.</td></tr>
+          <tr><td><strong>A2A rails (UPI)</strong></td><td>Mature in India.</td><td>Keep UPI as the default for Indian users.</td></tr>
+          <tr><td><strong>Merchant loyalty stablecoins</strong></td><td>Deloitte expects rewards tied to stablecoin payments.</td><td>Our bonus credits already do this, in a simpler way.</td></tr>
+        </tbody>
+      </table></div>
+      <div class="key" style="--ic:var(--i2)"><span class="tag">Where the real prize may be: payouts, not checkout</span>
+        <p>The market's biggest volumes are businesses <strong>paying out</strong> across borders. HERE will pay Guardians, creators (via the Garden) and possibly suppliers in China and India,
+        which is exactly where stablecoins beat banks by the widest margin. <strong>Recommendation: write a separate "Payouts PRD" after Phase 5.</strong></p></div>
+    </div>
+
+    <!-- 23 -->
+    <div class="sec" id="s23">
+      <div class="sec-hd"><span class="sec-n">23</span><h3>Open questions for Leo</h3></div>
+      <div class="tbl"><table>
+        <thead><tr><th>#</th><th>Question</th><th>Why it matters</th><th class="n">Status</th></tr></thead>
+        <tbody>
+          <tr><td class="mono">1</td><td>Which legal entity bills customers, and from which country? Is a US entity planned?</td><td>Decides the gateway, tax and effort</td><td class="n"><span class="pill risk">blocking</span></td></tr>
+          <tr><td class="mono">2</td><td>Are we moving billing from Paddle to Stripe anyway? (Path 1 vs 2, 9.3)</td><td>Decides the architecture</td><td class="n"><span class="pill risk">blocking</span></td></tr>
+          <tr><td class="mono">3</td><td>What is the main goal: lower fees, reaching card-less users, or agent-payment positioning?</td><td>Decides priority</td><td class="n"><span class="pill warn">shapes it</span></td></tr>
+          <tr><td class="mono">4</td><td>Which markets are the first paying users in?</td><td>USDC vs UPI vs card mix</td><td class="n"><span class="pill warn">shapes it</span></td></tr>
+          <tr><td class="mono">5</td><td>Do we also want the payout side (Guardians, creators, suppliers paid in USDC)?</td><td>The biggest opportunity</td><td class="n"><span class="pill warn">shapes it</span></td></tr>
+          <tr><td class="mono">6</td><td>OK with bonus credits (5/3/2%) instead of price discounts?</td><td>Unit economics</td><td class="n"><span class="pill">confirm</span></td></tr>
+          <tr><td class="mono">7</td><td>OK with a $2 minimum top-up for USDC only?</td><td>Unit economics</td><td class="n"><span class="pill">confirm</span></td></tr>
+          <tr><td class="mono">8</td><td>Does USDC always quote the USD list price, or honour regional prices (₹2,999 → $36)? <span class="pill warn">new</span></td><td>Regional price arbitrage</td><td class="n"><span class="pill">confirm</span></td></tr>
+          <tr><td class="mono">9</td><td>Does Stripe Managed Payments (MoR) support stablecoins? <span class="pill warn">new</span></td><td>Could keep tax coverage on Path 1</td><td class="n"><span class="pill">ask Stripe</span></td></tr>
+        </tbody>
+      </table></div>
+    </div>
+
+    <!-- 24 -->
+    <div class="sec" id="s24">
+      <div class="sec-hd"><span class="sec-n">24</span><h3>Appendix</h3></div>
+
+      <h4 class="sub"><span class="sn">24.1–24.4</span>Worked examples</h4>
+      <div class="grid g2">
+        <div class="ex" style="--ic:var(--good);--ic-soft:var(--good-wash)"><span class="lbl">Example 1</span><h4>A creator in Manila tops up $25</h4><ol>
+          <li>Chooses USDC. Quote: 25.00 USDC → 2,500 + 125 bonus = <b>2,625 credits</b>.</li>
+          <li>Connects Phantom, picks Solana, signs. Gas is ~$0.001.</li>
+          <li>Confirmed in ~1 s, and Stripe converts to USD.</li>
+          <li>HERE receives $25.00 − $0.375 fee = <b>$24.625</b>.</li>
+          <li>2,500 credits go to Purchased (12 months) and 125 to Promo (30 days).</li></ol>
+          <div class="res">vs card: saved $0.65, gave back ≤ $0.25 → kept <b>+$0.40</b></div></div>
+        <div class="ex" style="--ic:var(--warn);--ic-soft:var(--warn-wash)"><span class="lbl">Example 2</span><h4>An underpayment on Prime</h4><ol>
+          <li>Invoice: 39.00 USDC.</li>
+          <li>The customer withdraws from an exchange that deducts a $0.30 fee, so 38.70 USDC arrives.</li>
+          <li>The shortfall of $0.30 is under the $0.50 tolerance, so it is treated as <b>paid in full</b>.</li></ol>
+          <div class="res">Cost to us: $0.30. A support ticket costs far more, so this is the right call.</div></div>
+        <div class="ex" style="--ic:var(--i1);--ic-soft:var(--i1-soft)"><span class="lbl">Example 3</span><h4>Why the World bonus is 2%, not 5%</h4><ol>
+          <li>World: $999, 175,000 credits/month.</li>
+          <li>Card fee $29.27, USDC fee $14.99, so the saving is $14.29.</li>
+          <li>5% bonus = 8,750 × $0.002 = $17.50, a <b style="color:var(--risk)">loss of $3.21</b>.</li>
+          <li>2% bonus = 3,500 × $0.002 = $7.00, a <b style="color:var(--good)">gain of $7.29</b>.</li></ol></div>
+        <div class="ex" style="--ic:var(--i3);--ic-soft:var(--i3-soft)"><span class="lbl">Example 4</span><h4>An Indian user sees an Indian price</h4><ol>
+          <li>Sees ₹2,999. Options: <b>UPI (recommended)</b>, Card, USDC.</li>
+          <li>If they pick USDC, the system quotes $36.00 from the price table, i.e. 36.00 USDC (see open question 8).</li>
+          <li>The customer is transferring a VDA and may face their own 1% TDS.</li></ol>
+          <div class="res">This is why UPI is the default for Indian users.</div></div>
+      </div>
+
+      <h4 class="sub"><span class="sn">24.5</span>Engineering checklist (Phase 1)</h4>
+      <ul class="chk">
+        <li>Gateway sandbox account + API keys</li>
+        <li>"usdc" as a payment_method in the billing service</li>
+        <li>Quote service: local price → USD → USDC, 30-minute lock</li>
+        <li>Webhook handler: paid / underpaid / overpaid / expired / refunded</li>
+        <li>Idempotency key: (network, tx_hash)</li>
+        <li>Ledger row schema (14.2)</li>
+        <li>Bonus logic by plan tier (15.3)</li>
+        <li>Promo bucket grant with 30-day expiry</li>
+        <li>Tolerance rule: plans only, larger of 1% or $0.50. Top-ups credit what arrived.</li>
+        <li>Overpayment → Purchased bucket</li>
+        <li>Kill-switch flag (hide USDC instantly)</li>
+        <li>Network picker with an Ethereum warning, hidden under $20</li>
+        <li>Receipt in NOW with a tx hash link</li>
+        <li>Help page: "How to pay with USDC"</li>
+        <li>Finance export: monthly USDC report</li>
+      </ul>
+
+      <h4 class="sub"><span class="sn">24.6</span>One-line answers to common questions</h4>
+      <div class="qa">
+        <div><b>Do we hold crypto?</b><span>No. It is converted instantly.</span></div>
+        <div><b>Can customers lose money?</b><span>Only by sending on the wrong network, and the UI prevents that.</span></div>
+        <div><b>Can customers do a chargeback?</b><span>No, but our refund policy still applies.</span></div>
+        <div><b>Is this legal?</b><span>Accepting USDC is legal in the US and EU. India needs care. A lawyer and CA confirm.</span></div>
+        <div><b>Why not Bitcoin?</b><span>Its price moves. A $39 plan could be worth $35 an hour later.</span></div>
+        <div><b>Why not USDT?</b><span>Regulatory issues in the EU and US, and fewer merchants and gateways support it.</span></div>
+        <div><b>Will most users use it?</b><span>No, we expect 2–8%. It's for margin, access and the future.</span></div>
+        <div><b>What's the biggest opportunity?</b><span>Paying people <em>out</em> in USDC: Guardians, creators, suppliers.</span></div>
+      </div>
+
+      <h4 class="sub"><span class="sn">24.7</span>Sources</h4>
+      <div class="src">
+        <h5>Market data and reports</h5><ul>
+          <li><a href="https://www.alvarezandmarsal.com/thought-leadership/stablecoin-payment-activity-report">Alvarez &amp; Marsal, Stablecoin Payment Activity Report (29 Sep 2026)</a></li>
+          <li><a href="https://coingate.com/blog/post/crypto-payments-data-report-h1-2026">CoinGate, Crypto Payments Data Report H1 2026</a></li>
+          <li><a href="https://stablecoinspend.com/research/q3-2026-stablecoin-spending-report/">StablecoinSpend, Q3 2026 Stablecoin Spend Report</a></li>
+          <li><a href="https://www.deloitte.com/us/en/insights/industry/financial-services/financial-services-industry-predictions/2026/stablecoins-retail-payments.html">Deloitte, Stablecoins and the next era of retail payments</a></li>
+          <li><a href="https://reap.global/blog/stablecoin-statistics-2026">Reap, Stablecoin statistics 2026</a></li>
+          <li><a href="https://digitalmoneytimes.com/2026/08/18/stablecoin-payments-b2b-cross-border-2026/">Digital Money Times, B2B stablecoin payments +733%</a></li>
+          <li><a href="https://www.rzlt.io/blog/stablecoin-payments-2026-b2b-guide">RZLT, Stablecoin payments 2026 B2B guide</a></li></ul>
+        <h5>Gateways and providers</h5><ul>
+          <li><a href="https://docs.stripe.com/payments/stablecoin-payments">Stripe docs, Stablecoin payments</a></li>
+          <li><a href="https://stablecoininsider.org/how-to-accept-stablecoin-payments-on-stripe/">Stablecoin Insider, Accepting stablecoins on Stripe</a></li>
+          <li><a href="https://www.buildmvpfast.com/blog/stripe-usdc-stablecoin-payouts-saas-global-2026">BuildMVPFast, Stripe USDC for SaaS 2026</a></li>
+          <li><a href="https://eco.com/support/en/articles/15083174-stripe-stablecoin-payments-2026">Eco, Stripe stablecoin payments 2026</a></li>
+          <li><a href="https://fungies.io/the-best-merchant-of-record-platforms-with-crypto-and-stablecoin-payments-in-2026/">Fungies, MoR platforms with crypto payments</a></li>
+          <li><a href="https://www.financemagnates.com/thought-leadership/how-to-choose-a-crypto-payment-gateway-and-processor-the-due-diligence-nobody-writes-about/">Finance Magnates, Choosing a crypto payment gateway</a></li>
+          <li><a href="https://oxapay.com/blog/what-are-crypto-payment-gateways-and-how-do-they-work/">Oxapay, How crypto payment gateways work</a></li>
+          <li><a href="https://cryptoprocessing.com/learn/crypto-payment-disputes-guide-for-businesses">Cryptoprocessing, Crypto payment disputes</a></li></ul>
+        <h5>Chains and fees</h5><ul>
+          <li><a href="https://eco.com/support/en/articles/15247704-cheapest-way-to-send-usdc">Eco, Cheapest way to send USDC</a></li>
+          <li><a href="https://eco.com/support/en/articles/15261550-cheapest-stablecoin-transfer-services-2026-onchain-routes-ranked-by-fee">Eco, Cheapest stablecoin transfer routes</a></li>
+          <li><a href="https://venga.com/en/blog/stablecoin-fees/">Venga, Stablecoin fees explained</a></li>
+          <li><a href="https://www.plasma.org/learn/usdc-vs-usdt-fees">Plasma, USDC vs USDT fees</a></li></ul>
+        <h5>New rails</h5><ul>
+          <li><a href="https://ourcryptotalk.com/news/tempo-mainnet-live-on-stripe-machine-payments-protocol">Tempo mainnet coverage (Mar 2026)</a></li>
+          <li><a href="https://presenc.ai/research/x402-protocol-adoption-tracker-2026">Presenc, x402 adoption tracker</a></li>
+          <li><a href="https://www.spark.money/research/stablecoin-debit-card-market-2026">Spark, Stablecoin debit cards 2026</a></li>
+          <li><a href="https://fortune.com/2026/05/04/mastercard-rain-stablecoin-startup-institutional-customers-partnership/">Fortune, Rain + Mastercard (May 2026)</a></li>
+          <li><a href="https://eco.com/support/en/articles/15275167-what-is-a-tokenized-deposit-2026-guide">Eco, What is a tokenized deposit</a></li>
+          <li><a href="https://thedefiant.io/converge/tradfi-and-fintech/four-major-us-banks-and-the-clearing-house-plan-shared-tokenized-deposit-network">The Defiant, US banks' shared tokenized deposit network</a></li></ul>
+        <h5>Payouts</h5><ul>
+          <li><a href="https://www.spark.money/tools/stablecoin-freelancer-payment-comparison">Spark, Stablecoin freelancer payment platforms</a></li>
+          <li><a href="https://crypto.news/stablecoin-payments-creator-payroll-meta-visa-stripe/">crypto.news, Stablecoin creator payroll</a></li></ul>
+        <h5>Regulation and tax</h5><ul>
+          <li><a href="https://eco.com/support/en/articles/15282223-what-is-the-genius-act-us-stablecoin-law-explained-for-2026">Eco, GENIUS Act explained</a></li>
+          <li><a href="https://www.federalregister.gov/documents/2026/04/10/2026-06974/genius-act-requirements-and-standards-for-fdic-supervised-permitted-payment-stablecoin-issuers-and">Federal Register, FDIC GENIUS Act proposal</a></li>
+          <li><a href="https://www.federalregister.gov/documents/2026/09/29/2026-19860/implementing-the-federal-reserve-boards-responsibilities-under-the-genius-act">Federal Register, Federal Reserve GENIUS Act proposal (29 Sep 2026)</a></li>
+          <li><a href="https://www.xflowpay.com/blog/stablecoin-b-2-b-payments-india-offramp-compliance">Xflow, Stablecoin B2B payments in India</a></li>
+          <li><a href="https://mystablecorp.xyz/guides/india-crypto-tax-vda-tds">MyStableCorp, India crypto tax (VDA + TDS)</a></li>
+          <li><a href="https://mudrex.com/learn/buy-usdt-legally-india/">Mudrex, USDT legality in India 2026</a></li></ul>
+      </div>
+    </div>
+
+    <!-- 25 -->
+    <div class="sec" id="s25">
+      <div class="sec-hd"><span class="sec-n">25</span><h3>Review log: what changed from the v1.0 draft</h3></div>
+      <p>The fee and bonus arithmetic in the draft checks out. These are the inconsistencies and policy gaps that were corrected in v1.1.</p>
+      <div class="tbl fixes"><table>
+        <thead><tr><th>Where</th><th>Draft said</th><th>v1.1 says, and why</th></tr></thead>
+        <tbody>
+          <tr><td>Status</td><td>"Blocked on 1 decision"</td><td><b>2 blocking decisions</b> (entity + billing platform), matching the two BLOCKING rows in Section 23.</td></tr>
+          <tr><td>§10</td><td>Entity needed "before Phase 3"</td><td><b>Before Phase 1.</b> The sandbox needs a gateway, the gateway depends on the entity, and the P0 gate already requires it.</td></tr>
+          <tr><td>§6</td><td>Option C from "Phase 6+"</td><td>The plan only has P0–P5, so this is now <b>after Phase 5</b>, with a Payouts PRD.</td></tr>
+          <tr><td>§16 F2</td><td>Overpayment credited as Promo (30-day expiry)</td><td>It is now credited as <b>Purchased</b>. It is money the customer paid, so expiring it in 30 days would break the "one rule" and mis-book deferred revenue.</td></tr>
+          <tr><td>§16 F1</td><td>Tolerance of 1% or $0.50 on every payment</td><td>With a $2 minimum top-up, $0.50 is a 25% giveaway. <b>Top-ups now credit what arrived</b>, and tolerance applies to plans only.</td></tr>
+          <tr><td>§12 Flow B</td><td>"Wallet needs 36 USDC" for Prime</td><td>36 is the regional India figure, so this is now <b>39 USDC</b> (the customer's own plan price).</td></tr>
+          <tr><td>§1 vs §15</td><td>Prime gain vs Paddle shown as $1.37 and as $1.36</td><td><b>$1.36</b> everywhere, computed on the rounded fees shown.</td></tr>
+          <tr><td>§15.5</td><td>~$76/month at scale</td><td>That figure is vs Paddle. Under the recommended Path 1 the baseline is a Stripe card, which gives <b>~$20/month</b>. Both are now shown.</td></tr>
+          <tr><td>§8 / glossary</td><td>Ethereum USDC fee "$2–$5"</td><td>Now <b>~$0.10–$5, spikes &gt;$20</b>. Mainnet fees have been mostly under $1 since 2024, but they are volatile. The warning and the under-$20 hiding rule stay. Re-check before launch.</td></tr>
+          <tr><td>§9.3 / glossary</td><td>"Stripe is NOT an MoR"</td><td>True for standard payments, but Stripe also offers <b>Managed Payments</b> (MoR). Added as open question 9.</td></tr>
+          <tr><td>§4.6</td><td>Stripe settles "in local currency"</td><td>Stablecoin payments are US-business only and settle <b>in USD</b>.</td></tr>
+          <tr><td>§16 F10 vs §17 T5</td><td>Two different kill-switch rules (&gt;2% depeg vs &lt;$0.98 for 1 h)</td><td>Unified to <b>below $0.98 for more than 1 hour</b>.</td></tr>
+        </tbody>
+      </table></div>
+      <div class="note"><span class="t">Also added</span>Open question 8 (regional-price arbitrage on USDC quotes). A clearer T4: GENIUS bans <em>issuers</em> from paying yield, not every third party. A "Net vs Paddle" column in 15.3.
+      Some 2026 market figures (Solana slot times, Deel and Visa volumes, Rain's valuation) come from the cited sources and could not be independently verified here. Re-check them before this goes to investors.</div>
+    </div>
+
+    <p class="foot">End of document · HERE &amp; More · Stablecoin Payments Monetization PRD v1.1 · 30 Sep 2026.
+    Not legal, tax or financial advice. Confirm LEGAL and TAX items with qualified professionals before launch.</p>
+  </div>
+</section>

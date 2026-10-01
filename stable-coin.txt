@@ -1,0 +1,1775 @@
+================================================================================
+        HERE & MORE  ·  STABLECOIN PAYMENTS  ·  MONETIZATION PRD
+================================================================================
+
+  Document type : Monetization PRD (Product Requirements Document)
+  Topic         : Accepting stablecoins (USDC) as a payment method in HERE
+  Companion to  : "The HERE Money Model" - Monetization PRD draft v2 (20 Sep 2026)
+  Version       : v1.0 (draft for review)
+  Date          : 30 September 2026
+  Author        : Aman Porwal
+  Reviewer      : Leo (Leonardo Nicholas Koomen)
+  Status        : DRAFT - blocked on 1 decision (legal entity, see Section 10)
+
+  How to read this document
+  -------------------------
+  - Every section starts with a "IN PLAIN WORDS" box. If you read only those
+    boxes, you will understand the whole plan.
+  - Money figures are in US dollars unless marked otherwise.
+  - 1 credit = $0.01 of list value (same as the main Money Model).
+  - Market facts are dated. Crypto moves fast; re-check anything older than
+    3 months before relying on it.
+  - This is product and business analysis, NOT legal or tax advice. Items
+    marked [LEGAL] or [TAX] must be confirmed by a lawyer / chartered accountant.
+
+
+================================================================================
+ TABLE OF CONTENTS
+================================================================================
+
+   PART A - UNDERSTAND IT
+     01. One-page summary
+     02. Plain-English glossary (read this first if you are new to crypto)
+     03. The problem we are solving
+     04. The market in 2026: what is real and what is hype
+     05. How a stablecoin payment actually moves (rail architecture)
+
+   PART B - DECIDE IT
+     06. Decision 1: Hold crypto or convert to dollars?
+     07. Decision 2: Which stablecoin? (USDC vs USDT)
+     08. Decision 3: Which blockchain? (Solana, Base, Ethereum...)
+     09. Decision 4: Build our own wallet, or use a payment gateway?
+     10. Decision 5: Which legal entity takes the money? (BLOCKING)
+
+   PART C - DESIGN IT
+     11. Fiat abstraction: users see Rs / $, never "crypto"
+     12. User flows (top-up, subscription, renewal, refund)
+     13. Who will use it and why (personas)
+     14. How it plugs into the credit wallet and ledger
+
+   PART D - MAKE MONEY FROM IT
+     15. Unit economics: fees, bonus credits, margin per plan
+     16. Failure states and the policy for each one
+     17. Treasury policy (what we do with the money)
+     18. Tax, legal and compliance (US, EU, India)
+
+   PART E - SHIP IT
+     19. Metrics, targets and guardrails
+     20. Rollout plan (phases and gates)
+     21. Risks and mitigations
+     22. New rails to watch (the 12-24 month view)
+     23. Open questions for Leo
+     24. Appendix: worked examples, checklists, sources
+
+
+################################################################################
+#                                                                              #
+#                          PART A  -  UNDERSTAND IT                            #
+#                                                                              #
+################################################################################
+
+
+================================================================================
+ 01. ONE-PAGE SUMMARY
+================================================================================
+
+  +--------------------------------------------------------------------------+
+  | IN PLAIN WORDS                                                           |
+  |                                                                          |
+  | A stablecoin is a digital dollar. One USDC is always worth about one US  |
+  | dollar. People can send it from a phone app to anyone in the world in   |
+  | seconds, for less than one cent.                                         |
+  |                                                                          |
+  | We want to add "Pay with USDC" next to "Pay with Card" and "Pay with    |
+  | UPI" in HERE. The customer pays in digital dollars, a payment company   |
+  | (Stripe) instantly turns them into normal dollars, and normal dollars   |
+  | land in our bank. We never hold crypto. The customer gets credits,      |
+  | exactly as if they had paid by card.                                    |
+  |                                                                          |
+  | Why bother? It costs us 1.5% per payment instead of ~6% (Paddle) or     |
+  | ~4% (cards) on a $39 plan. It lets people without good cards pay us.    |
+  | And it prepares HERE for a future where AI agents pay for work by       |
+  | themselves.                                                              |
+  +--------------------------------------------------------------------------+
+
+  THE RECOMMENDATION IN ONE TABLE
+
+  +---------------------------+----------------------------------------------+
+  | Question                  | Answer                                       |
+  +---------------------------+----------------------------------------------+
+  | Should we do this?        | Yes, as an ADDITIONAL payment method, not a  |
+  |                           | replacement for cards / UPI.                 |
+  | What coin?                | USDC only at launch.                         |
+  | What blockchains?         | Solana + Base first, Polygon allowed,        |
+  |                           | Ethereum allowed with a fee warning.         |
+  | Hold crypto?              | No. Convert 100% to dollars automatically.   |
+  | Build or buy?             | Buy. Use a payment gateway (Stripe first).   |
+  | Who is it for?            | Builders, creators, AI-native users, and     |
+  |                           | users whose cards fail or cost extra.        |
+  | How do we attract users?  | Bonus credits (not a lower price).           |
+  | What does it earn us?     | ~$0.35-$1.37 more margin per Prime payment   |
+  |                           | even AFTER paying the bonus (Section 15).    |
+  | What blocks us?           | Which legal entity bills customers           |
+  |                           | (US entity = simple; Indian = complex).      |
+  | When?                     | 6 phases over ~90 days (Section 20).         |
+  +---------------------------+----------------------------------------------+
+
+  THE ONE RULE THAT OUTRANKS EVERYTHING (inherited from the Money Model)
+
+    Nobody is ever charged for something they did not knowingly start,
+    and nobody is ever charged for something that failed.
+    Paying in USDC must be exactly as safe and predictable as paying by card.
+
+
+================================================================================
+ 02. PLAIN-ENGLISH GLOSSARY
+================================================================================
+
+  +--------------------------------------------------------------------------+
+  | IN PLAIN WORDS                                                           |
+  | Crypto has a lot of jargon. Here is every word used in this document,    |
+  | explained with an everyday comparison.                                   |
+  +--------------------------------------------------------------------------+
+
+  STABLECOIN
+    A digital token designed to always be worth one unit of a normal
+    currency (usually $1). Think of it as a "digital dollar bill" that lives
+    on the internet instead of in your pocket.
+
+  USDC
+    The stablecoin issued by Circle, a US company. Backed 1:1 by cash and
+    short-term US government bonds. Regulated in the US and EU. The "safe,
+    boring, compliant" digital dollar. THIS IS THE ONE WE WILL ACCEPT.
+
+  USDT (Tether)
+    The biggest stablecoin, issued by Tether (offshore). Very popular in
+    emerging markets, but has regulatory problems in the EU and US.
+
+  BLOCKCHAIN / CHAIN / NETWORK
+    The public "road" the digital dollar travels on. Examples: Ethereum,
+    Solana, Base, Polygon, Tron. Same coin, different roads - some roads
+    have expensive tolls, some are almost free.
+
+  WALLET
+    The app where a person keeps their digital dollars. Examples: MetaMask,
+    Phantom, Coinbase Wallet. Like a banking app, but the person holds the
+    keys themselves.
+
+  SELF-CUSTODY
+    Holding your own keys (passwords) to your wallet. If you lose them, the
+    money is gone - no bank can reset it.
+
+  GAS / NETWORK FEE
+    The toll paid to use the blockchain road. On Solana or Base it is less
+    than one cent. On Ethereum it can be $2 to $20.
+
+  PAYMENT GATEWAY / PROCESSOR
+    A company (Stripe, Coinbase Commerce, CoinGate) that sits between the
+    customer's wallet and our bank. It watches the blockchain, confirms the
+    payment arrived, and converts it to normal money. Like a card terminal,
+    but for digital dollars.
+
+  ON-RAMP / OFF-RAMP
+    On-ramp = turning normal money into crypto. Off-ramp = turning crypto
+    back into normal money that can go to a bank account.
+
+  FIAT
+    Normal government money: US dollars, rupees, euros.
+
+  SETTLEMENT
+    The moment the money is final and belongs to us. Card payments settle in
+    2-3 days. Stablecoin payments settle in seconds.
+
+  FINALITY
+    When a blockchain payment can no longer be reversed. On Base: about 2
+    seconds "soft", ~15 minutes "hard". On Solana: about a second.
+
+  CHARGEBACK
+    When a card customer asks their bank to take the money back. The
+    merchant loses the money plus a fee. Blockchain payments have NO
+    chargebacks - once sent, they cannot be pulled back by the sender.
+
+  MERCHANT OF RECORD (MoR)
+    The company legally selling to the customer. Paddle is an MoR: it
+    handles global sales tax for us. Stripe is NOT an MoR: we handle tax.
+
+  KYC / KYB
+    "Know Your Customer / Know Your Business" - identity checks required
+    by law.
+
+  AML
+    Anti-Money-Laundering rules. Includes screening wallets against
+    sanctions lists.
+
+  DEPEG
+    When a stablecoin briefly stops being worth exactly $1 (e.g. $0.97).
+    Rare for USDC, but it has happened (March 2023, for a few days).
+
+  FX / FX SPREAD
+    Foreign exchange. The spread is the hidden cost when one currency is
+    converted to another (the difference between the "real" rate and the
+    rate you actually get).
+
+  BASIS POINT (bps)
+    One hundredth of a percent. 100 bps = 1%. Used to quote small fees.
+
+  DEFERRED REVENUE
+    Money a customer paid us for service we have not delivered yet. It is a
+    debt we owe in service, not profit yet. Becomes revenue when credits
+    are used.
+
+  BREAKAGE
+    Credits bought but never used before they expire.
+
+  VDA (India)
+    "Virtual Digital Asset" - India's legal name for crypto, including
+    stablecoins. Taxed at 30% on gains + 1% TDS on transfers.
+
+  TDS (India)
+    Tax Deducted at Source - 1% withheld on crypto transfers under
+    Section 194S.
+
+  GENIUS ACT (US)
+    The US federal stablecoin law signed July 2025. Regulates who can issue
+    stablecoins. Takes effect 18 Jan 2027 at the latest.
+
+  MiCA (EU)
+    The EU's crypto law. It is why USDT disappeared from many EU checkouts.
+
+  x402 / MPP
+    New protocols that let AI agents pay for things automatically over the
+    internet using stablecoins. Early stage.
+
+  TOKENIZED DEPOSIT
+    A bank's own version of a digital dollar (e.g. JPMorgan's JPMD). Like a
+    stablecoin, but issued by a bank. Institutional only for now.
+
+
+================================================================================
+ 03. THE PROBLEM WE ARE SOLVING
+================================================================================
+
+  +--------------------------------------------------------------------------+
+  | IN PLAIN WORDS                                                           |
+  | Today every payment into HERE loses a chunk to fees, some customers     |
+  | can't pay at all, and small top-ups are unprofitable. Stablecoins fix    |
+  | parts of all three.                                                      |
+  +--------------------------------------------------------------------------+
+
+  PROBLEM 1 - Card and Paddle fees eat margin, especially on small payments
+
+    Paddle charges ~5% + $0.50. Cards via Stripe charge ~2.9% + $0.30.
+    The fixed part ($0.30 / $0.50) is what kills small payments.
+
+      Fee as % of a $10 top-up
+      Paddle  |##########################################| 10.0%
+      Card    |########################                  |  5.9%
+      USDC    |######                                    |  1.5%
+              0%                                       10%
+
+    That is why the Money Model sets a $10 minimum top-up. With USDC the
+    fee has NO fixed part, so even a $2 top-up keeps 98.5% of its value.
+
+  PROBLEM 2 - Some customers cannot pay us easily
+
+    - Many creators, freelancers and builders outside the US/EU have cards
+      that fail on international SaaS, or pay 3%+ foreign transaction fees.
+    - A growing group of people are PAID in USDC (by Deel, Meta, freelance
+      platforms) and would rather spend it directly than convert it.
+
+  PROBLEM 3 - The future customer may be an AI agent
+
+    HERE runs Guardians and agents. Cards were built for humans typing
+    numbers into forms. Stablecoins can be paid by software, 24/7, in tiny
+    amounts. This is early, but it is where the product is heading.
+
+  WHAT WE ARE NOT TRYING TO SOLVE
+
+    - We are NOT trying to become a crypto company.
+    - We are NOT trying to replace cards or UPI.
+    - We are NOT letting anyone cash credits OUT as crypto (that would make
+      us a payments/money business - see Section 18).
+
+
+================================================================================
+ 04. THE MARKET IN 2026: WHAT IS REAL AND WHAT IS HYPE
+================================================================================
+
+  +--------------------------------------------------------------------------+
+  | IN PLAIN WORDS                                                           |
+  | Headlines say stablecoins move trillions. Almost all of that is traders  |
+  | moving money around. REAL payments are much smaller - but growing fast,  |
+  | and most of it is businesses paying businesses across borders.          |
+  +--------------------------------------------------------------------------+
+
+  4.1  THE HEADLINE vs THE REALITY
+
+    Gross stablecoin transfers in 2025 ............ $28 - 62 TRILLION
+    Of which: genuine real-economy payments ....... ~$350 - 550 BILLION
+                                                    (BCG, McKinsey, BIS)
+
+       Imagine a stadium of 100 people moving money.
+       Only ~1 of them is actually buying something.
+       The other 99 are traders, bots and exchanges shuffling funds.
+
+       [P][x][x][x][x][x][x][x][x][x]
+       [x][x][x][x][x][x][x][x][x][x]    P = real payment
+       [x][x][x][x][x][x][x][x][x][x]    x = trading / moving / bots
+       ... (x 10 rows)
+
+  4.2  THE MOST RECENT HARD NUMBERS (Alvarez & Marsal, 29 Sep 2026)
+
+    - Stablecoin supply at end of August 2026: $303 billion (+6% YoY).
+    - Stablecoin PAYMENTS, first 8 months of 2026: at least $401 billion,
+      up 42% year over year.
+        --> Usage is growing 7x faster than supply. People are USING
+            digital dollars more, not just holding more.
+    - Businesses receive an estimated 58-64% of that payment volume.
+    - B2B settlement alone: $137-153 billion.
+    - Drivers named: remittances, service fees, payroll, supplier payments.
+
+  4.3  WHO CREATES THE VOLUME
+
+      Share of real stablecoin payments (illustrative, from A&M / McKinsey)
+
+      Businesses receiving (B2B, services, supplier) ##################### ~60%
+      Remittances / person-to-person                 ########              ~20%
+      Payroll & contractor payouts                   ####                  ~10%
+      Consumer checkout / cards / other              ####                  ~10%
+      (Illustrative split for intuition - exact splits vary by study.)
+
+    +------------------------+----------------------+------------------------+
+    | Segment                | Why stablecoins win  | Proof point            |
+    +------------------------+----------------------+------------------------+
+    | B2B / suppliers        | Wires: 2-5 days, up  | B2B stablecoin pay-    |
+    |                        | to 7% cost. USDC:    | ments ~$226B/yr, +733% |
+    |                        | minutes, ~0.5%       | YoY (McKinsey)         |
+    | Payroll / contractors  | Global teams, weak   | Deel: $250M crypto     |
+    |                        | local banking        | payouts in 2025, 100   |
+    |                        |                      | countries              |
+    | Creators / affiliates  | Small, frequent,     | Meta pays select       |
+    |                        | international        | creators in USDC       |
+    |                        |                      | (Colombia, Philippines)|
+    | Remittances            | Emerging markets     | Turkey-UAE, UAE-SE     |
+    |                        |                      | Asia, Mexico-US        |
+    | Infra / SaaS checkout  | Crypto-native buyers,| OpenRouter, Vast.ai,   |
+    |                        | small recurring      | Venice AI, Vultr,      |
+    |                        | bills                | Hostinger accept it    |
+    | Everyday retail        | (It mostly doesn't)  | Menufy tried 2020-2025,|
+    |                        |                      | then dropped crypto    |
+    +------------------------+----------------------+------------------------+
+
+  4.4  WHERE CHECKOUT ACCEPTANCE ACTUALLY LIVES
+
+    StablecoinSpend (Q3 2026) found stablecoin checkout is concentrated in
+    hosting, VPS, domains, VPNs, proxies, dev tools. Physical retail is
+    almost absent. They explain why - and every reason applies to HERE:
+
+      [x] Buyers are technical and already hold crypto   --> HERE: builders
+      [x] Small recurring bills where card fees hurt     --> HERE: $39 plans,
+                                                             top-ups
+      [x] Instant delivery, so disputes are rare         --> HERE: credits
+                                                             arrive instantly
+      [x] Some buyers prefer not to use a card           --> HERE: global
+                                                             creators
+
+    CONCLUSION: HERE is the kind of business where stablecoin checkout
+    actually works. A supermarket is not.
+
+  4.5  WHAT PAYMENT PROCESSORS SEE (CoinGate, H1 2026, 782,403 payments)
+
+    - USDC became the #1 payment asset at 22.1% (overtaking Bitcoin at 21.0%).
+      USDC share over three half-years: 9.3% -> 16.4% -> 22.1%
+    - Merchants converted 75.4% of payments straight to fiat.
+      Share kept as crypto: 39.3% -> 33.4% -> 24.6%  (falling every half)
+    - USDC was 88.1% of all payouts; 93.2% of payouts were automated by API.
+    - Average order ~95 EUR, falling while order count rises
+      (= more frequent, smaller, everyday use).
+
+    USDC share of payments at CoinGate
+      H1 2025 |#########               |  9.3%
+      H2 2025 |################        | 16.4%
+      H1 2026 |######################  | 22.1%
+
+    Merchants keeping crypto instead of converting
+      H1 2025 |#######################################| 39.3%
+      H2 2025 |#################################      | 33.4%
+      H1 2026 |#########################              | 24.6%
+
+  4.6  THE BIG PLAYERS (who builds the roads)
+
+    - Stripe: bought Bridge (~$1.1B). Stablecoin checkout on by default since
+      Sept 2025, 1.5% fee, settles to your Stripe balance in local currency.
+    - Tempo: Stripe + Paradigm's own payments blockchain. Mainnet live
+      18 March 2026. Fees paid in stablecoins, no gas token needed.
+    - Visa: stablecoin settlement at ~$7B annualized, 130+ card programs.
+    - Rain: stablecoin card issuer, valued at $1.95B (Jan 2026).
+    - Coinbase: x402 protocol for AI-agent payments.
+    - JPMorgan: JPMD tokenized deposit live on Base for institutions.
+
+  4.7  THE HONEST FORECAST (Deloitte, May 2026)
+
+    - Stablecoins could support ~2.5% of US non-cash transactions by 2030,
+      mostly BEHIND THE SCENES (settlement, funding), not at the checkout.
+    - >$200B of US retail payments "stablecoin-enabled" by 2030.
+    - Early adoption led by CARDS (stablecoin-funded Visa/Mastercard cards),
+      then AI-agent commerce, then merchant loyalty programs.
+
+    WHAT THIS MEANS FOR US: stablecoin checkout will be a MINORITY of our
+    payments for years. We are building it for (a) margin on the payments
+    that do come through, (b) access for underserved users, (c) readiness
+    for agent payments - not because it will replace cards.
+
+
+================================================================================
+ 05. HOW A STABLECOIN PAYMENT ACTUALLY MOVES (RAIL ARCHITECTURE)
+================================================================================
+
+  +--------------------------------------------------------------------------+
+  | IN PLAIN WORDS                                                           |
+  | Think of sending a parcel. The customer (sender) hands the parcel to a   |
+  | road (blockchain). A courier company (gateway) watches the road, checks  |
+  | the parcel is right, and delivers it. A currency exchange (off-ramp)     |
+  | swaps digital dollars for normal dollars. The bank receives it.          |
+  +--------------------------------------------------------------------------+
+
+  5.1  THE FIVE LAYERS
+
+  +-----------+    +-------------+    +--------------+    +------------+    +----------+
+  |  WALLET   |    | BLOCKCHAIN  |    |   GATEWAY    |    | OFF-RAMP / |    |   BANK   |
+  |           |--->|             |--->|              |--->|     FX     |--->|          |
+  | MetaMask  |    | Solana      |    | Stripe       |    | USDC->USD  |    | HERE's   |
+  | Phantom   |    | Base        |    | Coinbase     |    | USD->INR/  |    | operating|
+  | Coinbase  |    | Polygon     |    |  Commerce    |    |  EUR (if   |    | account  |
+  |  Wallet   |    | Ethereum    |    | CoinGate     |    |  needed)   |    |          |
+  +-----------+    +-------------+    +--------------+    +------------+    +----------+
+   Customer         Public "road"      Watches the road,   Converts the     Money is
+   signs once,      that moves the     matches payment     digital dollar   usable.
+   pays gas         coin in seconds.   to our invoice,     into normal      Booked as
+   (<1 cent on      IRREVERSIBLE.      screens for         money.           a liability
+   Solana/Base)                        sanctions, fires                     until credits
+                                       "paid" webhook.                      burn.
+
+  5.2  WHAT EACH LAYER IS RESPONSIBLE FOR
+
+  +--------------+---------------------------+--------------------------------+
+  | Layer        | Job                       | What can go wrong              |
+  +--------------+---------------------------+--------------------------------+
+  | Wallet       | Hold coins, sign payment  | Wrong network chosen, not      |
+  |              |                           | enough gas, user lost keys     |
+  | Blockchain   | Move coins, make final    | Congestion (high fees),        |
+  |              |                           | rare reorganisations           |
+  | Gateway      | Match, confirm, screen,   | Under/overpayment, late pay,   |
+  |              | notify, convert           | outage, silent asset changes   |
+  | Off-ramp/FX  | Swap to fiat              | FX spread, conversion delays,  |
+  |              |                           | country restrictions (India)   |
+  | Bank         | Receive, hold             | Bank flags crypto-origin money |
+  +--------------+---------------------------+--------------------------------+
+
+  5.3  WHERE HERE'S SYSTEMS TOUCH IT
+
+                         HERE's side
+          +------------------------------------------------+
+          |  NOW (app)      Billing svc       Ledger       |
+          |  "Pay with  --> creates    --->   writes row   |
+          |   USDC"         invoice           on "paid"    |
+          |     ^              |                  |        |
+          |     |              v                  v        |
+          |  receipt  <--  webhook "paid"    credits to    |
+          |  shown         from gateway      Purchased     |
+          |                                  bucket        |
+          +------------------------------------------------+
+                  |                     ^
+                  v                     |
+          ======== GATEWAY (Stripe) ========
+          | hosted crypto page, chain watch,  |
+          | AML screen, USDC->USD conversion  |
+          ===================================
+                  |                     |
+            customer wallet          our bank
+
+    KEY POINT: HERE never touches the blockchain directly. We talk to the
+    gateway API, exactly like we talk to it for cards. That keeps our
+    engineering and legal exposure small.
+
+  5.4  CARD PAYMENT vs USDC PAYMENT, SIDE BY SIDE
+
+  +------------------------+---------------------------+-----------------------+
+  |                        | CARD                      | USDC (via Stripe)     |
+  +------------------------+---------------------------+-----------------------+
+  | Who approves?          | Customer's bank           | Customer (signs in    |
+  |                        |                           | wallet)               |
+  | Time to final money    | 2-3 business days         | Seconds               |
+  | Fee (US, standard)     | 2.9% + $0.30              | 1.5%, no fixed fee    |
+  | Can customer reverse?  | Yes (chargeback)          | No (refund only by    |
+  |                        |                           | us)                   |
+  | Works on weekends?     | Auth yes, payout later    | Yes, 24/7             |
+  | Needs a bank card?     | Yes                       | No, needs a wallet    |
+  | Refund goes to         | The card                  | The sending wallet    |
+  | Max per payment        | Card limit                | $10,000 (Stripe)      |
+  +------------------------+---------------------------+-----------------------+
+
+
+################################################################################
+#                                                                              #
+#                            PART B  -  DECIDE IT                              #
+#                                                                              #
+################################################################################
+
+
+================================================================================
+ 06. DECISION 1: HOLD CRYPTO OR CONVERT TO DOLLARS?
+================================================================================
+
+  +--------------------------------------------------------------------------+
+  | IN PLAIN WORDS                                                           |
+  | When a customer pays in USDC, we can keep it as USDC or immediately swap |
+  | it into regular dollars. Our bills (AI models, servers, guardians) are   |
+  | in dollars. Keeping USDC adds risk and paperwork for no benefit.         |
+  | So: convert everything, automatically, every time.                       |
+  +--------------------------------------------------------------------------+
+
+  OPTIONS
+
+  +----------------------+-------------------------+-------------------------+
+  | Option               | Good                    | Bad                     |
+  +----------------------+-------------------------+-------------------------+
+  | A. Convert 100%      | No crypto on our books. | Pays a small conversion |
+  |    automatically     | Same accounting as card.| (included in 1.5% on    |
+  |                      | No depeg risk. Simple   | Stripe).                |
+  |                      | for auditors/investors. |                         |
+  +----------------------+-------------------------+-------------------------+
+  | B. Hold 100% USDC    | Can pay suppliers/      | Depeg risk, custody     |
+  |                      | creators in USDC        | risk, crypto accounting,|
+  |                      | without re-converting.  | India tax nightmare,    |
+  |                      |                         | scares banks/investors. |
+  +----------------------+-------------------------+-------------------------+
+  | C. Split: convert by | Best of both            | Needs a written treasury|
+  |    default + small   |                         | policy and discipline.  |
+  |    USDC float        |                         |                         |
+  +----------------------+-------------------------+-------------------------+
+
+  WHAT THE MARKET DOES: 75.4% of CoinGate merchant payments convert to fiat,
+  and the share keeping crypto has fallen three halves in a row.
+
+  DECISION
+    Phase 1-5 : Option A. Convert 100%.
+    Phase 6+  : Option C, ONLY if we start paying Guardians / creators /
+                suppliers in USDC. Float capped at 30 days of expected USDC
+                payouts (see Section 17).
+
+
+================================================================================
+ 07. DECISION 2: WHICH STABLECOIN? (USDC vs USDT)
+================================================================================
+
+  +--------------------------------------------------------------------------+
+  | IN PLAIN WORDS                                                           |
+  | There are two big digital dollars. USDT is bigger overall, but USDC is   |
+  | the one regulators, payment companies and merchants trust. Choosing      |
+  | USDC is like accepting the currency every bank recognises.              |
+  +--------------------------------------------------------------------------+
+
+  +------------------------+----------------------------+----------------------+
+  |                        | USDC (Circle)              | USDT (Tether)        |
+  +------------------------+----------------------------+----------------------+
+  | Issuer                 | US company, regulated      | Offshore             |
+  | Merchant acceptance    | 81.3% of documented        | 57% of documented    |
+  |  (StablecoinSpend)     | merchants                  | merchants            |
+  | Share of payments      | #1 asset at 22.1%          | Minor at checkouts   |
+  |  (CoinGate H1 2026)    |                            |                      |
+  | Share of payouts       | 88.1%                      | Minor                |
+  | EU status (MiCA)       | Compliant                  | Withdrawn by EU      |
+  |                        |                            | processors 2024-25   |
+  | US status (GENIUS)     | Positioned to comply       | No comparability     |
+  |                        |                            | ruling yet           |
+  | Stripe supports?       | Yes (5 networks)           | No                   |
+  | Where it wins          | Merchants, B2B, regulated  | Emerging-market      |
+  |                        | flows, payouts             | remittances (Tron)   |
+  +------------------------+----------------------------+----------------------+
+
+      Merchant acceptance (StablecoinSpend, 107 merchants, Sept 2026)
+      USDC |########################################| 81.3%
+      USDT |############################            | 57.0%
+      DAI  |##############                          | 29.0%
+      EURC |##########                              | 19.6%
+      PYUSD|######                                  | 13.1%
+
+  DECISION
+    Launch: USDC only.
+    Later : Add EURC (euro stablecoin) if EU customers ask.
+            Add USDT only if Indian / SE Asian users ask AND only via a
+            gateway that converts it instantly.
+
+
+================================================================================
+ 08. DECISION 3: WHICH BLOCKCHAIN?
+================================================================================
+
+  +--------------------------------------------------------------------------+
+  | IN PLAIN WORDS                                                           |
+  | The same USDC can travel on different "roads". Some roads charge $5+    |
+  | per trip (Ethereum). Some charge a fraction of a cent (Solana, Base).    |
+  | On a $39 purchase, a $5 toll is insulting. We steer people to cheap,     |
+  | fast, well-supported roads.                                              |
+  +--------------------------------------------------------------------------+
+
+  8.1  COMPARISON
+
+  +-----------+-------------------+----------------+-------------+------------+
+  | Chain     | Typical USDC fee  | Speed          | Wallets     | Verdict    |
+  +-----------+-------------------+----------------+-------------+------------+
+  | Solana    | ~$0.0003 - $0.01  | ~1 sec (300ms  | Phantom,    | PRIMARY    |
+  |           |                   | slots since    | Backpack,   |            |
+  |           |                   | 25 Aug 2026)   | exchanges   |            |
+  | Base      | ~$0.01            | ~2s soft,      | Coinbase    | PRIMARY    |
+  |           |                   | ~15 min hard   | Wallet,     |            |
+  |           |                   |                | MetaMask    |            |
+  | Polygon   | ~$0.01            | seconds        | MetaMask    | ALLOWED    |
+  | Ethereum  | $2 - $5, spikes   | ~13 min final  | Everyone    | ALLOWED    |
+  |           | >$20              |                |             | + WARNING  |
+  | Tempo     | sub-cent, paid in | ~0.6s final    | New         | WATCH      |
+  |           | stablecoin        |                |             | (Stripe    |
+  |           |                   |                |             | supports)  |
+  | Tron      | $1 - $3 (w/o      | ~3 sec         | USDT-heavy  | SKIP       |
+  |           | staked TRX)       |                |             |            |
+  +-----------+-------------------+----------------+-------------+------------+
+
+  8.2  WHY THE ROAD MATTERS: TOLL AS % OF A $39 PAYMENT
+
+      Solana   |                                          | ~0.001%
+      Base     |                                          | ~0.03%
+      Polygon  |                                          | ~0.03%
+      Ethereum |##########                                | ~5-13%  ($2-$5)
+      Ethereum |#################################         | ~50%+   (spike $20)
+      (congested)
+
+    A $50 payment on busy Ethereum can lose 10-20% to gas. High fees are a
+    common reason people abandon crypto checkouts.
+
+  8.3  HOW WE PRESENT IT
+
+      +-----------------------------------------------+
+      |  Pay with USDC                                |
+      |                                               |
+      |  Choose network:                              |
+      |   (o) Solana    fee < $0.01   ~1 sec  [BEST]  |
+      |   ( ) Base      fee ~ $0.01   ~2 sec          |
+      |   ( ) Polygon   fee ~ $0.01   ~5 sec          |
+      |   ( ) Ethereum  fee $2-$20    ~1-13 min  (!)  |
+      |       "Ethereum is expensive for small        |
+      |        payments. We recommend Solana or Base."|
+      +-----------------------------------------------+
+
+  DECISION
+    Default order: Solana, Base, Polygon, Ethereum (with warning).
+    Hide Ethereum for payments under $20.
+    Re-evaluate Tempo in Q1 2027.
+
+
+================================================================================
+ 09. DECISION 4: BUILD OUR OWN WALLET, OR USE A PAYMENT GATEWAY?
+================================================================================
+
+  +--------------------------------------------------------------------------+
+  | IN PLAIN WORDS                                                           |
+  | We could publish our own wallet address and ask people to send money    |
+  | there. That is like running a shop where customers throw cash through a  |
+  | window with no receipt. A gateway gives every payment an invoice,       |
+  | checks it, and deposits normal money in the bank. 70% of merchants use   |
+  | one. We will too.                                                        |
+  +--------------------------------------------------------------------------+
+
+  9.1  SELF-CUSTODY vs GATEWAY
+
+  +----------------------------+--------------------------+-------------------+
+  |                            | Self-custody (own wallet)| Gateway           |
+  +----------------------------+--------------------------+-------------------+
+  | Keys / passwords           | We guard them. Lose =    | Gateway guards    |
+  |                            | money gone forever       | them              |
+  | Match payment to customer  | We build it              | Built in          |
+  | Wrong amount / late / dup  | Support tickets          | Rules built in    |
+  | Sanctions screening        | Our legal problem        | Built in          |
+  | Convert to dollars         | Manual via exchange      | Automatic         |
+  | Accounting export          | We build it              | Built in          |
+  | Regulatory exposure        | We may look like a       | Gateway is the    |
+  |                            | custodian / transmitter  | licensed party    |
+  | Cost                       | Gas only + eng time +    | 1-1.5% per payment|
+  |                            | risk                     |                   |
+  +----------------------------+--------------------------+-------------------+
+
+    Market evidence: 70.1% of documented stablecoin-accepting merchants use
+    a third-party gateway; almost none take direct wallet transfers.
+
+  9.2  GATEWAY SHORTLIST
+
+  +----------------------+-----------+------------------------------------------+
+  | Provider             | Fee       | Notes                                    |
+  +----------------------+-----------+------------------------------------------+
+  | 1. Stripe stablecoin | 1.5%      | Same dashboard/API as cards. Settles to  |
+  |    payments          |           | Stripe balance in local currency. Works  |
+  |                      |           | in Checkout, Elements, Billing,          |
+  |                      |           | Invoicing, Payment Links. Recurring:     |
+  |                      |           | supported. Coins: USDC on Solana, Base,  |
+  |                      |           | Polygon, Ethereum, Tempo (+USDP/USDG     |
+  |                      |           | US-only). LIMITS: US-based businesses    |
+  |                      |           | only; $10,000 per payment; refunds only  |
+  |                      |           | to the sending wallet; priced in USD.    |
+  |                      |           | Note: Link stablecoins is a separate     |
+  |                      |           | product (0.8% promo to 1 Jan 2027).      |
+  | 2. Coinbase Commerce | 1.0%      | Standalone hosted checkout. Base,        |
+  |                      |           | Ethereum, Polygon, Solana. USD payout    |
+  |                      |           | via add-on.                              |
+  | 3. CoinGate          | varies    | MiCA-licensed (Bank of Lithuania). Good  |
+  |                      |           | if billing entity is in the EU.          |
+  |                      |           | Supports fiat settlement + API payouts.  |
+  | 4. Crypto-native MoR | varies    | e.g. Fungies. Handles tax AND crypto.    |
+  |    (e.g. Fungies)    |           | Smaller, less proven.                    |
+  | X. Paddle            | n/a       | NO native stablecoin checkout. Can't do  |
+  |                      |           | this on Paddle alone.                    |
+  +----------------------+-----------+------------------------------------------+
+
+  9.3  THE PADDLE PROBLEM
+
+    The Money Model says "Paddle now, Stripe later". Paddle has no crypto
+    checkout. So stablecoins force one of three paths:
+
+      PATH 1: Move billing to Stripe NOW (cards + USDC in one place).
+              + one system, native meters/credits (Money Model page 4)
+              - we take on global tax compliance (use Stripe Tax)
+              - needs a US entity for stablecoins
+
+      PATH 2: Keep Paddle for cards + add Coinbase Commerce for USDC.
+              + no migration
+              - two systems to reconcile; we own tax on USDC sales
+
+      PATH 3: Keep Paddle, delay stablecoins.
+              + zero work
+              - no margin gain, no access gain
+
+    RECOMMENDATION: PATH 1 if a US entity exists or is planned.
+                    PATH 2 as a temporary bridge if not.
+
+  9.4  CHECKLIST FOR CHOOSING A GATEWAY (ask every vendor)
+
+    [ ] All-in cost on a $1,000 payment, with FX spread in basis points
+    [ ] Underpayment tolerance: configurable? who covers the shortfall?
+    [ ] Wrong-network recovery: possible? fee? how long?
+    [ ] Late payment after quote expiry: what happens?
+    [ ] Rolling reserve: any %? for how long? (some hold 5-10% for 30-180d)
+    [ ] Payout schedule and fees to our bank
+    [ ] Refund method (to wallet? partial?)
+    [ ] Recurring / subscription support
+    [ ] AML / sanctions screening included?
+    [ ] Countries where OUR entity is allowed
+    [ ] Accounting export format (per-payment tx hash, rate, fee)
+    [ ] Webhook reliability, retries, idempotency
+    [ ] Uptime history / status page
+    [ ] Does the vendor change supported coins without notice?
+
+
+================================================================================
+ 10. DECISION 5: WHICH LEGAL ENTITY TAKES THE MONEY?  (BLOCKING)
+================================================================================
+
+  +--------------------------------------------------------------------------+
+  | IN PLAIN WORDS                                                           |
+  | The country our billing company is registered in decides almost         |
+  | everything: which payment companies will work with us, how crypto is    |
+  | taxed, and how much paperwork we face. A US company makes this easy.     |
+  | An Indian company makes it complicated and expensive.                   |
+  +--------------------------------------------------------------------------+
+
+  +-----------------+-------------------------+----------------------------------+
+  | Entity          | Stablecoin path         | Complexity                       |
+  +-----------------+-------------------------+----------------------------------+
+  | US (e.g.        | Stripe stablecoin       | LOW. Convert to USD instantly.   |
+  | Delaware LLC /  | payments. Auto USD.     | Sales tax via Stripe Tax.        |
+  | C-corp)         |                         | GENIUS Act regulates issuers,    |
+  |                 |                         | not us.                          |
+  +-----------------+-------------------------+----------------------------------+
+  | EU (e.g. Czech, | CoinGate (MiCA) or      | MEDIUM. Must use MiCA-compliant  |
+  | Lithuania)      | Coinbase Commerce.      | coins (USDC/EURC, not USDT).     |
+  |                 | Auto EUR.               | VAT handling.                    |
+  +-----------------+-------------------------+----------------------------------+
+  | India           | Regulated provider that | HIGH. [TAX] Stablecoins are VDAs:|
+  |                 | converts OFFSHORE and   | 30% tax on gains + 1% TDS on     |
+  |                 | remits INR with eFIRA + | transfers. Receiving USDC into   |
+  |                 | purpose code matched to | an Indian wallet leaves us       |
+  |                 | export invoice.         | holding a VDA, not export        |
+  |                 |                         | proceeds. Providers must be      |
+  |                 |                         | FIU-IND registered. Crypto       |
+  |                 |                         | reporting under CARF from 2026.  |
+  +-----------------+-------------------------+----------------------------------+
+
+    Decision tree
+
+      Do we have (or will we form) a US entity?
+            |
+       YES -+-> Stripe for cards + USDC. Proceed with this PRD as written.
+            |
+       NO --+-> Is there an EU entity?
+                  |
+             YES -+-> CoinGate / Coinbase Commerce, EUR settlement.
+                  |
+             NO --+-> Indian entity only:
+                        - Do NOT receive USDC into our own wallets.
+                        - Use an offshore regulated converter -> INR + eFIRA.
+                        - Get CA sign-off BEFORE launch.
+                        - Consider delaying stablecoins until a US entity.
+
+  STATUS: BLOCKING. Owner: Leo. Needed before Phase 3.
+
+
+################################################################################
+#                                                                              #
+#                            PART C  -  DESIGN IT                              #
+#                                                                              #
+################################################################################
+
+
+================================================================================
+ 11. FIAT ABSTRACTION: USERS SEE Rs / $, NEVER "CRYPTO"
+================================================================================
+
+  +--------------------------------------------------------------------------+
+  | IN PLAIN WORDS                                                           |
+  | The customer should think in rupees or dollars. "USDC" is just a        |
+  | button, like "UPI" or "Card". Behind the scenes, we work out how many    |
+  | USDC equals the price, lock it for a few minutes, and handle all the    |
+  | conversion and bookkeeping. The customer never sees exchange rates,      |
+  | blockchains, or crypto jargon unless they want to.                       |
+  +--------------------------------------------------------------------------+
+
+  11.1  WHAT THE USER SEES
+
+      +--------------------------------------------------+
+      |  Prime                                           |
+      |  Rs 2,999 / month      (or $39 / EUR 39)         |
+      |  5,000 credits every month                       |
+      |                                                  |
+      |  Pay with:                                       |
+      |   [ Card ]   [ UPI ]   [ USDC  +5% credits ]     |
+      +--------------------------------------------------+
+
+  11.2  WHAT THE SYSTEM DOES UNDERNEATH
+
+    STEP 1 - PRICE      Look up fixed local price point from the quarterly
+                        price table (Money Model: $39 / EUR 39 / GBP 33 /
+                        Rs 2,999). Never live FX.
+    STEP 2 - QUOTE      Convert to a USD amount for the USDC path
+                        (e.g. Rs 2,999 -> $36.00 from our price table).
+    STEP 3 - LOCK       Lock that USDC amount for 30 minutes.
+    STEP 4 - PRESENT    Show exact USDC amount + network + estimated gas.
+    STEP 5 - DETECT     Gateway watches chain, matches to invoice.
+    STEP 6 - SETTLE     Gateway converts USDC -> USD; webhook "paid".
+    STEP 7 - GRANT      Entitlement service grants credits.
+    STEP 8 - RECORD     Ledger writes one immutable row (Section 14).
+
+  11.3  RULES
+
+    R1. Credits are the ONLY unit inside HERE. Card, UPI and USDC buyers get
+        the same credits for the same plan.
+    R2. The ledger never holds currency or crypto. (Money Model rule.)
+    R3. Never display a live exchange rate like "36.42 USDC". Round quotes to
+        whole cents of our price table.
+    R4. Gas is shown before signing. No surprise costs.
+    R5. The word "crypto" appears only on the USDC payment screen and its
+        help page. Nowhere else in the product.
+    R6. Stripe's stablecoin checkout presents in USD (other currencies in
+        private preview). Local-currency display is OUR job via step 2.
+
+
+================================================================================
+ 12. USER FLOWS
+================================================================================
+
+  +--------------------------------------------------------------------------+
+  | IN PLAIN WORDS                                                           |
+  | These are the exact steps a customer goes through. We start with the     |
+  | simplest (one-off top-up), then add subscriptions once top-ups work.     |
+  +--------------------------------------------------------------------------+
+
+  12.1  FLOW A - ONE-OFF TOP-UP (build first)
+
+    [User in NOW]
+         |
+         v
+    "Add credits" -> picks $10 / $25 / $50 / custom
+         |
+         v
+    Chooses payment method ---- Card / UPI ----> existing flow
+         |
+       USDC
+         |
+         v
+    +-----------------------------------------+
+    | Quote screen                            |
+    | You pay: 25.00 USDC                     |
+    | You get: 2,625 credits (incl. +5%)      |
+    | Network: Solana (fee < $0.01)           |
+    | Quote valid: 29:59                      |
+    +-----------------------------------------+
+         |
+         v
+    Stripe hosted crypto page opens
+         |
+         v
+    User connects wallet (Phantom / Coinbase Wallet / MetaMask)
+         |
+         v
+    User signs ONE transaction
+         |
+         v
+    Chain confirms (~1-2 seconds)
+         |
+         v
+    Stripe webhook "paid" --> HERE grants credits (Purchased bucket)
+         |
+         v
+    NOW shows receipt: "2,625 credits added. Tx: 5Xk...9aP"
+
+    Target: < 60 seconds from "Add credits" to credits in wallet.
+
+  12.2  FLOW B - SUBSCRIPTION (build second)
+
+    Sign-up
+      Choose Prime -> Pay with USDC -> wallet approval for recurring pull
+      -> first month charged -> 5,000 + bonus credits granted
+
+    Each renewal
+      T-3 days : email + in-app: "Renewal in 3 days. Wallet needs 36 USDC."
+      T-0      : Stripe attempts charge
+                   |
+            success-+--> credits granted, receipt
+                   |
+            failure-+--> T+0 notice "Top up wallet or switch to card"
+                        T+3 retry
+                        T+7 retry + final notice
+                        T+10 downgrade to Signal (free); nothing deleted
+
+    Why the extra care: a card refills itself every month; a crypto wallet
+    does not. Renewals fail more often, so reminders matter more.
+
+  12.3  FLOW C - REFUND
+
+      Refund requested
+           |
+           v
+      Why? -------- job failed on our side --> credits restored automatically
+           |                                  (Money Model: failed jobs free)
+           |
+           +------- unused credits / cancel --> DEFAULT: refund as credits
+           |
+           +------- full cancellation within --> USDC back to ORIGINAL wallet
+                    policy window                 (Stripe only refunds to the
+                                                  sending wallet)
+
+  12.4  FLOW D - SOMETHING WENT WRONG (user view)
+
+      "Payment received but amount was short by 0.40 USDC"
+        -> within tolerance -> credited in full, no message
+      "Payment received but short by 5 USDC"
+        -> credit what arrived, show "Pay 5 USDC more to complete Prime"
+      "Payment arrived after the quote expired"
+        -> USDC price doesn't move; accept at original quote within 24h
+      "I sent on the wrong network"
+        -> prevented by wallet-connect checkout; if it happens, support
+           ticket + gateway recovery attempt (not guaranteed)
+
+
+================================================================================
+ 13. WHO WILL USE IT AND WHY (PERSONAS)
+================================================================================
+
+  +--------------------------------------------------------------------------+
+  | IN PLAIN WORDS                                                           |
+  | Most people will keep paying by card or UPI. A specific group will       |
+  | prefer USDC. We design for them, and give everyone else a small reason  |
+  | (bonus credits) to try it.                                               |
+  +--------------------------------------------------------------------------+
+
+  PERSONA 1 - "The Paid-in-USDC Creator"   (Manila / Bogota / Lagos)
+    Gets paid in USDC by Meta, Deel or a freelance platform.
+    Pain   : Converting to local currency and then paying by card costs
+             twice.
+    Why us : Spend USDC directly, get bonus credits.
+
+  PERSONA 2 - "The Card-Declined Builder"  (India / Africa / LatAm)
+    Card fails on international SaaS or charges 3%+ foreign fees.
+    Pain   : Can't subscribe at all, or pays extra.
+    Why us : Works without a card. (Indians can also just use UPI.)
+
+  PERSONA 3 - "The Crypto-Native Developer" (anywhere)
+    Already pays OpenRouter, Vast.ai, Vultr in USDC.
+    Pain   : Hates entering card details; wants one-click wallet pay.
+    Why us : Familiar, fast, private-ish.
+
+  PERSONA 4 - "The Agent Operator" (future)
+    Runs Guardians that should buy compute/credits by themselves.
+    Pain   : Cards need a human; can't do $0.05 payments.
+    Why us : Later - programmatic top-ups via Tempo/MPP or x402.
+
+  WHY A USER WOULD CHOOSE USDC (strongest first)
+    1. Their card doesn't work or costs extra.
+    2. They already hold USDC.
+    3. Bonus credits (we share part of the fee saving).
+    4. Speed: credits instantly, 24/7, even weekends.
+    5. (Later) Agents can pay for themselves.
+
+  REALISTIC ADOPTION EXPECTATION
+    Plan for USDC to be 2-8% of payment volume in year one, higher in
+    creator-heavy and non-US segments. Treat anything above 10% as a
+    signal to invest more.
+
+
+================================================================================
+ 14. HOW IT PLUGS INTO THE CREDIT WALLET AND LEDGER
+================================================================================
+
+  +--------------------------------------------------------------------------+
+  | IN PLAIN WORDS                                                           |
+  | Nothing about credits changes. A USDC payment is just another way to     |
+  | fill the same wallet. We record extra details (which blockchain         |
+  | transaction paid for it) so our accountant can trace every dollar.       |
+  +--------------------------------------------------------------------------+
+
+  14.1  WHICH BUCKET (from the Money Model)
+
+    ORDER  BUCKET      SOURCE                         USDC IMPACT
+    1st    Promo       grants, campaigns              USDC bonus credits go
+                                                      HERE (expire in 30 days)
+    2nd    Plan        monthly allotment              USDC subscription fills
+                                                      this, same as card
+    3rd    Purchased   top-ups                        USDC top-ups go HERE
+                                                      (12 months)
+    4th    Overdraft   Studio/World only              Not payable in USDC
+                                                      at launch
+
+    Why bonus credits go in Promo: they expire sooner, spend first, and never
+    look like cash we owe. This keeps "credits are not money" intact.
+
+  14.2  LEDGER ROW FOR A USDC PAYMENT (immutable)
+
+    ledger_id            : led_01J...
+    account_id           : acc_...
+    event                : topup | subscription_charge | refund
+    method               : usdc
+    credits_plan         : 0
+    credits_purchased    : 2500
+    credits_promo        : 125
+    list_value_usd       : 25.00
+    local_price          : 2,099 INR      (what the user saw)
+    quote_usdc           : 25.00
+    received_usdc        : 25.00
+    network              : solana
+    tx_hash              : 5Xk...9aP
+    gateway              : stripe
+    gateway_payment_id   : pi_...
+    gateway_fee_usd      : 0.375
+    settled_usd          : 24.625
+    fx_rate_used         : 1.0000 (USDC->USD)
+    underpay_tolerance   : applied | none
+    created_at           : 2026-10-14T09:12:03Z
+
+  14.3  ACCOUNTING (same as card - Money Model steps 6-8)
+
+      USDC arrives -> converted to USD -> books as LIABILITY (deferred revenue)
+            |
+            v
+      Credits burn on successful jobs -> becomes REVENUE
+            |
+            v
+      Credits expire unused -> BREAKAGE (keep under 8%)
+
+    Gateway fee (1.5%) = payment processing cost in COGS, same line as card
+    fees.
+
+
+################################################################################
+#                                                                              #
+#                        PART D  -  MAKE MONEY FROM IT                         #
+#                                                                              #
+################################################################################
+
+
+================================================================================
+ 15. UNIT ECONOMICS
+================================================================================
+
+  +--------------------------------------------------------------------------+
+  | IN PLAIN WORDS                                                           |
+  | Every payment method charges us a fee. USDC's fee is much smaller. We   |
+  | give part of that saving back to the customer as bonus credits (so they  |
+  | have a reason to choose it) and keep the rest as extra profit. The rule: |
+  | the bonus must always cost us LESS than the fee we save.                |
+  +--------------------------------------------------------------------------+
+
+  15.1  FEE PER PAYMENT
+
+  +-------------+----------------------+----------------------+-------------------+
+  | Payment     | Paddle (5% + $0.50)  | Stripe card          | Stripe USDC (1.5%)|
+  |             |                      | (2.9% + $0.30)       |                   |
+  +-------------+----------------------+----------------------+-------------------+
+  | $10 top-up  | $1.00   (10.0%)      | $0.59   (5.9%)       | $0.15   (1.5%)    |
+  | $25 top-up  | $1.75   ( 7.0%)      | $1.03   (4.1%)       | $0.38   (1.5%)    |
+  | Prime $39   | $2.45   ( 6.3%)      | $1.43   (3.7%)       | $0.59   (1.5%)    |
+  | Studio $199 | $10.45  ( 5.3%)      | $6.07   (3.1%)       | $2.99   (1.5%)    |
+  | World $999  | $50.45  ( 5.1%)      | $29.27  (2.9%)       | $14.99  (1.5%)    |
+  +-------------+----------------------+----------------------+-------------------+
+   Card figures are US domestic; international cards cost more, which makes
+   USDC relatively better for non-US buyers. Gas (~$0.01) is paid by the
+   customer, not us.
+
+      Fee on a Prime $39 payment
+      Paddle |#########################################| $2.45
+      Card   |########################                 | $1.43
+      USDC   |##########                               | $0.59
+
+  15.2  WHAT A BONUS CREDIT COSTS US
+
+    Credits are sold at $0.01 list value, but cost us ~$0.002 each to serve
+    (Money Model target, 80% margin). So:
+
+      Bonus of 250 credits  = $2.50 of LIST value to the customer
+                            = up to $0.50 of REAL cost to us
+                              (only if every bonus credit is actually used)
+
+    This is why bonus credits beat price discounts: a $2.50 discount costs
+    us $2.50; 250 bonus credits cost us at most $0.50.
+
+  15.3  THE BONUS SCHEDULE (tiered so it never loses money)
+
+    Rule: bonus cost must be LESS than the fee saving versus a normal
+    card payment (the worst case, since card is cheaper than Paddle).
+
+  +-------------+--------+---------+----------+-----------+-----------+---------+
+  | Plan        | Bonus  | Bonus   | Max cost | Saving vs | Saving vs | Net vs  |
+  |             | %      | credits | to us    | card      | Paddle    | card    |
+  +-------------+--------+---------+----------+-----------+-----------+---------+
+  | $10 top-up  | 5%     |    50   |  $0.10   |  $0.44    |  $0.85    | +$0.34  |
+  | $25 top-up  | 5%     |   125   |  $0.25   |  $0.65    |  $1.38    | +$0.40  |
+  | Prime $39   | 5%     |   250   |  $0.50   |  $0.85    |  $1.86    | +$0.35  |
+  | Studio $199 | 3%     |   900   |  $1.80   |  $3.09    |  $7.47    | +$1.29  |
+  | World $999  | 2%     | 3,500   |  $7.00   | $14.29    | $35.47    | +$7.29  |
+  +-------------+--------+---------+----------+-----------+-----------+---------+
+   Bonus credits computed on each plan's monthly credits
+   (Prime 5,000 / Studio 30,000 / World 175,000) and on top-up credits
+   (100 per $1). "Net vs Paddle" is much larger: e.g. Prime +$1.36.
+
+    WARNING - why not 5% everywhere?
+      World at 5% = 8,750 bonus credits = up to $17.50 cost,
+      but saving vs card is only $14.29 -> we would LOSE $3.21 per payment.
+      Tiering fixes this.
+
+  15.4  CONTRIBUTION PER PRIME ACCOUNT (monthly, before guardian cost)
+
+      Money Model: Prime contributes ~$29.97/month before guardian cost.
+
+                          Paddle      Card        USDC (+5% bonus)
+      Price               $39.00      $39.00      $39.00
+      Processing fee     -$2.45      -$1.43      -$0.59
+      Bonus credit cost    -           -          -$0.50 (max)
+      -----------------------------------------------------------
+      Difference vs                  +$1.02      +$1.36 vs Paddle
+      Paddle baseline                             +$0.35 vs card
+
+  15.5  WHAT THIS IS WORTH AT SCALE (illustrative)
+
+    Using the Money Model's month-12 Plan B: 1,120 paying accounts.
+    Assume USDC share of payments = 5%.
+
+      56 accounts x ~$1.36 saving vs Paddle ...... ~$76 / month
+      + top-ups and larger plans ................. more
+
+    Honest reading: at 5% adoption this is small money. The fee saving
+    matters more if (a) USDC share grows, (b) we move ALL billing to Stripe
+    anyway (card saving vs Paddle on every payment is much bigger), or
+    (c) it unlocks customers who otherwise could not pay at all - that
+    revenue is the real prize, and it is 100% incremental.
+
+  15.6  NEW THING UNLOCKED: SMALL TOP-UPS
+
+    With no fixed fee, we can safely allow smaller top-ups for USDC payers:
+
+      $2 top-up  : Card fee $0.36 (18%)  vs  USDC fee $0.03 (1.5%)
+      $5 top-up  : Card fee $0.45 ( 9%)  vs  USDC fee $0.08 (1.5%)
+
+    Proposal: USDC minimum top-up = $2 (card minimum stays $10).
+
+  15.7  HIDDEN COSTS TO MODEL
+
+    [ ] FX spread when USD is paid out to an INR or EUR bank account.
+    [ ] Tax compliance: Paddle's 5% includes global VAT/GST as MoR.
+        Stripe's 1.5% does not. Add Stripe Tax fees + filing cost.
+    [ ] Rolling reserves some gateways hold (5-10%, 30-180 days).
+    [ ] Support cost per USDC ticket (expect higher at first).
+    [ ] India entity: 1% TDS + 30% VDA tax on any gain [TAX].
+    [ ] Engineering: ~2-4 weeks for Phase 3-4 if on Stripe already.
+
+
+================================================================================
+ 16. FAILURE STATES AND THE POLICY FOR EACH
+================================================================================
+
+  +--------------------------------------------------------------------------+
+  | IN PLAIN WORDS                                                           |
+  | Crypto payments fail in different ways than cards. Most failures are     |
+  | human mistakes (wrong amount, wrong network), not technical ones. For    |
+  | each one, we decide the rule in advance so no customer is ever confused  |
+  | and no support person has to guess.                                     |
+  +--------------------------------------------------------------------------+
+
+  16.1  PAYMENT STATE MACHINE
+
+      CREATED --> AWAITING_PAYMENT --(tx seen)--> CONFIRMING
+                        |                              |
+                   (30 min, no tx)          +----------+----------+
+                        |                   |          |          |
+                        v                  PAID    UNDERPAID  OVERPAID
+                     EXPIRED                |          |          |
+                        |                   v          v          v
+                 (tx arrives late)      credits    tolerance?  credit
+                        |               granted    yes -> PAID  excess as
+                        v                          no  -> PARTIAL bonus
+                  LATE_PAYMENT                         (credit what
+                  (accept within 24h                    arrived)
+                   at original quote)
+
+  16.2  POLICY TABLE
+
+  +----+-------------------+------------------------------+---------------------------+
+  | #  | Failure           | What happens                 | HERE policy               |
+  +----+-------------------+------------------------------+---------------------------+
+  | F1 | Underpayment      | Customer paid a bit less     | Auto-accept within 1% or  |
+  |    |                   | (often an exchange withdrawal| $0.50 (whichever larger). |
+  |    |                   | fee was deducted)            | Beyond: credit what came, |
+  |    |                   |                              | ask for the difference.   |
+  | F2 | Overpayment       | Customer paid too much       | Credit excess as Promo    |
+  |    |                   |                              | credits. No small USDC    |
+  |    |                   |                              | refunds (gas+support cost |
+  |    |                   |                              | more than the refund).    |
+  | F3 | Wrong network /   | Coins sent where gateway     | PREVENT: wallet-connect   |
+  |    | wrong token       | isn't listening; may be lost | only, no copy-paste       |
+  |    |                   |                              | addresses, network picker |
+  |    |                   |                              | limited to supported.     |
+  |    |                   |                              | If it happens: gateway    |
+  |    |                   |                              | recovery attempt, no      |
+  |    |                   |                              | guarantee, clear FAQ.     |
+  | F4 | Late payment      | Paid after 30-min quote      | USDC doesn't move in      |
+  |    |                   |                              | price: accept at original |
+  |    |                   |                              | quote within 24h.         |
+  | F5 | Not final yet     | Base soft-confirms in 2s,    | Grant credits on gateway  |
+  |    | (reorg risk)      | hard-final ~15 min           | "paid" status. For >$100, |
+  |    |                   |                              | wait for hard finality.   |
+  | F6 | "Chargeback"      | No network reversal, but     | Same refund policy as     |
+  |    | equivalent        | customer can still dispute   | cards. "Failed jobs are   |
+  |    |                   | (non-delivery, wrong amount) | free" prevents most       |
+  |    |                   |                              | disputes.                 |
+  | F7 | Refund            | Stripe refunds only to the   | Default: refund as        |
+  |    |                   | sending wallet               | credits. USDC only for    |
+  |    |                   |                              | full cancellation.        |
+  | F8 | Sanctioned /      | AML liability                | Gateway screens. Never    |
+  |    | high-risk wallet  |                              | bypass. Auto-block + no   |
+  |    |                   |                              | credits.                  |
+  | F9 | Renewal fails     | Wallet empty / no approval   | T-3 reminder, retries at  |
+  |    |                   |                              | T+3 and T+7, grace to     |
+  |    |                   |                              | T+10, offer card switch.  |
+  |F10 | Depeg             | USDC briefly < $1            | Zero exposure if we       |
+  |    |                   |                              | convert instantly. Pause  |
+  |    |                   |                              | USDC checkout if depeg    |
+  |    |                   |                              | > 2% (kill switch).       |
+  |F11 | Gateway outage    | USDC button fails            | Hide USDC option; card    |
+  |    |                   |                              | and UPI always available. |
+  |F12 | Duplicate webhook | "Paid" received twice        | Idempotent: unique key on |
+  |    |                   |                              | (network, tx_hash). Never |
+  |    |                   |                              | grant credits twice.      |
+  |F13 | Payment > $10,000 | Stripe per-payment cap       | World annual (~$9,990)    |
+  |    |                   |                              | just fits. Above: invoice |
+  |    |                   |                              | or split.                 |
+  +----+-------------------+------------------------------+---------------------------+
+
+  16.3  CHARGEBACKS: CARD vs USDC IN ONE PICTURE
+
+      CARD:  Customer --(complains to bank)--> Bank pulls money back
+             Merchant loses money + dispute fee, must send evidence.
+
+      USDC:  Customer --(complains to US)--> We decide using our policy.
+             No one can pull money back without us.
+             Risk shifts from "fraud reversal" to "our refund policy".
+
+
+================================================================================
+ 17. TREASURY POLICY (WHAT WE DO WITH THE MONEY)
+================================================================================
+
+  +--------------------------------------------------------------------------+
+  | IN PLAIN WORDS                                                           |
+  | Treasury = how a company manages its cash. Our policy is simple: turn   |
+  | every digital dollar into a real dollar immediately. The only exception  |
+  | is a small, capped pot of USDC kept for paying people abroad in USDC.    |
+  +--------------------------------------------------------------------------+
+
+  T1. DEFAULT: 100% auto-conversion to USD at the gateway.
+  T2. EXPOSURE: seconds-to-minutes between payment and conversion ~ zero.
+  T3. FLOAT (only once USDC payouts exist):
+        - Size   : max 30 days of expected USDC payouts
+        - Asset  : USDC only
+        - Where  : regulated custodian (Stripe stablecoin financial account
+                   or Coinbase). NEVER a self-custody wallet.
+        - Review : monthly
+  T4. NO YIELD CHASING: no lending, staking or "earn" products. (Regulated
+      stablecoins can't pay holders interest under GENIUS anyway.)
+  T5. KILL SWITCH: if USDC trades below $0.98 for >1 hour, pause USDC
+      checkout and payouts until it recovers.
+  T6. REPORTING: monthly report of USDC received, converted, fees, float
+      balance, incidents.
+
+      Money flow with float (later phase)
+
+      Customers pay USDC --> Gateway --> 100% converted --> USD bank
+                                                              |
+                                          (only for payouts)  |
+                                                              v
+      Guardians/creators <-- USDC float (<= 30 days) <-- USD topped up
+
+
+================================================================================
+ 18. TAX, LEGAL AND COMPLIANCE
+================================================================================
+
+  +--------------------------------------------------------------------------+
+  | IN PLAIN WORDS                                                           |
+  | Accepting digital dollars is legal in most places, but each country has  |
+  | its own rules. The two big risks: (1) accidentally becoming a "money    |
+  | business" (which needs licences), and (2) tax treatment in India. A     |
+  | one-hour lawyer and accountant review BEFORE launch avoids both.        |
+  +--------------------------------------------------------------------------+
+
+  18.1  CREDITS ARE STILL NOT MONEY (Money Model rule, reinforced)
+
+    ALLOWED  : Customer pays IN with USDC -> receives credits.
+    FORBIDDEN: Cashing credits OUT as USDC.
+    FORBIDDEN: Sending credits between users for value.
+    FORBIDDEN: Promising credits can be redeemed for USDC.
+    Each forbidden item edges us toward money-transmitter regulation.
+
+      IN  (safe)                     OUT (forbidden)
+      USDC --> credits               credits --X--> USDC
+
+  18.2  UNITED STATES
+    - GENIUS Act (July 2025) regulates stablecoin ISSUERS, not merchants.
+      Effective 18 Jan 2027 or 120 days after final rules, whichever is
+      earlier. Federal Reserve published its proposed rule 29 Sep 2026.
+    - Merchant duties: normal sales tax (Stripe Tax), normal income tax.
+      Stripe handles wallet screening.
+    - [LEGAL] Confirm credit terms + USDC acceptance with a US lawyer.
+
+  18.3  EUROPEAN UNION
+    - MiCA in force. Use only MiCA-compliant coins (USDC, EURC).
+    - VAT on digital services still applies by customer country.
+    - Leo is in Prague; if an EU entity bills, use a MiCA-licensed gateway.
+
+  18.4  INDIA  [TAX] [LEGAL]
+    - Stablecoins are VDAs (Section 2(47A)).
+    - 30% flat tax on gains (Section 115BBH), 1% TDS on transfers (194S).
+    - Converting USDC to INR is a taxable transfer.
+    - VDA service providers must be FIU-IND registered.
+    - Crypto brought into CARF/FATCA tax reporting from 2026.
+    - Compliant route for an Indian business: regulated provider accepts
+      and converts OFFSHORE, remits INR with eFIRA + purpose code matched
+      to export invoice.
+    - Indian CUSTOMERS paying us: they are transferring a VDA -> their own
+      TDS/tax situation. Recommend UPI as the default for Indian users.
+
+  18.5  COMPLIANCE CHECKLIST BEFORE LAUNCH
+    [ ] Lawyer review of credit terms + USDC acceptance (billing country)
+    [ ] CA review if any Indian entity touches crypto
+    [ ] Gateway contract: AML/sanctions screening confirmed
+    [ ] Terms of service updated: USDC refunds only to sending wallet
+    [ ] Privacy policy: wallet addresses are personal data
+    [ ] Tax engine configured for USDC sales (Stripe Tax)
+    [ ] Accounting: USDC receipts booked as deferred revenue
+
+
+################################################################################
+#                                                                              #
+#                             PART E  -  SHIP IT                               #
+#                                                                              #
+################################################################################
+
+
+================================================================================
+ 19. METRICS, TARGETS AND GUARDRAILS
+================================================================================
+
+  +--------------------------------------------------------------------------+
+  | IN PLAIN WORDS                                                           |
+  | We measure whether USDC payments are used, whether they work smoothly,  |
+  | and whether they make or lose money. And we set red lines we never      |
+  | cross, even if numbers look good.                                        |
+  +--------------------------------------------------------------------------+
+
+  19.1  TIE TO THE NORTH STAR
+    North Star (Money Model): Weekly Successful Credit Burn.
+    USDC's job: add PAYING accounts who would otherwise not pay, and lower
+    processing cost. Measured by the branches below.
+
+  19.2  KPIs
+
+  +-------------------------------------+----------------------+---------------+
+  | Metric                              | Definition           | Target (Y1)   |
+  +-------------------------------------+----------------------+---------------+
+  | USDC share of payment volume        | USDC $ / all $       | 2-8%          |
+  | USDC checkout conversion            | paid / started       | >= 70%        |
+  | Time to credits                     | click -> credits     | median < 60s  |
+  | Incremental payers                  | USDC payers with a   | track; >30%   |
+  |                                     | failed card attempt  | of USDC payers|
+  |                                     | or no card on file   |               |
+  | Effective processing cost           | fees / revenue on    | <= 1.6%       |
+  |                                     | USDC payments        |               |
+  | Net margin gain after bonus         | Section 15.3         | > $0 on every |
+  |                                     |                      | plan          |
+  | Underpayment rate                   | underpaid / paid     | < 3%          |
+  | USDC renewal success                | renewals ok / due    | >= 85%        |
+  | Support tickets per 100 USDC pays   |                      | < 3           |
+  +-------------------------------------+----------------------+---------------+
+
+  19.3  GUARDRAILS (never trade away)
+
+  +----------------------------------------+----------+----------------------------+
+  | Guardrail                              | Limit    | Why                        |
+  +----------------------------------------+----------+----------------------------+
+  | Credits granted twice for one tx       | 0        | Idempotency failure = loss |
+  | Funds lost to wrong network            | 0 by     | Prevent via UI             |
+  |                                        | design   |                            |
+  | "I didn't expect that" USDC reports    | <1/1,000 | Same bar as Money Model    |
+  | Crypto held outside policy (T3)        | $0       | Treasury discipline        |
+  | Bonus cost > fee saving on any plan    | never    | Would lose money per sale  |
+  | Credits cashed out as USDC             | never    | Legal line                 |
+  +----------------------------------------+----------+----------------------------+
+
+  19.4  WEEKLY REVIEW (add to the Money Model weekly screen)
+    - USDC volume vs last week
+    - Conversion + time-to-credits
+    - Failure states count (F1-F13)
+    - Any red guardrail = stop and fix before growing
+
+
+================================================================================
+ 20. ROLLOUT PLAN (PHASES AND GATES)
+================================================================================
+
+  +--------------------------------------------------------------------------+
+  | IN PLAIN WORDS                                                           |
+  | We start small and safe, prove each step works, then open it up. Each   |
+  | phase has a "gate" - a test that must pass before the next phase.       |
+  +--------------------------------------------------------------------------+
+
+    Day:  0     15     30     45     60     75     90
+          |------|------|------|------|------|------|
+     P0   [DECIDE]
+     P1          [SANDBOX]
+     P2                 [INTERNAL]
+     P3                        [TOP-UPS LIVE]
+     P4                               [SUBSCRIPTIONS]
+     P5                                      [REVIEW]
+
+  +------+-----------+-------------------------------+-----------------------------+
+  | Phase| Days      | What ships                    | Gate to next phase          |
+  +------+-----------+-------------------------------+-----------------------------+
+  | P0   | before 0  | Entity decision; gateway      | Entity chosen; lawyer/CA    |
+  |      |           | chosen; lawyer + CA review    | sign-off; contract signed   |
+  | P1   | 1-15      | Sandbox integration: invoice, | All F1-F13 states tested in |
+  |      |           | webhook, ledger row, credit   | sandbox; idempotency proven |
+  |      |           | grant. Hidden in product.     |                             |
+  | P2   | 16-30     | Internal team pays real USDC  | 20 real payments reconcile  |
+  |      |           | (small amounts), all networks | to bank within $0.01        |
+  | P3   | 31-45     | Public USDC TOP-UPS. Solana + | Conversion >= 70%; 0        |
+  |      |           | Base. $2 min. 5% bonus.       | duplicate grants; <3        |
+  |      |           | "How to pay" help page.       | tickets / 100 payments      |
+  | P4   | 46-75     | USDC SUBSCRIPTIONS (Prime     | Renewal success >= 85%;     |
+  |      |           | first, then Studio/World).    | net margin > 0 every plan   |
+  |      |           | Tiered bonus. Renewal flow.   |                             |
+  | P5   | 76-90     | First review vs Section 19.   | Decide: expand (EURC, USDT, |
+  |      |           | Payout research kicks off.    | payouts) / hold / stop      |
+  +------+-----------+-------------------------------+-----------------------------+
+
+    STOP CONDITIONS (any phase)
+      - Any guardrail breached twice
+      - Lawyer/CA flags an issue
+      - USDC conversion < 40% after 30 days live (UX broken)
+
+
+================================================================================
+ 21. RISKS AND MITIGATIONS
+================================================================================
+
+  +---------------------------+--------+--------+--------------------------------+
+  | Risk                      | Chance | Impact | Mitigation                     |
+  +---------------------------+--------+--------+--------------------------------+
+  | Low adoption (<2%)        | High   | Low    | Cheap to run; keep for access  |
+  |                           |        |        | + agent readiness. Measure     |
+  |                           |        |        | incremental payers.            |
+  | Entity can't use Stripe   | Medium | High   | Coinbase Commerce / CoinGate;  |
+  | stablecoins               |        |        | or form US entity.             |
+  | India tax complications   | Medium | High   | No USDC into Indian wallets;   |
+  |                           |        |        | CA sign-off; UPI for Indians.  |
+  | Losing Paddle's MoR tax   | Medium | Medium | Stripe Tax; accountant.        |
+  | coverage                  |        |        |                                |
+  | Customer loses funds      | Low    | High   | Wallet-connect only; network   |
+  | (wrong network)           |        |        | picker; clear warnings.        |
+  | USDC depeg                | Low    | Low    | Instant conversion; kill       |
+  |                           |        |        | switch.                        |
+  | Gateway changes terms /   | Medium | Medium | Keep second gateway integrated |
+  | coins silently            |        |        | or ready; publish our own list.|
+  | Reputational ("crypto")   | Low    | Medium | USDC only, framed as "digital  |
+  |                           |        |        | dollars", no speculation.      |
+  | Becoming a money business | Low    | High   | Pay-in only; never cash-out    |
+  | by accident               |        |        | (Section 18.1).                |
+  | Bonus abuse (pay USDC,    | Low    | Low    | Bonus in Promo bucket, expires |
+  | refund, keep bonus)       |        |        | 30d; refund claws back bonus.  |
+  +---------------------------+--------+--------+--------------------------------+
+
+
+================================================================================
+ 22. NEW RAILS TO WATCH (THE 12-24 MONTH VIEW)
+================================================================================
+
+  +--------------------------------------------------------------------------+
+  | IN PLAIN WORDS                                                           |
+  | Crypto payments are slowly merging with normal payments. Cards funded by |
+  | stablecoins, bank-issued digital dollars, and AI agents that pay by      |
+  | themselves are all arriving. We don't need to build for them yet, but    |
+  | we should know when to.                                                  |
+  +--------------------------------------------------------------------------+
+
+      CONVERGENCE MAP
+
+      Traditional world                          Crypto world
+      -----------------                          ------------
+      Card networks  <---- stablecoin cards ---->  USDC balances
+      (Visa/MC)            (Rain, Bridge)
+      Banks          <---- tokenized deposits -->  public chains
+      (JPM, Citi)          (JPMD, TCH network)     (Base, Canton)
+      Payment APIs   <---- agent protocols ----->  AI agents
+      (Stripe)             (MPP/Tempo, x402)
+      UPI / A2A      <---- (future bridges) ---->  stablecoins
+
+  +------------------------+--------------------------------+-------------------+
+  | Rail                   | Status (2026)                  | HERE action       |
+  +------------------------+--------------------------------+-------------------+
+  | Stablecoin cards       | Visa settlement ~$7B/yr, 130+  | NONE needed. Users|
+  |                        | programs. Rain $1.95B.         | with these cards  |
+  |                        | Bridge+Visa -> 100+ countries. | already pay our   |
+  |                        |                                | card checkout.    |
+  | AI-agent payments      | Tempo mainnet (Mar 2026) +     | Prototype pay-per-|
+  | (MPP, x402)            | MPP. x402 real commerce small  | GO for Guardians  |
+  |                        | (~$28K/day, ~half gamified).   | in 2027. Don't    |
+  |                        |                                | depend on it yet. |
+  | Tokenized deposits     | JPMD live on Base (Nov 2025);  | Watch H1 2027.    |
+  |                        | 17+ US banks plan shared       | Institutional     |
+  |                        | network via The Clearing House | only for now.     |
+  |                        | for H1 2027.                   |                   |
+  | Programmable payouts   | 93% of CoinGate payouts via    | HIGH PRIORITY     |
+  |                        | API, 88% in USDC.              | next research:    |
+  |                        |                                | pay Guardians /   |
+  |                        |                                | creators in USDC. |
+  | A2A rails (UPI etc.)   | Mature in India.               | Keep UPI default  |
+  |                        |                                | for Indian users. |
+  | Merchant loyalty       | Deloitte expects rewards tied  | Our bonus credits |
+  | stablecoins            | to stablecoin payments.        | are this, simply. |
+  +------------------------+--------------------------------+-------------------+
+
+  WHERE THE REAL PRIZE MAY BE: PAYOUTS, NOT CHECKOUT
+
+    The market's biggest volumes are businesses PAYING OUT across borders.
+    HERE will pay Guardians, creators (via the Garden), and possibly
+    suppliers in China/India. That is exactly the B2B / payroll / creator
+    pattern where stablecoins beat banks by the most.
+    --> Recommend a separate "Payouts PRD" after Phase 5.
+
+
+================================================================================
+ 23. OPEN QUESTIONS FOR LEO
+================================================================================
+
+  +---+-------------------------------------------+-------------+-------------+
+  | # | Question                                  | Why         | Status      |
+  +---+-------------------------------------------+-------------+-------------+
+  | 1 | Which legal entity bills customers, and   | Decides     | BLOCKING    |
+  |   | from which country? Is a US entity        | gateway,    |             |
+  |   | planned?                                  | tax, effort |             |
+  | 2 | Are we moving billing from Paddle to      | Decides     | BLOCKING    |
+  |   | Stripe anyway? (Path 1 vs 2, Sec 9.3)     | architecture|             |
+  | 3 | Main goal: lower fees, reach card-less    | Decides     | shapes it   |
+  |   | users, or agent-payment positioning?      | priority    |             |
+  | 4 | Which markets are the first paying users  | USDC vs UPI | shapes it   |
+  |   | in?                                       | vs card mix |             |
+  | 5 | Do we also want the PAYOUT side (Guardians| Biggest     | shapes it   |
+  |   | / creators / suppliers in USDC)?          | opportunity |             |
+  | 6 | OK with bonus credits (5/3/2%) instead of | Unit econ   | confirm     |
+  |   | price discounts?                          |             |             |
+  | 7 | OK with $2 minimum top-up for USDC only?  | Unit econ   | confirm     |
+  +---+-------------------------------------------+-------------+-------------+
+
+
+================================================================================
+ 24. APPENDIX
+================================================================================
+
+  24.1  WORKED EXAMPLE 1 - A creator in Manila tops up $25
+
+    1. Sees "Add credits - $25". Chooses USDC. Quote: 25.00 USDC ->
+       2,500 credits + 125 bonus = 2,625 credits.
+    2. Connects Phantom, picks Solana, signs. Gas: ~$0.001.
+    3. Confirmed in ~1 second. Stripe converts to USD.
+    4. HERE receives $25.00 - $0.375 fee = $24.625.
+    5. Credits: 2,500 to Purchased (12 months), 125 to Promo (30 days).
+    6. Cost of bonus to us: 125 x $0.002 = $0.25 max.
+    7. Versus card: fee would have been $1.03. We saved $0.65, gave
+       back $0.25, kept +$0.40.
+
+  24.2  WORKED EXAMPLE 2 - An underpayment
+
+    Invoice: 39.00 USDC. Customer withdraws from an exchange that deducts
+    a $0.30 fee. 38.70 USDC arrives.
+    Shortfall $0.30 < tolerance ($0.50) -> treated as PAID in full.
+    Cost to us: $0.30. Cost of a support ticket: much more. Correct call.
+
+  24.3  WORKED EXAMPLE 3 - Why the World bonus is 2%, not 5%
+
+    World: $999, 175,000 credits/month.
+    Card fee $29.27, USDC fee $14.99 -> saving $14.29.
+    5% bonus = 8,750 credits x $0.002 = $17.50  -> LOSS of $3.21.
+    2% bonus = 3,500 credits x $0.002 = $7.00   -> GAIN of $7.29.
+
+  24.4  WORKED EXAMPLE 4 - Indian user, Indian price
+
+    Sees Rs 2,999. Options: UPI (recommended), Card, USDC.
+    If USDC: system quotes $36.00 from the price table -> 36.00 USDC.
+    Note: the Indian customer is transferring a VDA and may face their own
+    1% TDS / tax treatment. That is why UPI is the recommended default for
+    Indian users.
+
+  24.5  ENGINEERING CHECKLIST (Phase 1)
+
+    [ ] Gateway sandbox account + API keys
+    [ ] "usdc" as a payment_method in billing service
+    [ ] Quote service: local price -> USD -> USDC, 30-min lock
+    [ ] Webhook handler: paid / underpaid / overpaid / expired / refunded
+    [ ] Idempotency key: (network, tx_hash)
+    [ ] Ledger row schema (Section 14.2)
+    [ ] Bonus logic by plan tier (Section 15.3)
+    [ ] Promo bucket grant with 30-day expiry
+    [ ] Tolerance rule (1% or $0.50)
+    [ ] Kill switch flag (hide USDC option instantly)
+    [ ] Network picker with Ethereum warning / hide under $20
+    [ ] Receipt in NOW with tx hash link
+    [ ] Help page: "How to pay with USDC" (coins + networks listed)
+    [ ] Finance export: monthly USDC report
+
+  24.6  ONE-LINE ANSWERS TO COMMON QUESTIONS
+
+    Q: Do we hold crypto?                A: No. Converted instantly.
+    Q: Can customers lose money?         A: Only by sending on a wrong
+                                            network; the UI prevents it.
+    Q: Can customers do a chargeback?    A: No, but our refund policy
+                                            still applies.
+    Q: Is this legal?                    A: Accepting USDC is legal in the
+                                            US/EU; India needs care. Lawyer
+                                            + CA to confirm.
+    Q: Why not Bitcoin?                  A: Price moves; a $39 plan could be
+                                            worth $35 an hour later.
+    Q: Why not USDT?                     A: Regulatory issues in the EU/US;
+                                            fewer merchants/gateways support.
+    Q: Will most users use it?           A: No. 2-8% expected. It's for
+                                            margin, access and the future.
+    Q: What's the biggest opportunity?   A: Paying people OUT in USDC
+                                            (Guardians, creators, suppliers).
+
+  24.7  SOURCES
+
+    Market data and reports
+    - Alvarez & Marsal, Stablecoin Payment Activity Report (29 Sep 2026)
+      https://www.alvarezandmarsal.com/thought-leadership/stablecoin-payment-activity-report
+    - CoinGate, Crypto Payments Data Report H1 2026
+      https://coingate.com/blog/post/crypto-payments-data-report-h1-2026
+    - StablecoinSpend, Q3 2026 Stablecoin Spend Report
+      https://stablecoinspend.com/research/q3-2026-stablecoin-spending-report/
+    - Deloitte, How stablecoins could power the next era of retail payments
+      https://www.deloitte.com/us/en/insights/industry/financial-services/financial-services-industry-predictions/2026/stablecoins-retail-payments.html
+    - Reap, Stablecoin statistics 2026
+      https://reap.global/blog/stablecoin-statistics-2026
+    - Digital Money Times, B2B stablecoin payments +733%
+      https://digitalmoneytimes.com/2026/08/18/stablecoin-payments-b2b-cross-border-2026/
+    - RZLT, Stablecoin payments 2026 B2B guide
+      https://www.rzlt.io/blog/stablecoin-payments-2026-b2b-guide
+
+    Gateways and providers
+    - Stripe docs, Stablecoin payments
+      https://docs.stripe.com/payments/stablecoin-payments
+    - Stablecoin Insider, How to accept stablecoin payments on Stripe
+      https://stablecoininsider.org/how-to-accept-stablecoin-payments-on-stripe/
+    - BuildMVPFast, Stripe USDC for SaaS 2026
+      https://www.buildmvpfast.com/blog/stripe-usdc-stablecoin-payouts-saas-global-2026
+    - Eco, Stripe stablecoin payments 2026
+      https://eco.com/support/en/articles/15083174-stripe-stablecoin-payments-2026
+    - Fungies, MoR platforms with crypto payments
+      https://fungies.io/the-best-merchant-of-record-platforms-with-crypto-and-stablecoin-payments-in-2026/
+    - Finance Magnates, Choosing a crypto payment gateway
+      https://www.financemagnates.com/thought-leadership/how-to-choose-a-crypto-payment-gateway-and-processor-the-due-diligence-nobody-writes-about/
+    - Oxapay, How crypto payment gateways work
+      https://oxapay.com/blog/what-are-crypto-payment-gateways-and-how-do-they-work/
+    - Cryptoprocessing, Crypto payment disputes
+      https://cryptoprocessing.com/learn/crypto-payment-disputes-guide-for-businesses
+
+    Chains and fees
+    - Eco, Cheapest way to send USDC
+      https://eco.com/support/en/articles/15247704-cheapest-way-to-send-usdc
+    - Eco, Cheapest stablecoin transfer routes
+      https://eco.com/support/en/articles/15261550-cheapest-stablecoin-transfer-services-2026-onchain-routes-ranked-by-fee
+    - Venga, Stablecoin fees explained
+      https://venga.com/en/blog/stablecoin-fees/
+    - Plasma, USDC vs USDT fees
+      https://www.plasma.org/learn/usdc-vs-usdt-fees
+
+    New rails
+    - Tempo mainnet (Ourcryptotalk / CoinDesk coverage, Mar 2026)
+      https://ourcryptotalk.com/news/tempo-mainnet-live-on-stripe-machine-payments-protocol
+    - Presenc, x402 adoption tracker
+      https://presenc.ai/research/x402-protocol-adoption-tracker-2026
+    - Spark, Stablecoin debit cards 2026
+      https://www.spark.money/research/stablecoin-debit-card-market-2026
+    - Fortune, Rain + Mastercard (May 2026)
+      https://fortune.com/2026/05/04/mastercard-rain-stablecoin-startup-institutional-customers-partnership/
+    - Eco, What is a tokenized deposit
+      https://eco.com/support/en/articles/15275167-what-is-a-tokenized-deposit-2026-guide
+    - The Defiant, US banks' shared tokenized deposit network
+      https://thedefiant.io/converge/tradfi-and-fintech/four-major-us-banks-and-the-clearing-house-plan-shared-tokenized-deposit-network
+
+    Payouts
+    - Spark, Stablecoin freelancer payment platforms
+      https://www.spark.money/tools/stablecoin-freelancer-payment-comparison
+    - crypto.news, Stablecoin creator payroll
+      https://crypto.news/stablecoin-payments-creator-payroll-meta-visa-stripe/
+
+    Regulation and tax
+    - Eco, GENIUS Act explained
+      https://eco.com/support/en/articles/15282223-what-is-the-genius-act-us-stablecoin-law-explained-for-2026
+    - Federal Register, FDIC GENIUS Act proposal
+      https://www.federalregister.gov/documents/2026/04/10/2026-06974/genius-act-requirements-and-standards-for-fdic-supervised-permitted-payment-stablecoin-issuers-and
+    - Federal Register, Federal Reserve GENIUS Act proposal (29 Sep 2026)
+      https://www.federalregister.gov/documents/2026/09/29/2026-19860/implementing-the-federal-reserve-boards-responsibilities-under-the-genius-act
+    - Xflow, Stablecoin B2B payments in India
+      https://www.xflowpay.com/blog/stablecoin-b-2-b-payments-india-offramp-compliance
+    - MyStableCorp, India crypto tax (VDA + TDS)
+      https://mystablecorp.xyz/guides/india-crypto-tax-vda-tds
+    - Mudrex, USDT legality in India 2026
+      https://mudrex.com/learn/buy-usdt-legally-india/
+
+================================================================================
+  END OF DOCUMENT
+  Not legal, tax or financial advice. Confirm [LEGAL] and [TAX] items with
+  qualified professionals before launch.
+================================================================================
